@@ -1,0 +1,85 @@
+[
+  {
+    "title": "Large-Scale Social Media Sentiment Intelligence Platform",
+    "websiteImagePrompt": "A high-fidelity dashboard UI for a social media intelligence platform. Dark mode, professional analytics style. Main panel shows a real-time feed of social posts with color-coded sentiment indicators (green/red). Sidebar with 'Brand Health', 'Topic Trends', and 'Alerts'. Top metrics bar showing 'Posts/sec', 'Positive Sentiment %', 'Total Volume'. Clean, modern typography, blue and grey color scheme. No text placeholders, looks like a real SaaS product.",
+    "architectureImagePrompt": "A professional high-level system architecture diagram for a real-time NLP pipeline. Clean, minimal, technical style. Left to right flow: 'Social Media API' -> 'Apache Kafka' (streaming ingestion) -> 'Apache Spark' (processing) -> 'BERT Model' (inference) -> 'PostgreSQL/Elasticsearch' (storage) -> 'Dashboard Client'. Icons should be simple and standard technical symbols. White background, blue accent lines.",
+    "visualizationPrompts": [
+      "A line chart showing 'Brand Sentiment Over Time' with two lines: Positive (green) and Negative (red). Professional data visualization style, clear axis labels, grid lines, sleek design.",
+      "A topic cluster visualization or word cloud showing trending terms like 'Product Launch', 'Support', 'Quality', 'Shipping'. Modern, clean aesthetic, varying font sizes based on frequency, blue and teal colors."
+    ]
+  },
+  {
+    "title": "Customer Churn Decision Intelligence System",
+    "websiteImagePrompt": "A customer retention CRM interface. The screen shows a specific customer profile 'John Doe' with a high 'Churn Risk Score' of 82% highlighted in red. A section 'Top Risk Factors' lists 'Low Usage', 'Recent Support Ticket', 'Contract Expiring'. Action buttons: 'Send Offer', 'Schedule Call'. Clean, enterprise software look, light grey background.",
+    "architectureImagePrompt": "A technical MLOps pipeline diagram. Flow: 'Data Lake' -> 'Airflow' (orchestration) -> 'Feature Store' -> 'XGBoost/CatBoost' (training) -> 'MLflow' (model registry) -> 'FastAPI' (serving) -> 'CRM App'. Hexagonal or block diagram style, professional and schematic.",
+    "visualizationPrompts": [
+      "A SHAP force plot visualization showing feature contributions to a churn prediction. Red bars pushing probability higher (e.g., 'Low Login Frequency'), blue bars pushing lower. Technical, interpretable ML output style.",
+      "A bar chart comparing 'Churn Rate by Customer Segment' (e.g., Enterprise vs. SMB). Clean, distinct bars, professional labeling."
+    ]
+  },
+  {
+    "title": "Deep Learning Brain Tumor Classification",
+    "websiteImagePrompt": "A medical imaging diagnostic software interface. Dark, high-contrast UI for radiologists. Central area displays a brain MRI scan with a red bounding box or heatmap overlay highlighting a tumor. Sidebar shows 'Patient ID', 'Scan Date', and 'AI Prediction: Glioma (98.4%)'. Professional medical software aesthetic.",
+    "architectureImagePrompt": "A deep learning model architecture diagram. Layers of a Convolutional Neural Network (CNN) shown as 3D blocks or flat layers. Input image -> Conv Layers -> Pooling -> Fully Connected -> Softmax Output. Labels: 'EfficientNet Backbone', 'Feature Extraction', 'Classification Head'. Clean, scientific diagram style.",
+    "visualizationPrompts": [
+      "A side-by-side comparison image: Left is raw brain MRI, Right is the same MRI with a Grad-CAM heatmap overlay showing the model's focus area in warm colors (red/yellow). Medical imaging context."
+    ]
+  },
+  {
+    "title": "Financial Fraud Detection Engine",
+    "websiteImagePrompt": "A fraud analyst workstation dashboard. Dark mode. A table lists recent transactions with a 'Risk Score' column. High-risk transaction highlighted in red. Detail view on the right shows 'Transaction ID', 'Amount', 'Location', and 'Anomaly Reason'. sleek, fintech data terminal look.",
+    "architectureImagePrompt": "A real-time fraud detection system diagram. Flow: 'Transaction Stream' -> 'Kafka' -> 'Preprocessor' -> 'Autoencoder Model' (Anomaly Detection) -> 'Scoring Engine' -> 'Alert System'. Blocks connected by arrows. Blue and dark grey color scheme, technical.",
+    "visualizationPrompts": [
+      "A 2D scatter plot showing 'Transaction Distribution'. Most points clustered in a dense 'Normal' region (blue), with a few scattered outlier points labeled 'Anomalies' (red). Technical data science plot style.",
+      "A histogram showing the distribution of 'Reconstruction Error'. A large peak for normal transactions and a long tail for fraudulent ones. Clean, statistical chart."
+    ]
+  },
+  {
+    "title": "YOLOv8 Real-Time Vision Inference Engine",
+    "websiteImagePrompt": "A video analytics dashboard. Main view is a simulated CCTV video feed showing a street scene. Bounding boxes drawn around cars (blue) and pedestrians (green) with confidence labels (e.g., 'Car 0.95'). Top right overlay shows 'FPS: 45', 'Latency: 22ms'. Technical surveillance software interface.",
+    "architectureImagePrompt": "An edge AI inference architecture diagram. 'Camera Source' -> 'Video Frame' -> 'TensorRT Engine' (YOLOv8) -> 'Post-Processing' (NMS) -> 'WebRTC Stream' -> 'Client Browser'. Minimalist, flow-chart style, indicating hardware acceleration.",
+    "visualizationPrompts": [
+      "A sample output image of object detection: A busy city street scene with clean, colored bounding boxes identifying multiple objects (bus, car, person, traffic light). High-quality computer vision demo look."
+    ]
+  },
+  {
+    "title": "Hybrid Recommendation Engine",
+    "websiteImagePrompt": "An e-commerce website product page. Main product is shown, followed by a 'Recommended for You' carousel section. The recommendations look highly relevant. Clean, modern retail UI, white background with product cards.",
+    "architectureImagePrompt": "A recommendation system architecture diagram. Two parallel paths: 'User/Item Matrix' -> 'Matrix Factorization' and 'User Features' -> 'Neural Network (NCF)'. Both feed into 'Hybrid Ranker' -> 'Top-K Recommendations'. Technical block diagram.",
+    "visualizationPrompts": [
+      "A t-SNE scatter plot of product embeddings. Points colored by category (e.g., Electronics, Clothing). Clusters are clearly visible, showing semantic similarity. Data science visualization style."
+    ]
+  },
+  {
+    "title": "Big Data Demand Forecasting Pipeline",
+    "websiteImagePrompt": "A supply chain planning dashboard. Main chart shows 'Sales Forecast vs Actuals'. Sidebar metrics: 'Inventory Turnover', 'Stockout Risk', 'Forecast Accuracy (MAPE)'. Clean, enterprise BI look (Power BI style).",
+    "architectureImagePrompt": "A big data pipeline architecture diagram. 'Raw Data' (CSV/SQL) -> 'PySpark Cluster' (ETL) -> 'Prophet/XGBoost' (Forecasting Models) -> 'Data Warehouse' -> 'BI Dashboard'. Cloud infrastructure icons (AWS/Azure).",
+    "visualizationPrompts": [
+      "A time-series forecast chart. Historical data as a solid blue line, future forecast as a dotted line with a shaded light blue confidence interval area. Clear date axis, professional financial charting style."
+    ]
+  },
+  {
+    "title": "Intelligent Resume Parser & Skill Extraction",
+    "websiteImagePrompt": "An HR recruitment platform interface. A candidate's profile is shown. Left side: PDF resume preview. Right side: Extracted structured data fields like 'Name', 'Education', 'Skills' (displayed as tags), 'Experience'. A 'Match Score: 92%' badge is prominent. Clean, modern SaaS UI.",
+    "architectureImagePrompt": "An NLP pipeline diagram. 'Resume (PDF/Doc)' -> 'OCR/Text Extraction' -> 'BERT NER Model' -> 'Entity Linking' -> 'Knowledge Graph' -> 'Structured Database'. Flowchart style, clean and technical.",
+    "visualizationPrompts": [
+      "A network graph or knowledge graph visualization. Central node 'Candidate', connected to nodes like 'Python' (Skill), 'Data Scientist' (Role), 'Google' (Company). Nodes are colored by type. Clean, modern graph viz."
+    ]
+  },
+  {
+    "title": "Cloud-Native Data Warehouse & ETL System",
+    "websiteImagePrompt": "A data engineering platform interface (like dbt Cloud or Snowflake). Shows a list of database tables/models with status indicators (green checks). A lineage graph shows data flowing from 'Source' to 'Staging' to 'Mart'. Metrics: 'Last Run: Success', 'Rows Processed: 1.2M'. Dark technical UI.",
+    "architectureImagePrompt": "A modern data stack architecture diagram. 'Data Sources' -> 'Ingestion (Fivetran/Airbyte)' -> 'Data Warehouse (Snowflake)' containing 'Bronze', 'Silver', 'Gold' layers -> 'Transformation (dbt)' -> 'BI Tool'. Layered architecture diagram.",
+    "visualizationPrompts": [
+      "A DAG (Directed Acyclic Graph) visualization of an ETL workflow. Nodes representing tasks/tables connected by arrows, showing dependencies. Status colors (green for success). Technical workflow diagram."
+    ]
+  },
+  {
+    "title": "Blood Group Classification Using Quantum Deep Learning",
+    "websiteImagePrompt": "A futuristic lab software interface. Displays a microscopic image of a blood sample. A panel shows 'Quantum Analysis in Progress...'. Final result: 'Blood Group: A+'. A small visualization of a quantum circuit or Bloch sphere is visible in a corner widget. High-tech, scientific look.",
+    "architectureImagePrompt": "A hybrid quantum-classical architecture diagram. 'Input Image' -> 'Classical CNN Layers' (Feature Extraction) -> 'Variational Quantum Circuit (VQC)' layer -> 'Fully Connected' -> 'Output Class'. Distinct visual separation between Classical (blue) and Quantum (purple) parts.",
+    "visualizationPrompts": [
+      "A simplified quantum circuit diagram showing qubits, Hadamard gates, and measurement blocks. Clean, schematic style, typical of Qiskit/Pennylane visualizations."
+    ]
+  }
+]

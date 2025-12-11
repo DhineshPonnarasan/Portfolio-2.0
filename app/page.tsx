@@ -1,0 +1,25 @@
+import AboutMe from './_components/AboutMe';
+import Banner from './_components/Banner';
+import Education from './_components/Education';
+import Experiences from './_components/Experiences';
+import Skills from './_components/Skills';
+import ProjectList from './_components/ProjectList';
+import Publications from './_components/Publications';
+import OpenSource from './_components/OpenSource';
+import Footer from '@/components/Footer';
+
+export default function Home() {
+    return (
+        <div className="page-">
+            <Banner />
+            <AboutMe />
+            <Education />
+            <Experiences />
+            <ProjectList />
+            <Skills />
+            <OpenSource />
+            <Publications />
+            <Footer />
+        </div>
+    );
+}
