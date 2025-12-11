@@ -39,7 +39,7 @@ This is a private repository intended for my personal use.
 2. Set up environment variables:
    Create a `.env.local` file in the root directory:
    ```env
-   API_KEY=your_groq_api_key_here
+   API_KEY=your_api_key_here
    ```
 
 3. Run the development server:
