@@ -121,10 +121,12 @@ const Project = ({ index, project, selectedProject, onMouseEnter }: Props) => {
                         </span>
                     </h4>
                     <p className="text-muted-foreground my-4 text-sm md:text-base max-w-3xl leading-relaxed">
-                        {project.description}
+                        {Array.isArray(project.description)
+                            ? project.description[0]
+                            : project.description}
                     </p>
                     <div className="mt-2 flex flex-wrap gap-3 text-muted-foreground text-xs">
-                        {project.techStack.map((tech, idx, stackArr) => (
+                        {(project.techAndTechniques ?? []).map((tech, idx, stackArr) => (
                             <div className="gap-3 flex items-center" key={tech}>
                                 <span className="">{tech}</span>
                                 {idx !== stackArr.length - 1 && (

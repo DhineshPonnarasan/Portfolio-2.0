@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#1a1d23" rx="0" />
+  
+  <!-- Hero Section -->
+  <rect x="100" y="100" width="1720" height="300" fill="#2a2d34" rx="10" />
+  <text x="110" y="220" font-size="48" font-family="Arial" fill="#66d9ef">Resume Intelligence OS</text>
+  <text x="110" y="280" font-size="24" font-family="Arial" fill="#8a8d96">Unlock the power of AI-driven resume parsing and candidate scoring</text>
+  
+  <!-- Upload Card -->
+  <rect x="100" y="450" width="400" height="200" fill="#2a2d34" rx="10" />
+  <text x="110" y="520" font-size="24" font-family="Arial" fill="#8a8d96">Upload Resume</text>
+  <rect x="110" y="550" width="380" height="40" fill="#4b4f58" rx="5" />
+  <text x="120" y="580" font-size="18" font-family="Arial" fill="#66d9ef">Drag and drop or browse files</text>
+  
+  <!-- Parsed Entity Chips -->
+  <g transform="translate(550, 450)">
+    <rect x="0" y="0" width="150" height="30" fill="#4b4f58" rx="5" />
+    <text x="10" y="20" font-size="16" font-family="Arial" fill="#66d9ef">Software Engineer</text>
+  </g>
+  <g transform="translate(720, 450)">
+    <rect x="0" y="0" width="150" height="30" fill="#4b4f58" rx="5" />
+    <text x="10" y="20" font-size="16" font-family="Arial" fill="#ff69b4">Data Scientist</text>
+  </g>
+  <g transform="translate(890, 450)">
+    <rect x="0" y="0" width="150" height="30" fill="#4b4f58" rx="5" />
+    <text x="10" y="20" font-size="16" font-family="Arial" fill="#66d9ef">Product Manager</text>
+  </g>
+  
+  <!-- Ranked Candidates List -->
+  <rect x="100" y="700" width="1720" height="300" fill="#2a2d34" rx="10" />
+  <text x="110" y="770" font-size="24" font-family="Arial" fill="#8a8d96">Top Candidates</text>
+  <g transform="translate(110, 800)">
+    <rect x="0" y="0" width="200" height="40" fill="#4b4f58" rx="5" />
+    <text x="10" y="25" font-size="18" font-family="Arial" fill="#66d9ef">John Doe (92%)</text>
+  </g>
+  <g transform="translate(330, 800)">
+    <rect x="0" y="0" width="200" height="40" fill="#4b4f58" rx="5" />
+    <text x="10" y="25" font-size="18" font-family="Arial" fill="#ff69b4">Jane Smith (88%)</text>
+  </g>
+  <g transform="translate(550, 800)">
+    <rect x="0" y="0" width="200" height="40" fill="#4b4f58" rx="5" />
+    <text x="10" y="25" font-size="18" font-family="Arial" fill="#66d9ef">Bob Johnson (85%)</text>
+  </g>
+  
+  <!-- Minimal Chart Lines -->
+  <path d="M 100 900 L 1720 900" stroke="#4b4f58" stroke-width="1" />
+  <path d="M 100 950 L 1720 950" stroke="#4b4f58" stroke-width="1" />
+  
+  <!-- Neon Accents -->
+  <rect x="100" y="100" width="10" height="300" fill="#66d9ef" rx="0" />
+  <rect x="1710" y="100" width="10" height="300" fill="#ff69b4" rx="0" />
+</svg>

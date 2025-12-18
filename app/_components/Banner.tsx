@@ -1,5 +1,6 @@
 'use client';
 import ArrowAnimation from '@/components/ArrowAnimation';
+import ImportDhinesh from '@/components/import_dhinesh';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
@@ -148,6 +149,7 @@ const Banner = () => {
 
     return (
         <section className="relative overflow-hidden" id="banner">
+            <ImportDhinesh />
             <ArrowAnimation />
             <div
                 className="container h-[100svh] min-h-[600px] max-md:pb-10 flex justify-center items-center"

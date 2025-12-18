@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 810" width="1440" height="810">
+  <!-- Background -->
+  <rect x="0" y="0" width="1440" height="810" fill="#212121" rx="10" />
+  
+  <!-- Nodes -->
+  <g>
+    <rect x="100" y="100" width="200" height="100" fill="#333" rx="10" stroke="#39FF14" stroke-width="2" />
+    <text x="150" y="170" font-size="24" font-family="Arial" fill="#fff">Capture</text>
+  </g>
+  <g>
+    <rect x="400" y="100" width="200" height="100" fill="#333" rx="10" stroke="#39FF14" stroke-width="2" />
+    <text x="450" y="170" font-size="24" font-family="Arial" fill="#fff">Normalize</text>
+  </g>
+  <g>
+    <rect x="700" y="100" width="200" height="100" fill="#333" rx="10" stroke="#39FF14" stroke-width="2" />
+    <text x="750" y="170" font-size="24" font-family="Arial" fill="#fff">CNN Feature Extract</text>
+  </g>
+  <g>
+    <rect x="100" y="350" width="200" height="100" fill="#333" rx="10" stroke="#39FF14" stroke-width="2" />
+    <text x="150" y="420" font-size="24" font-family="Arial" fill="#fff">Quantum Layer</text>
+  </g>
+  <g>
+    <rect x="400" y="350" width="200" height="100" fill="#333" rx="10" stroke="#39FF14" stroke-width="2" />
+    <text x="450" y="420" font-size="24" font-family="Arial" fill="#fff">Post-process</text>
+  </g>
+  <g>
+    <rect x="700" y="350" width="200" height="100" fill="#333" rx="10" stroke="#39FF14" stroke-width="2" />
+    <text x="750" y="420" font-size="24" font-family="Arial" fill="#fff">Evaluate</text>
+  </g>
+  
+  <!-- Connections -->
+  <path d="M300 150L400 150" stroke="#39FF14" stroke-width="2" fill="none" />
+  <path d="M600 150L700 150" stroke="#39FF14" stroke-width="2" fill="none" />
+  <path d="M900 150L100 350" stroke="#39FF14" stroke-width="2" fill="none" />
+  <path d="M300 450L400 450" stroke="#39FF14" stroke-width="2" fill="none" />
+  <path d="M600 450L700 450" stroke="#39FF14" stroke-width="2" fill="none" />
+</svg>

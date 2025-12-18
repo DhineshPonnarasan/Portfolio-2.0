@@ -2,7 +2,8 @@
 import fs from 'fs';
 import path from 'path';
 import { Groq } from 'groq-sdk';
-import { IProject } from '../types';
+import { IProject, VisualAsset } from '../types';
+import { VISUAL_PROMPT_TEMPLATE } from './visuals-template';
 
 const groq = new Groq({
     apiKey: process.env.GROQ_API_KEY,
@@ -92,54 +93,56 @@ const generateFallbackSVG = (prompt: string, type: string, title: string): strin
         </svg>`;
     }
 
-    // Default Visualization
+    // Default Visualization (line-based to avoid bar charts)
     return `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" style="background-color: #171717;">
-        <text x="300" y="40" text-anchor="middle" font-family="sans-serif" font-size="20" fill="white">${title} Metrics</text>
-        <rect x="50" y="60" width="500" height="300" fill="#262626"/>
-        
-        <!-- Bars -->
-        <rect x="80" y="200" width="40" height="160" fill="${primaryColor}"/>
-        <rect x="150" y="150" width="40" height="210" fill="${secondaryColor}"/>
-        <rect x="220" y="100" width="40" height="260" fill="${primaryColor}"/>
-        <rect x="290" y="180" width="40" height="180" fill="${secondaryColor}"/>
-        <rect x="360" y="120" width="40" height="240" fill="${primaryColor}"/>
-        <rect x="430" y="220" width="40" height="140" fill="${secondaryColor}"/>
-        
-        <!-- Axis -->
-        <line x1="50" y1="360" x2="550" y2="360" stroke="#52525b" stroke-width="2"/>
-        <line x1="50" y1="60" x2="50" y2="360" stroke="#52525b" stroke-width="2"/>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" style="background-color: #0f172a;">
+        <defs>
+            <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:${primaryColor};stop-opacity:0.8" />
+                <stop offset="100%" style="stop-color:${secondaryColor};stop-opacity:0.8" />
+            </linearGradient>
+        </defs>
+        <text x="300" y="36" text-anchor="middle" font-family="Inter, sans-serif" font-size="20" fill="white" font-weight="bold">${title} Visualization</text>
+        <rect x="40" y="60" width="520" height="300" rx="12" fill="#111827" stroke="#1f2937"/>
+        <polyline points="60,330 140,260 200,280 260,210 340,250 420,190 500,220 540,180" fill="none" stroke="url(#grad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+        <circle cx="60" cy="330" r="4" fill="${primaryColor}" />
+        <circle cx="140" cy="260" r="4" fill="${primaryColor}" />
+        <circle cx="200" cy="280" r="4" fill="${primaryColor}" />
+        <circle cx="260" cy="210" r="4" fill="${primaryColor}" />
+        <circle cx="340" cy="250" r="4" fill="${primaryColor}" />
+        <circle cx="420" cy="190" r="4" fill="${primaryColor}" />
+        <circle cx="500" cy="220" r="4" fill="${primaryColor}" />
+        <circle cx="540" cy="180" r="4" fill="${primaryColor}" />
+        <line x1="60" y1="360" x2="560" y2="360" stroke="#1f2937" stroke-width="2" />
+        <line x1="60" y1="360" x2="60" y2="80" stroke="#1f2937" stroke-width="2" />
     </svg>`;
 };
 
-const generateSVG = async (prompt: string, type: string, title: string): Promise<string> => {
+const buildSystemPrompt = (title: string, description: string) => {
+    return `${VISUAL_PROMPT_TEMPLATE}\n\nProject Title: ${title}\nProject Description: ${description}`;
+};
+
+const generateSVG = async (
+    prompt: string,
+    type: string,
+    title: string,
+    description: string,
+): Promise<string> => {
     // Try to use Groq, but fallback immediately on error or if key is missing
     if (!process.env.GROQ_API_KEY) {
         return generateFallbackSVG(prompt, type, title);
     }
 
-    const systemPrompt = `
-    You are an expert UI/UX Designer and Data Visualization Specialist.
-    Your task is to generate high-quality, professional SVG code based on the user's description.
-    
-    RULES:
-    1. Output ONLY the raw SVG code. No markdown, no explanation.
-    2. The SVG must be responsive (viewBox="0 0 800 600" or similar) and scale well.
-    3. Use modern color palettes (slate, zinc, indigo, blue, emerald).
-    4. For UI Screenshots: Draw a browser window frame, sidebar, header, and main content area representing the app.
-    5. For Architecture: Draw a clean, block-based system diagram with arrows and labels.
-    6. For Visualizations: Draw professional charts (bar, line, heatmap, scatter) or data flow graphics.
-    7. Text should be legible.
-    8. Background should be transparent or have a subtle solid color fitting a dark/light mode aesthetic (prefer dark mode for tech portfolios).
-    
-    Ensure the SVG is valid and self-contained.
-    `;
+    const systemPrompt = buildSystemPrompt(title, description);
 
     try {
         const completion = await groq.chat.completions.create({
             messages: [
                 { role: 'system', content: systemPrompt },
-                { role: 'user', content: `Generate an SVG for a ${type}. Title: ${title}. Context: ${prompt}` }
+                {
+                    role: 'user',
+                    content: `Generate ONLY raw SVG for ${type}. Aspect ratio 16:9. Dark mode with neon accents. Avoid bar charts unless explicitly required. Use SaaS-style professional look. Context: ${prompt}`,
+                },
             ],
             model: 'llama-3.3-70b-versatile',
             temperature: 0.4,
@@ -168,40 +171,28 @@ const generateSVG = async (prompt: string, type: string, title: string): Promise
     }
 };
 
-export const generateProjectImages = async (project: IProject) => {
+export const generateProjectImages = async (project: IProject): Promise<VisualAsset[]> => {
     const slug = project.slug;
     const baseDir = path.join(process.cwd(), 'public', 'projects', slug);
     ensureDirectoryExists(baseDir);
 
-    const images: { src: string; alt: string }[] = [];
+    const visuals = project.visuals ?? [];
+    const descriptionText = Array.isArray(project.description)
+        ? project.description.join(' ')
+        : project.description;
+    const generated: VisualAsset[] = [];
 
-    // 1. UI Screenshot
-    console.log(`Generating UI for ${project.title}...`);
-    const uiPrompt = `A modern SaaS dashboard UI for "${project.title}". Description: ${project.description}.`;
-    const uiSvg = await generateSVG(uiPrompt, 'UI Screenshot', project.title);
-    fs.writeFileSync(path.join(baseDir, 'ui.svg'), uiSvg);
-    images.push({ src: `/projects/${slug}/ui.svg`, alt: `${project.title} - UI Dashboard` });
+    for (let i = 0; i < visuals.length; i++) {
+        const visual = visuals[i];
+        const fileName = `visual-${i + 1}.svg`;
+        const promptContext = `${visual.prompt} | Project: ${project.title}. Description: ${descriptionText}`;
 
-    // 2. Architecture Diagram
-    console.log(`Generating Architecture for ${project.title}...`);
-    const archPrompt = `A system architecture diagram for "${project.title}". Key Features: ${project.keyFeatures.join(', ')}.`;
-    const archSvg = await generateSVG(archPrompt, 'System Architecture Diagram', project.title);
-    fs.writeFileSync(path.join(baseDir, 'architecture.svg'), archSvg);
-    images.push({ src: `/projects/${slug}/architecture.svg`, alt: `${project.title} - System Architecture` });
+        console.log(`Generating ${visual.label} for ${project.title}...`);
+        const svg = await generateSVG(promptContext, visual.label, project.title, descriptionText);
+        fs.writeFileSync(path.join(baseDir, fileName), svg);
 
-    // 3. Visualization 1
-    console.log(`Generating Visualization 1 for ${project.title}...`);
-    const vis1Prompt = `A data visualization or output chart for "${project.title}".`;
-    const vis1Svg = await generateSVG(vis1Prompt, 'Data Visualization', project.title);
-    fs.writeFileSync(path.join(baseDir, 'visualization-1.svg'), vis1Svg);
-    images.push({ src: `/projects/${slug}/visualization-1.svg`, alt: `${project.title} - Visualization` });
+        generated.push({ ...visual, image: `/projects/${slug}/${fileName}` });
+    }
 
-    // 4. Visualization 2 (Optional)
-    console.log(`Generating Visualization 2 for ${project.title}...`);
-    const vis2Prompt = `Another distinct visual output for "${project.title}".`;
-    const vis2Svg = await generateSVG(vis2Prompt, 'Metric Chart', project.title);
-    fs.writeFileSync(path.join(baseDir, 'visualization-2.svg'), vis2Svg);
-    images.push({ src: `/projects/${slug}/visualization-2.svg`, alt: `${project.title} - Metrics` });
-
-    return images;
+    return generated;
 };

@@ -15,7 +15,7 @@ export const useChatLogic = () => {
     const [messages, setMessages] = useState<Message[]>([
         {
             id: 'init',
-            text: "Hi there! I'm Chitti, Dhinesh's virtual assistant. How can I help you today?",
+            text: "Hi there! I'm the Chitti, Dhinesh's virtual assistant. How can I help you today?",
             sender: 'bot',
             type: 'options',
             options: ['Experience', 'Skills', 'Contact Info', 'View Projects'],

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#212121" rx="10" />
+  
+  <!-- Card Container -->
+  <rect x="100" y="100" width="1720" height="880" fill="#2f2f2f" rx="20" />
+  
+  <!-- SHAP Waterfall -->
+  <g transform="translate(150, 200)">
+    <text x="0" y="0" font-size="24" font-family="Open Sans" fill="#66d9ef">SHAP Contribution</text>
+    <rect x="0" y="40" width="200" height="20" fill="#444444" rx="5" />
+    <text x="10" y="55" font-size="18" font-family="Open Sans" fill="#ffffff">Feature 1: 0.23</text>
+    <rect x="0" y="80" width="180" height="20" fill="#444444" rx="5" />
+    <text x="10" y="95" font-size="18" font-family="Open Sans" fill="#ffffff">Feature 2: 0.17</text>
+    <rect x="0" y="120" width="160" height="20" fill="#444444" rx="5" />
+    <text x="10" y="135" font-size="18" font-family="Open Sans" fill="#ffffff">Feature 3: 0.12</text>
+  </g>
+  
+  <!-- Customer Profile Panel -->
+  <g transform="translate(500, 200)">
+    <text x="0" y="0" font-size="24" font-family="Open Sans" fill="#66d9ef">Customer Profile</text>
+    <rect x="0" y="40" width="400" height="200" fill="#444444" rx="10" />
+    <text x="10" y="60" font-size="18" font-family="Open Sans" fill="#ffffff">Name: John Doe</text>
+    <text x="10" y="90" font-size="18" font-family="Open Sans" fill="#ffffff">Age: 32</text>
+    <text x="10" y="120" font-size="18" font-family="Open Sans" fill="#ffffff">Location: New York</text>
+  </g>
+  
+  <!-- What-If Simulation Sliders -->
+  <g transform="translate(1000, 200)">
+    <text x="0" y="0" font-size="24" font-family="Open Sans" fill="#66d9ef">What-If Simulation</text>
+    <rect x="0" y="40" width="400" height="20" fill="#444444" rx="5" />
+    <rect x="0" y="70" width="200" height="20" fill="#444444" rx="5" />
+    <text x="10" y="45" font-size="18" font-family="Open Sans" fill="#ffffff">Feature 1: 0.5</text>
+    <text x="10" y="75" font-size="18" font-family="Open Sans" fill="#ffffff">Feature 2: 0.3</text>
+    <rect x="220" y="40" width="20" height="100" fill="#66d9ef" rx="5" />
+  </g>
+  
+  <!-- Dark Glass Aesthetic -->
+  <rect x="0" y="0" width="1920" height="1080" fill="rgba(0, 0, 0, 0.2)" rx="10" />
+</svg>

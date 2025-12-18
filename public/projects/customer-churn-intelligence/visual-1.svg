@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#212121" rx="0" />
+
+  <!-- Hero Section -->
+  <rect x="100" y="100" width="1720" height="300" fill="#2f2f2f" rx="10" />
+  <text x="110" y="220" font-size="64" font-family="Arial" fill="#ffffff">Churn Decision Intelligence</text>
+  <text x="110" y="300" font-size="24" font-family="Arial" fill="#cccccc">Predict. Interpret. Act.</text>
+
+  <!-- Dashboard Cards -->
+  <rect x="100" y="450" width="400" height="200" fill="#2f2f2f" rx="10" />
+  <text x="110" y="520" font-size="24" font-family="Arial" fill="#ffffff">Churn Rate Trend</text>
+  <path d="M 110 550 L 490 550 C 520 520, 580 600, 490 650" stroke="#0097a7" stroke-width="4" fill="none" />
+  <rect x="600" y="450" width="400" height="200" fill="#2f2f2f" rx="10" />
+  <text x="610" y="520" font-size="24" font-family="Arial" fill="#ffffff">Cohort Table</text>
+  <rect x="610" y="550" width="380" height="50" fill="#333333" rx="5" />
+  <rect x="610" y="610" width="380" height="50" fill="#333333" rx="5" />
+  <rect x="1100" y="450" width="400" height="200" fill="#2f2f2f" rx="10" />
+  <text x="1110" y="520" font-size="24" font-family="Arial" fill="#ffffff">SHAP Explanation</text>
+  <rect x="1110" y="550" width="380" height="50" fill="#32cd32" rx="5" />
+  <rect x="1110" y="610" width="380" height="50" fill="#32cd32" rx="5" />
+
+  <!-- CTA Buttons -->
+  <rect x="100" y="700" width="200" height="50" fill="#0097a7" rx="10" />
+  <text x="110" y="735" font-size="18" font-family="Arial" fill="#ffffff">Predict Churn</text>
+  <rect x="350" y="700" width="200" height="50" fill="#32cd32" rx="10" />
+  <text x="360" y="735" font-size="18" font-family="Arial" fill="#ffffff">Interpret Results</text>
+
+  <!-- Neon Accents -->
+  <rect x="100" y="100" width="1720" height="10" fill="#0097a7" rx="0" />
+  <rect x="100" y="790" width="1720" height="10" fill="#32cd32" rx="0" />
+</svg>

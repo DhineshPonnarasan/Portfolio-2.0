@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#2f2f2f" rx="10" />
+  
+  <!-- Extract Node -->
+  <g transform="translate(150, 200)">
+    <rect x="0" y="0" width="200" height="50" fill="#1a1a1a" rx="10" />
+    <text x="100" y="30" font-size="24" font-family="Arial" fill="#00ffff" text-anchor="middle">Extract</text>
+  </g>
+  
+  <!-- Stage Node -->
+  <g transform="translate(450, 200)">
+    <rect x="0" y="0" width="200" height="50" fill="#1a1a1a" rx="10" />
+    <text x="100" y="30" font-size="24" font-family="Arial" fill="#00ffff" text-anchor="middle">Stage</text>
+  </g>
+  
+  <!-- Transform Node -->
+  <g transform="translate(750, 200)">
+    <rect x="0" y="0" width="200" height="50" fill="#1a1a1a" rx="10" />
+    <text x="100" y="30" font-size="24" font-family="Arial" fill="#00ffff" text-anchor="middle">Transform</text>
+  </g>
+  
+  <!-- Test Node -->
+  <g transform="translate(1050, 200)">
+    <rect x="0" y="0" width="200" height="50" fill="#1a1a1a" rx="10" />
+    <text x="100" y="30" font-size="24" font-family="Arial" fill="#00ffff" text-anchor="middle">Test</text>
+  </g>
+  
+  <!-- Load Node -->
+  <g transform="translate(1350, 200)">
+    <rect x="0" y="0" width="200" height="50" fill="#1a1a1a" rx="10" />
+    <text x="100" y="30" font-size="24" font-family="Arial" fill="#00ffff" text-anchor="middle">Load</text>
+  </g>
+  
+  <!-- Serve Node -->
+  <g transform="translate(1650, 200)">
+    <rect x="0" y="0" width="200" height="50" fill="#1a1a1a" rx="10" />
+    <text x="100" y="30" font-size="24" font-family="Arial" fill="#00ffff" text-anchor="middle">Serve</text>
+  </g>
+  
+  <!-- Monitor Node -->
+  <g transform="translate(1950, 200)">
+    <rect x="0" y="0" width="200" height="50" fill="#1a1a1a" rx="10" />
+    <text x="100" y="30" font-size="24" font-family="Arial" fill="#00ffff" text-anchor="middle">Monitor</text>
+  </g>
+  
+  <!-- Connections -->
+  <path d="M 350 225 L 450 225" stroke="#0097a7" stroke-width="5" />
+  <path d="M 650 225 L 750 225" stroke="#0097a7" stroke-width="5" />
+  <path d="M 950 225 L 1050 225" stroke="#0097a7" stroke-width="5" />
+  <path d="M 1250 225 L 1350 225" stroke="#0097a7" stroke-width="5" />
+  <path d="M 1550 225 L 1650 225" stroke="#0097a7" stroke-width="5" />
+  <path d="M 1850 225 L 1950 225" stroke="#0097a7" stroke-width="5" />
+  
+  <!-- Highlights -->
+  <circle cx="200" cy="225" r="10" fill="#0097a7" />
+  <circle cx="500" cy="225" r="10" fill="#0097a7" />
+  <circle cx="800" cy="225" r="10" fill="#0097a7" />
+  <circle cx="1100" cy="225" r="10" fill="#0097a7" />
+  <circle cx="1400" cy="225" r="10" fill="#0097a7" />
+  <circle cx="1700" cy="225" r="10" fill="#0097a7" />
+  <circle cx="2000" cy="225" r="10" fill="#0097a7" />
+</svg>

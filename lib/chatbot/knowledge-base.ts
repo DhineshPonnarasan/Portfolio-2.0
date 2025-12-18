@@ -14,7 +14,7 @@ export const KNOWLEDGE_BASE: KnowledgeEntry[] = [
     {
         id: 'greeting',
         keywords: ['hi', 'hello', 'hey', 'greetings', 'morning', 'afternoon', 'evening'],
-        response: "Hello! 👋 I'm Chitti, Dhinesh's virtual assistant. How can I help you today?",
+        response: "Hello! 👋 I'm the Chitti, Dhinesh's virtual assistant. How can I help you today?",
         options: ['Experience', 'Skills', 'Contact Info'],
         category: 'general',
         version: 1,

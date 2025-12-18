@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <!-- Dark background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#2f2f2f" rx="10" />
+  
+  <!-- Grid pattern -->
+  <g>
+    <line x1="0" y1="0" x2="1920" y2="0" stroke="#444" stroke-width="1" />
+    <line x1="0" y1="1080" x2="1920" y2="1080" stroke="#444" stroke-width="1" />
+    <line x1="0" y1="0" x2="0" y2="1080" stroke="#444" stroke-width="1" />
+    <line x1="1920" y1="0" x2="1920" y2="1080" stroke="#444" stroke-width="1" />
+    <line x1="0" y1="360" x2="1920" y2="360" stroke="#444" stroke-width="1" />
+    <line x1="0" y1="720" x2="1920" y2="720" stroke="#444" stroke-width="1" />
+  </g>
+  
+  <!-- Source systems -->
+  <g transform="translate(100, 50)">
+    <rect x="0" y="0" width="200" height="100" fill="#3498db" rx="10" />
+    <text x="100" y="60" font-size="24" font-family="Arial" fill="#fff" text-anchor="middle">Source Systems</text>
+  </g>
+  
+  <!-- Airflow orchestrator -->
+  <g transform="translate(500, 50)">
+    <rect x="0" y="0" width="200" height="100" fill="#f1c40f" rx="10" />
+    <text x="100" y="60" font-size="24" font-family="Arial" fill="#fff" text-anchor="middle">Airflow</text>
+  </g>
+  
+  <!-- dbt transformations -->
+  <g transform="translate(900, 50)">
+    <rect x="0" y="0" width="200" height="100" fill="#2ecc71" rx="10" />
+    <text x="100" y="60" font-size="24" font-family="Arial" fill="#fff" text-anchor="middle">dbt</text>
+  </g>
+  
+  <!-- Snowflake/BigQuery warehouse -->
+  <g transform="translate(100, 370)">
+    <rect x="0" y="0" width="300" height="150" fill="#9b59b6" rx="10" />
+    <text x="150" y="90" font-size="30" font-family="Arial" fill="#fff" text-anchor="middle">Snowflake/BigQuery</text>
+    <text x="150" y="130" font-size="24" font-family="Arial" fill="#fff" text-anchor="middle">Data Warehouse</text>
+  </g>
+  
+  <!-- Semantic layer -->
+  <g transform="translate(550, 370)">
+    <rect x="0" y="0" width="200" height="100" fill="#1abc9c" rx="10" />
+    <text x="100" y="60" font-size="24" font-family="Arial" fill="#fff" text-anchor="middle">Semantic Layer</text>
+  </g>
+  
+  <!-- BI clients -->
+  <g transform="translate(900, 370)">
+    <rect x="0" y="0" width="200" height="100" fill="#e74c3c" rx="10" />
+    <text x="100" y="60" font-size="24" font-family="Arial" fill="#fff" text-anchor="middle">BI Clients</text>
+  </g>
+  
+  <!-- Connections -->
+  <g>
+    <line x1="300" y1="100" x2="500" y2="100" stroke="#66d9ef" stroke-width="2" />
+    <line x1="700" y1="100" x2="900" y2="100" stroke="#66d9ef" stroke-width="2" />
+    <line x1="1100" y1="100" x2="100" y2="370" stroke="#66d9ef" stroke-width="2" />
+    <line x1="400" y1="370" x2="550" y2="370" stroke="#66d9ef" stroke-width="2" />
+    <line x1="750" y1="370" x2="900" y2="370" stroke="#66d9ef" stroke-width="2" />
+  </g>
+  
+  <!-- Cloud icons -->
+  <g transform="translate(1700, 50)">
+    <path d="M10 10h20v20h-20z" fill="#fff" />
+    <path d="M15 15h10v10h-10z" fill="#fff" />
+  </g>
+  <g transform="translate(1700, 370)">
+    <path d="M10 10h20v20h-20z" fill="#fff" />
+    <path d="M15 15h10v10h-10z" fill="#fff" />
+  </g>
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#212121" rx="0" />
+  
+  <!-- Hero Section -->
+  <rect x="100" y="100" width="1720" height="400" fill="#2f2f2f" rx="10" />
+  <text x="120" y="170" font-size="48" font-family="Arial" fill="#66d9ef">Social Sentiment Intelligence</text>
+  
+  <!-- Live Stream Tiles -->
+  <rect x="120" y="250" width="400" height="200" fill="#3f3f3f" rx="5" />
+  <text x="130" y="280" font-size="24" font-family="Arial" fill="#fff">English Stream</text>
+  <rect x="540" y="250" width="400" height="200" fill="#3f3f3f" rx="5" />
+  <text x="550" y="280" font-size="24" font-family="Arial" fill="#fff">Spanish Stream</text>
+  <rect x="960" y="250" width="400" height="200" fill="#3f3f3f" rx="5" />
+  <text x="970" y="280" font-size="24" font-family="Arial" fill="#fff">French Stream</text>
+  
+  <!-- Multilingual Topic Chips -->
+  <circle cx="120" cy="500" r="20" fill="#66d9ef" />
+  <text x="150" y="505" font-size="18" font-family="Arial" fill="#fff">Politics</text>
+  <circle cx="250" cy="500" r="20" fill="#66d9ef" />
+  <text x="280" y="505" font-size="18" font-family="Arial" fill="#fff">Sports</text>
+  <circle cx="380" cy="500" r="20" fill="#66d9ef" />
+  <text x="410" y="505" font-size="18" font-family="Arial" fill="#fff">Entertainment</text>
+  
+  <!-- Subtle Geo Heatmap Outline -->
+  <path d="M 100 600 L 1820 600" stroke="#66d9ef" stroke-width="2" fill="none" />
+  <path d="M 100 700 L 1820 700" stroke="#66d9ef" stroke-width="2" fill="none" />
+  <path d="M 100 800 L 1820 800" stroke="#66d9ef" stroke-width="2" fill="none" />
+  
+  <!-- Slim Line Indicators -->
+  <path d="M 100 550 L 1820 550" stroke="#66d9ef" stroke-width="1" fill="none" />
+  <path d="M 100 650 L 1820 650" stroke="#66d9ef" stroke-width="1" fill="none" />
+  <path d="M 100 750 L 1820 750" stroke="#66d9ef" stroke-width="1" fill="none" />
+  
+  <!-- Floating CTA Buttons -->
+  <rect x="1400" y="900" width="200" height="50" fill="#66d9ef" rx="5" />
+  <text x="1450" y="935" font-size="24" font-family="Arial" fill="#fff">Get Started</text>
+  <rect x="1600" y="900" width="200" height="50" fill="#66d9ef" rx="5" />
+  <text x="1650" y="935" font-size="24" font-family="Arial" fill="#fff">Learn More</text>
+</svg>

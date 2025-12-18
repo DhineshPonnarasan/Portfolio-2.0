@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <!-- Dark cosmos background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#1a1d23" rx="0" />
+  <rect x="0" y="0" width="1920" height="1080" fill="none" stroke="#2b2f3b" stroke-width="2" rx="0" />
+
+  <!-- Image intake -->
+  <rect x="100" y="200" width="200" height="100" fill="#212529" rx="10" />
+  <text x="150" y="260" font-size="24" font-family="Arial" fill="#66d9ef">Image Intake</text>
+
+  <!-- Preprocessing -->
+  <rect x="400" y="200" width="200" height="100" fill="#212529" rx="10" />
+  <text x="450" y="260" font-size="24" font-family="Arial" fill="#66d9ef">Preprocessing</text>
+
+  <!-- Classical CNN -->
+  <rect x="700" y="200" width="200" height="100" fill="#212529" rx="10" />
+  <text x="750" y="260" font-size="24" font-family="Arial" fill="#66d9ef">Classical CNN</text>
+
+  <!-- Quantum VQC layer (Qiskit/Pennylane) -->
+  <rect x="1000" y="200" width="250" height="100" fill="#212529" rx="10" />
+  <text x="1050" y="260" font-size="24" font-family="Arial" fill="#66d9ef">Quantum VQC (Qiskit/Pennylane)</text>
+
+  <!-- Classifier -->
+  <rect x="1300" y="200" width="200" height="100" fill="#212529" rx="10" />
+  <text x="1350" y="260" font-size="24" font-family="Arial" fill="#66d9ef">Classifier</text>
+
+  <!-- Insights dashboard -->
+  <rect x="1600" y="200" width="250" height="100" fill="#212529" rx="10" />
+  <text x="1650" y="260" font-size="24" font-family="Arial" fill="#66d9ef">Insights Dashboard</text>
+
+  <!-- Connections -->
+  <line x1="300" y1="250" x2="400" y2="250" stroke="#66d9ef" stroke-width="2" />
+  <line x1="600" y1="250" x2="700" y2="250" stroke="#66d9ef" stroke-width="2" />
+  <line x1="900" y1="250" x2="1000" y2="250" stroke="#66d9ef" stroke-width="2" />
+  <line x1="1250" y1="250" x2="1300" y2="250" stroke="#66d9ef" stroke-width="2" />
+  <line x1="1500" y1="250" x2="1600" y2="250" stroke="#66d9ef" stroke-width="2" />
+
+  <!-- Quantum accents -->
+  <circle cx="1050" cy="220" r="20" fill="#66d9ef" />
+  <circle cx="1050" cy="280" r="20" fill="#66d9ef" />
+  <path d="M 1050 200 L 1070 220 L 1050 240 Z" fill="#66d9ef" />
+  <path d="M 1050 260 L 1070 240 L 1050 220 Z" fill="#66d9ef" />
+</svg>

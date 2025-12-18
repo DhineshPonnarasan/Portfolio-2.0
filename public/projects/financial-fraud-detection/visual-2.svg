@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 810" width="1440" height="810">
+  <!-- Background -->
+  <rect x="0" y="0" width="1440" height="810" fill="#212121" rx="10" />
+  
+  <!-- Payment Gateways -->
+  <rect x="100" y="100" width="200" height="100" fill="#2f2f2f" rx="10" />
+  <text x="150" y="170" font-size="24" font-family="Arial" fill="#66ccff">Payment Gateways</text>
+  
+  <!-- Kafka -->
+  <rect x="400" y="100" width="200" height="100" fill="#2f2f2f" rx="10" />
+  <text x="450" y="170" font-size="24" font-family="Arial" fill="#66ccff">Kafka</text>
+  
+  <!-- Feature Engineering -->
+  <rect x="700" y="100" width="200" height="100" fill="#2f2f2f" rx="10" />
+  <text x="750" y="170" font-size="24" font-family="Arial" fill="#66ccff">Feature Engineering</text>
+  
+  <!-- Autoencoder + Isolation Forest Services -->
+  <rect x="100" y="300" width="300" height="100" fill="#2f2f2f" rx="10" />
+  <text x="150" y="370" font-size="24" font-family="Arial" fill="#66ccff">Autoencoder + Isolation Forest Services</text>
+  
+  <!-- Alert Rules -->
+  <rect x="500" y="300" width="200" height="100" fill="#2f2f2f" rx="10" />
+  <text x="550" y="370" font-size="24" font-family="Arial" fill="#66ccff">Alert Rules</text>
+  
+  <!-- SOC Dashboard -->
+  <rect x="800" y="300" width="200" height="100" fill="#2f2f2f" rx="10" />
+  <text x="850" y="370" font-size="24" font-family="Arial" fill="#66ccff">SOC Dashboard</text>
+  
+  <!-- Arrows -->
+  <path d="M 300 150 L 400 150" stroke="#66ccff" stroke-width="2" fill="none" />
+  <path d="M 600 150 L 700 150" stroke="#66ccff" stroke-width="2" fill="none" />
+  <path d="M 900 150 L 1000 250" stroke="#66ccff" stroke-width="2" fill="none" />
+  <path d="M 400 250 L 500 250" stroke="#66ccff" stroke-width="2" fill="none" />
+  <path d="M 700 250 L 800 250" stroke="#66ccff" stroke-width="2" fill="none" />
+  <path d="M 1000 350 L 1100 350" stroke="#66ccff" stroke-width="2" fill="none" />
+  
+  <!-- Arrowheads -->
+  <polygon points="400,145 410,155 400,165" fill="#66ccff" />
+  <polygon points="700,145 710,155 700,165" fill="#66ccff" />
+  <polygon points="1000,245 1010,255 1000,265" fill="#66ccff" />
+  <polygon points="500,245 510,255 500,265" fill="#66ccff" />
+  <polygon points="800,245 810,255 800,265" fill="#66ccff" />
+  <polygon points="1100,345 1110,355 1100,365" fill="#66ccff" />
+</svg>

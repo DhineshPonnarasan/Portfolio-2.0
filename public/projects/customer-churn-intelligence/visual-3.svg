@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <!-- Dark background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#212121" rx="10" />
+  
+  <!-- Pipeline nodes and arrows -->
+  <g>
+    <!-- Ingest node -->
+    <rect x="100" y="400" width="200" height="100" fill="#039BE5" rx="10" />
+    <text x="150" y="450" font-size="24" font-family="Arial" fill="#FFFFFF" text-anchor="middle">Ingest</text>
+    
+    <!-- Arrow to Clean/encode node -->
+    <path d="M 300 450 L 500 450" stroke="#66CCCC" stroke-width="2" fill="none" />
+    <path d="M 500 450 L 490 440 L 500 450 L 490 460 Z" fill="#66CCCC" />
+    
+    <!-- Clean/encode node -->
+    <rect x="500" y="400" width="200" height="100" fill="#039BE5" rx="10" />
+    <text x="550" y="450" font-size="24" font-family="Arial" fill="#FFFFFF" text-anchor="middle">Clean/encode</text>
+    
+    <!-- Arrow to Train/validate node -->
+    <path d="M 700 450 L 900 450" stroke="#66CCCC" stroke-width="2" fill="none" />
+    <path d="M 900 450 L 890 440 L 900 450 L 890 460 Z" fill="#66CCCC" />
+    
+    <!-- Train/validate node -->
+    <rect x="900" y="400" width="200" height="100" fill="#039BE5" rx="10" />
+    <text x="950" y="450" font-size="24" font-family="Arial" fill="#FFFFFF" text-anchor="middle">Train/validate</text>
+    
+    <!-- Arrow to Register node -->
+    <path d="M 1100 450 L 1300 450" stroke="#66CCCC" stroke-width="2" fill="none" />
+    <path d="M 1300 450 L 1290 440 L 1300 450 L 1290 460 Z" fill="#66CCCC" />
+    
+    <!-- Register node -->
+    <rect x="1300" y="400" width="200" height="100" fill="#039BE5" rx="10" />
+    <text x="1350" y="450" font-size="24" font-family="Arial" fill="#FFFFFF" text-anchor="middle">Register</text>
+    
+    <!-- Arrow to Deploy node -->
+    <path d="M 1500 450 L 1700 450" stroke="#66CCCC" stroke-width="2" fill="none" />
+    <path d="M 1700 450 L 1690 440 L 1700 450 L 1690 460 Z" fill="#66CCCC" />
+    
+    <!-- Deploy node -->
+    <rect x="1700" y="400" width="200" height="100" fill="#039BE5" rx="10" />
+    <text x="1750" y="450" font-size="24" font-family="Arial" fill="#FFFFFF" text-anchor="middle">Deploy</text>
+    
+    <!-- Arrow to Monitor drift node -->
+    <path d="M 1900 450 L 160 550" stroke="#66CCCC" stroke-width="2" fill="none" />
+    <path d="M 160 550 L 170 540 L 160 550 L 170 560 Z" fill="#66CCCC" />
+    
+    <!-- Monitor drift node -->
+    <rect x="100" y="600" width="200" height="100" fill="#039BE5" rx="10" />
+    <text x="150" y="650" font-size="24" font-family="Arial" fill="#FFFFFF" text-anchor="middle">Monitor drift</text>
+    
+    <!-- Arrow to Retrain trigger node -->
+    <path d="M 300 650 L 500 650" stroke="#66CCCC" stroke-width="2" fill="none" />
+    <path d="M 500 650 L 490 640 L 500 650 L 490 660 Z" fill="#66CCCC" />
+    
+    <!-- Retrain trigger node -->
+    <rect x="500" y="600" width="200" height="100" fill="#039BE5" rx="10" />
+    <text x="550" y="650" font-size="24" font-family="Arial" fill="#FFFFFF" text-anchor="middle">Retrain trigger</text>
+  </g>
+  
+  <!-- Title and subtitle -->
+  <text x="50" y="50" font-size="36" font-family="Arial" fill="#66CCCC">Customer Churn Decision Intelligence System</text>
+  <text x="50" y="100" font-size="24" font-family="Arial" fill="#66CCCC">End-to-end ML lifecycle system for churn prediction and interpretability</text>
+</svg>

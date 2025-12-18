@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#1a1d23" rx="10" />
+  
+  <!-- Carousel Container -->
+  <g transform="translate(100, 100)">
+    <!-- Carousel Card 1 -->
+    <rect x="0" y="0" width="300" height="400" fill="#2a2d34" rx="10" />
+    <text x="10" y="30" font-size="24" font-family="Arial" fill="#66d9ef">Movie Title</text>
+    <text x="10" y="60" font-size="18" font-family="Arial" fill="#8f94a5">Because you liked Inception</text>
+    <rect x="10" y="90" width="20" height="20" fill="#34c759" rx="5" />
+    <text x="40" y="110" font-size="18" font-family="Arial" fill="#8f94a5">Predicted Score: 8.5/10</text>
+    <path d="M 10 150 L 20 160 L 30 155 L 40 165 L 50 160" stroke="#8f94a5" stroke-width="2" fill="none" />
+    
+    <!-- Carousel Card 2 -->
+    <rect x="350" y="0" width="300" height="400" fill="#2a2d34" rx="10" />
+    <text x="360" y="30" font-size="24" font-family="Arial" fill="#66d9ef">Book Title</text>
+    <text x="360" y="60" font-size="18" font-family="Arial" fill="#8f94a5">Because you liked Harry Potter</text>
+    <rect x="360" y="90" width="20" height="20" fill="#34c759" rx="5" />
+    <text x="390" y="110" font-size="18" font-family="Arial" fill="#8f94a5">Predicted Score: 9.0/10</text>
+    <path d="M 360 150 L 370 155 L 380 160 L 390 165 L 400 160" stroke="#8f94a5" stroke-width="2" fill="none" />
+    
+    <!-- Carousel Card 3 -->
+    <rect x="700" y="0" width="300" height="400" fill="#2a2d34" rx="10" />
+    <text x="710" y="30" font-size="24" font-family="Arial" fill="#66d9ef">Music Title</text>
+    <text x="710" y="60" font-size="18" font-family="Arial" fill="#8f94a5">Because you liked The Weeknd</text>
+    <rect x="710" y="90" width="20" height="20" fill="#34c759" rx="5" />
+    <text x="740" y="110" font-size="18" font-family="Arial" fill="#8f94a5">Predicted Score: 8.0/10</text>
+    <path d="M 710 150 L 720 155 L 730 160 L 740 165 L 750 160" stroke="#8f94a5" stroke-width="2" fill="none" />
+  </g>
+  
+  <!-- Engagement Trend Line -->
+  <path d="M 100 500 L 200 480 L 300 500 L 400 520 L 500 500" stroke="#8f94a5" stroke-width="2" fill="none" />
+  
+  <!-- Neon Accents -->
+  <rect x="0" y="0" width="1920" height="10" fill="#34c759" rx="5" />
+  <rect x="0" y="1070" width="1920" height="10" fill="#34c759" rx="5" />
+  <rect x="0" y="0" width="10" height="1080" fill="#34c759" rx="5" />
+  <rect x="1910" y="0" width="10" height="1080" fill="#34c759" rx="5" />
+</svg>

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#212121" rx="10" />
+  
+  <!-- Left Column: Live Posts -->
+  <rect x="50" y="50" width="400" height="980" fill="#2f2f2f" rx="10" />
+  <text x="60" y="80" font-size="24" font-family="Arial" fill="#66d9ef">Live Posts</text>
+  <rect x="60" y="120" width="380" height="60" fill="#3f3f3f" rx="5" />
+  <text x="70" y="160" font-size="18" font-family="Arial" fill="#fff">Username: Just posted about our brand!</text>
+  <rect x="60" y="200" width="380" height="60" fill="#3f3f3f" rx="5" />
+  <text x="70" y="240" font-size="18" font-family="Arial" fill="#fff">Username: Loving the new product!</text>
+  <rect x="60" y="280" width="380" height="60" fill="#3f3f3f" rx="5" />
+  <text x="70" y="320" font-size="18" font-family="Arial" fill="#fff">Username: Disappointed with the service.</text>
+  
+  <!-- Center Sentiment Trend Line -->
+  <rect x="500" y="50" width="800" height="980" fill="#2f2f2f" rx="10" />
+  <text x="510" y="80" font-size="24" font-family="Arial" fill="#66d9ef">Sentiment Trend</text>
+  <path d="M 510 200 L 1310 200" stroke="#66d9ef" stroke-width="2" fill="none" />
+  <path d="M 510 250 L 1310 250" stroke="#66d9ef" stroke-width="2" fill="none" />
+  <path d="M 510 300 L 1310 300" stroke="#66d9ef" stroke-width="2" fill="none" />
+  <path d="M 550 150 L 550 350" stroke="#66d9ef" stroke-width="2" fill="none" />
+  <path d="M 650 150 L 650 350" stroke="#66d9ef" stroke-width="2" fill="none" />
+  <path d="M 750 150 L 750 350" stroke="#66d9ef" stroke-width="2" fill="none" />
+  <path d="M 850 150 L 850 350" stroke="#66d9ef" stroke-width="2" fill="none" />
+  <path d="M 950 150 L 950 350" stroke="#66d9ef" stroke-width="2" fill="none" />
+  <path d="M 1050 150 L 1050 350" stroke="#66d9ef" stroke-width="2" fill="none" />
+  <path d="M 1150 150 L 1150 350" stroke="#66d9ef" stroke-width="2" fill="none" />
+  <path d="M 1250 150 L 1250 350" stroke="#66d9ef" stroke-width="2" fill="none" />
+  <path d="M 550 200 L 650 220 L 750 250 L 850 280 L 950 300 L 1050 320 L 1150 350 L 1250 380" stroke="#66d9ef" stroke-width="4" fill="none" />
+  
+  <!-- Right Alert Panel -->
+  <rect x="1320" y="50" width="550" height="980" fill="#2f2f2f" rx="10" />
+  <text x="1330" y="80" font-size="24" font-family="Arial" fill="#66d9ef">Alerts</text>
+  <rect x="1330" y="150" width="220" height="100" fill="#3f3f3f" rx="5" />
+  <text x="1340" y="180" font-size="18" font-family="Arial" fill="#fff">Brand Spike</text>
+  <text x="1340" y="210" font-size="18" font-family="Arial" fill="#fff">+25% in the last hour</text>
+  <rect x="1330" y="270" width="220" height="100" fill="#3f3f3f" rx="5" />
+  <text x="1340" y="300" font-size="18" font-family="Arial" fill="#fff">Map Inset</text>
+  <circle cx="1450" cy="370" r="50" fill="#3f3f3f" />
+  <rect x="1330" y="430" width="220" height="100" fill="#3f3f3f" rx="5" />
+  <text x="1340" y="460" font-size="18" font-family="Arial" fill="#fff">KPI Chips</text>
+  <text x="1340" y="490" font-size="18" font-family="Arial" fill="#fff">Engagement: 1000</text>
+  <text x="1340" y="520" font-size="18" font-family="Arial" fill="#fff">Reach: 10000</text>
+  
+  <!-- Dark Teal Aesthetic -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#0097a7" rx="10" opacity="0.1" />
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#2f2f2f" rx="10" />
+  
+  <!-- Header -->
+  <rect x="10" y="10" width="1900" height="50" fill="#3f3f3f" rx="5" />
+  <text x="20" y="40" font-size="24" font-family="Arial" fill="#66cccc">Customer Churn Decision Intelligence System</text>
+  
+  <!-- Customer List -->
+  <rect x="10" y="70" width="400" height="600" fill="#3f3f3f" rx="5" />
+  <text x="20" y="100" font-size="18" font-family="Arial" fill="#66cccc">High-Risk Customers</text>
+  <rect x="20" y="130" width="370" height="30" fill="#4f4f4f" rx="5" />
+  <text x="30" y="155" font-size="16" font-family="Arial" fill="#ffffff">John Doe (85%)</text>
+  <rect x="20" y="170" width="370" height="30" fill="#4f4f4f" rx="5" />
+  <text x="30" y="195" font-size="16" font-family="Arial" fill="#ffffff">Jane Doe (78%)</text>
+  <rect x="20" y="210" width="370" height="30" fill="#4f4f4f" rx="5" />
+  <text x="30" y="235" font-size="16" font-family="Arial" fill="#ffffff">Bob Smith (92%)</text>
+  
+  <!-- Churn Trend -->
+  <rect x="420" y="70" width="600" height="400" fill="#3f3f3f" rx="5" />
+  <text x="430" y="100" font-size="18" font-family="Arial" fill="#66cccc">Churn Trend (12 weeks)</text>
+  <path d="M 450 150 L 550 120 L 650 150 L 750 180 L 850 150 L 950 120 L 1050 150" stroke="#66cccc" stroke-width="2" fill="none" />
+  <circle cx="550" cy="120" r="5" fill="#66cccc" />
+  <circle cx="650" cy="150" r="5" fill="#66cccc" />
+  <circle cx="750" cy="180" r="5" fill="#66cccc" />
+  <circle cx="850" cy="150" r="5" fill="#66cccc" />
+  <circle cx="950" cy="120" r="5" fill="#66cccc" />
+  <circle cx="1050" cy="150" r="5" fill="#66cccc" />
+  
+  <!-- Call-to-Action Panel -->
+  <rect x="1030" y="70" width="280" height="100" fill="#3f3f3f" rx="5" />
+  <text x="1040" y="100" font-size="18" font-family="Arial" fill="#66cccc">Trigger Retention Playbook</text>
+  <rect x="1040" y="130" width="260" height="30" fill="#4f4f4f" rx="5" />
+  <text x="1050" y="155" font-size="16" font-family="Arial" fill="#ffffff">Start Retention Campaign</text>
+  
+  <!-- Footer -->
+  <rect x="10" y="980" width="1900" height="50" fill="#3f3f3f" rx="5" />
+  <text x="20" y="1010" font-size="14" font-family="Arial" fill="#66cccc">Customer Churn Decision Intelligence System &copy; 2024</text>
+</svg>

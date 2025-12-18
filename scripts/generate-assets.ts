@@ -16,17 +16,12 @@ async function main() {
         console.log(`Processing ${project.title}...`);
         
         try {
-            const gallery = await generateProjectImages(project);
-            
-            // Update project fields
+            const visuals = await generateProjectImages(project);
             const newProject = {
                 ...project,
-                thumbnail: gallery[0].src, // Use UI screenshot as thumbnail
-                longThumbnail: gallery[0].src,
-                images: gallery.map(g => g.src),
-                gallery: gallery
+                visuals,
             };
-            
+
             updatedProjects.push(newProject);
         } catch (err) {
             console.error(`Failed to process ${project.title}:`, err);

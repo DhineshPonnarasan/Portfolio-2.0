@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#1a1d23" rx="10" />
+  
+  <!-- Multi-camera grid -->
+  <rect x="50" y="50" width="400" height="300" fill="#2f343a" rx="5" />
+  <rect x="470" y="50" width="400" height="300" fill="#2f343a" rx="5" />
+  <rect x="50" y="370" width="400" height="300" fill="#2f343a" rx="5" />
+  <rect x="470" y="370" width="400" height="300" fill="#2f343a" rx="5" />
+  
+  <!-- Detection overlays -->
+  <rect x="60" y="60" width="50" height="50" fill="#33cc33" rx="5" />
+  <rect x="480" y="60" width="50" height="50" fill="#33cc33" rx="5" />
+  <rect x="60" y="380" width="50" height="50" fill="#33cc33" rx="5" />
+  <rect x="480" y="380" width="50" height="50" fill="#33cc33" rx="5" />
+  
+  <!-- Timeline line for FPS -->
+  <line x1="50" y1="700" x2="1870" y2="700" stroke="#66d9ef" stroke-width="2" />
+  <text x="50" y="680" font-size="24" fill="#66d9ef" font-family="Arial">FPS: 60</text>
+  
+  <!-- Alert sidebar -->
+  <rect x="1500" y="50" width="370" height="980" fill="#2f343a" rx="5" />
+  <text x="1520" y="80" font-size="24" fill="#66d9ef" font-family="Arial">Alerts</text>
+  <text x="1520" y="120" font-size="18" fill="#ffffff" font-family="Arial">No alerts</text>
+  
+  <!-- Neon lime highlights -->
+  <rect x="60" y="60" width="50" height="50" fill="none" stroke="#33cc33" stroke-width="2" rx="5" />
+  <rect x="480" y="60" width="50" height="50" fill="none" stroke="#33cc33" stroke-width="2" rx="5" />
+  <rect x="60" y="380" width="50" height="50" fill="none" stroke="#33cc33" stroke-width="2" rx="5" />
+  <rect x="480" y="380" width="50" height="50" fill="none" stroke="#33cc33" stroke-width="2" rx="5" />
+</svg>

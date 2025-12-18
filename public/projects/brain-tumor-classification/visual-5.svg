@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#2f2f2f" rx="10" />
+  
+  <!-- Image Viewer -->
+  <rect x="50" y="50" width="1200" height="800" fill="#3f3f3f" rx="10" />
+  <image x="60" y="60" width="1180" height="780" href="data:image/png;base64,iVBORw0KGg..." />
+  <text x="60" y="840" font-size="24" font-family="Arial" fill="#fff">MRI Scan</text>
+  
+  <!-- Confidence Gauge -->
+  <circle cx="1400" cy="200" r="100" fill="#3f3f3f" />
+  <circle cx="1400" cy="200" r="80" fill="none" stroke="#4dfcff" stroke-width="20" />
+  <text x="1370" y="220" font-size="36" font-family="Arial" fill="#4dfcff">92%</text>
+  <text x="1370" y="260" font-size="24" font-family="Arial" fill="#fff">Confidence</text>
+  
+  <!-- Timeline -->
+  <line x1="50" y1="900" x2="1870" y2="900" stroke="#fff" stroke-width="2" />
+  <circle cx="100" cy="900" r="10" fill="#4dfcff" />
+  <circle cx="500" cy="900" r="10" fill="#4dfcff" />
+  <circle cx="900" cy="900" r="10" fill="#4dfcff" />
+  <circle cx="1300" cy="900" r="10" fill="#4dfcff" />
+  <text x="80" y="920" font-size="18" font-family="Arial" fill="#fff">6 months ago</text>
+  <text x="480" y="920" font-size="18" font-family="Arial" fill="#fff">3 months ago</text>
+  <text x="880" y="920" font-size="18" font-family="Arial" fill="#fff">1 month ago</text>
+  <text x="1280" y="920" font-size="18" font-family="Arial" fill="#fff">Current</text>
+  
+  <!-- PDF Export Button -->
+  <rect x="1750" y="50" width="150" height="50" fill="#4dfcff" rx="10" />
+  <text x="1760" y="80" font-size="24" font-family="Arial" fill="#2f2f2f">Export PDF</text>
+</svg>

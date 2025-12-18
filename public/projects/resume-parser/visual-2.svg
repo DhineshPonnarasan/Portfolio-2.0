@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#2f2f2f" rx="10" />
+  
+  <!-- Resume Upload -->
+  <rect x="100" y="100" width="200" height="100" fill="#444" rx="10" />
+  <text x="120" y="170" font-size="24" font-family="Arial" fill="#66ccff">Resume Upload</text>
+  <path d="M 300 150 L 400 150" stroke="#66ccff" stroke-width="2" />
+  
+  <!-- OCR/Cleaning -->
+  <rect x="400" y="100" width="200" height="100" fill="#444" rx="10" />
+  <text x="420" y="170" font-size="24" font-family="Arial" fill="#66ccff">OCR/Cleaning</text>
+  <path d="M 600 150 L 700 150" stroke="#66ccff" stroke-width="2" />
+  
+  <!-- BERT+spaCy NER -->
+  <rect x="700" y="100" width="250" height="100" fill="#444" rx="10" />
+  <text x="720" y="170" font-size="24" font-family="Arial" fill="#66ccff">BERT+spaCy NER</text>
+  <path d="M 950 150 L 1050 150" stroke="#66ccff" stroke-width="2" />
+  
+  <!-- Skill Graph Store -->
+  <rect x="1050" y="100" width="200" height="100" fill="#444" rx="10" />
+  <text x="1070" y="170" font-size="24" font-family="Arial" fill="#66ccff">Skill Graph Store</text>
+  <path d="M 1250 150 L 1350 150" stroke="#66ccff" stroke-width="2" />
+  
+  <!-- Matching Engine -->
+  <rect x="1350" y="100" width="200" height="100" fill="#444" rx="10" />
+  <text x="1370" y="170" font-size="24" font-family="Arial" fill="#66ccff">Matching Engine</text>
+  <path d="M 1550 150 L 1650 150" stroke="#66ccff" stroke-width="2" />
+  
+  <!-- Recruiter Dashboard -->
+  <rect x="1650" y="100" width="200" height="100" fill="#444" rx="10" />
+  <text x="1670" y="170" font-size="24" font-family="Arial" fill="#66ccff">Recruiter Dashboard</text>
+  
+  <!-- Accent -->
+  <rect x="0" y="0" width="1920" height="10" fill="#66ccff" />
+  <rect x="0" y="1070" width="1920" height="10" fill="#66ccff" />
+  <rect x="0" y="0" width="10" height="1080" fill="#66ccff" />
+  <rect x="1910" y="0" width="10" height="1080" fill="#66ccff" />
+</svg>

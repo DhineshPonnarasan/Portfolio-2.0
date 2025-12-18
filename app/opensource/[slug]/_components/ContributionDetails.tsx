@@ -3,7 +3,7 @@ import TransitionLink from '@/components/TransitionLink';
 import { IContribution } from '@/types';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { ArrowLeft, ExternalLink, Calendar, User, Code2, GitPullRequest, GitCommit, FileCode } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Calendar, User, Code2, GitPullRequest, Building2 } from 'lucide-react';
 import { useRef } from 'react';
 
 interface Props {
@@ -61,14 +61,16 @@ const ContributionDetails = ({ contribution }: Props) => {
                     <div className="flex flex-wrap gap-6 text-muted-foreground mb-8">
                         <div className="flex items-center gap-2">
                             <Calendar className="size-5 text-primary" />
-                            <span className="font-mono">{contribution.date}</span>
+                            <span className="font-mono">{contribution.period}</span>
                         </div>
-                        {contribution.role && (
-                            <div className="flex items-center gap-2">
-                                <User className="size-5 text-primary" />
-                                <span className="font-medium">{contribution.role}</span>
-                            </div>
-                        )}
+                        <div className="flex items-center gap-2">
+                            <Building2 className="size-5 text-primary" />
+                            <span className="font-medium">{contribution.org}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <User className="size-5 text-primary" />
+                            <span className="font-medium">{contribution.role}</span>
+                        </div>
                     </div>
                 </div>
 

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#212121" rx="10" />
+  
+  <!-- Capture Node -->
+  <rect x="100" y="400" width="200" height="100" fill="#333333" rx="10" />
+  <text x="150" y="450" font-size="24" font-family="Arial" fill="#66CCFF">Capture</text>
+  
+  <!-- Decode Node -->
+  <rect x="400" y="400" width="200" height="100" fill="#333333" rx="10" />
+  <text x="450" y="450" font-size="24" font-family="Arial" fill="#66CCFF">Decode</text>
+  
+  <!-- Preprocess Node -->
+  <rect x="700" y="400" width="200" height="100" fill="#333333" rx="10" />
+  <text x="750" y="450" font-size="24" font-family="Arial" fill="#66CCFF">Preprocess</text>
+  
+  <!-- YOLOv8 Node -->
+  <rect x="1000" y="400" width="200" height="100" fill="#333333" rx="10" />
+  <text x="1050" y="450" font-size="24" font-family="Arial" fill="#66CCFF">YOLOv8</text>
+  
+  <!-- NMS Node -->
+  <rect x="1300" y="400" width="200" height="100" fill="#333333" rx="10" />
+  <text x="1350" y="450" font-size="24" font-family="Arial" fill="#66CCFF">NMS</text>
+  
+  <!-- Overlay Node -->
+  <rect x="1600" y="400" width="200" height="100" fill="#333333" rx="10" />
+  <text x="1650" y="450" font-size="24" font-family="Arial" fill="#66CCFF">Overlay</text>
+  
+  <!-- Stream/Archive Node -->
+  <rect x="1750" y="400" width="150" height="100" fill="#333333" rx="10" />
+  <text x="1800" y="450" font-size="24" font-family="Arial" fill="#66CCFF">Stream/Archive</text>
+  
+  <!-- Arrows -->
+  <path d="M 300 450 L 400 450" stroke="#44FFCC" stroke-width="5" fill="none" />
+  <path d="M 600 450 L 700 450" stroke="#44FFCC" stroke-width="5" fill="none" />
+  <path d="M 900 450 L 1000 450" stroke="#44FFCC" stroke-width="5" fill="none" />
+  <path d="M 1200 450 L 1300 450" stroke="#44FFCC" stroke-width="5" fill="none" />
+  <path d="M 1500 450 L 1600 450" stroke="#44FFCC" stroke-width="5" fill="none" />
+  <path d="M 1800 450 L 1900 450" stroke="#44FFCC" stroke-width="5" fill="none" />
+  
+  <!-- Arrowheads -->
+  <polygon points="400,435 410,450 400,465" fill="#44FFCC" />
+  <polygon points="700,435 710,450 700,465" fill="#44FFCC" />
+  <polygon points="1000,435 1010,450 1000,465" fill="#44FFCC" />
+  <polygon points="1300,435 1310,450 1300,465" fill="#44FFCC" />
+  <polygon points="1600,435 1610,450 1600,465" fill="#44FFCC" />
+  <polygon points="1900,435 1910,450 1900,465" fill="#44FFCC" />
+</svg>

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <!-- Dark background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#2f2f2f" rx="0" />
+  
+  <!-- Grid lines -->
+  <line x1="0" y1="120" x2="1920" y2="120" stroke="#333" stroke-width="1" />
+  <line x1="0" y1="240" x2="1920" y2="240" stroke="#333" stroke-width="1" />
+  <line x1="0" y1="360" x2="1920" y2="360" stroke="#333" stroke-width="1" />
+  <line x1="0" y1="480" x2="1920" y2="480" stroke="#333" stroke-width="1" />
+  <line x1="0" y1="600" x2="1920" y2="600" stroke="#333" stroke-width="1" />
+  <line x1="0" y1="720" x2="1920" y2="720" stroke="#333" stroke-width="1" />
+  <line x1="0" y1="840" x2="1920" y2="840" stroke="#333" stroke-width="1" />
+  <line x1="0" y1="960" x2="1920" y2="960" stroke="#333" stroke-width="1" />
+  <line x1="240" y1="0" x2="240" y2="1080" stroke="#333" stroke-width="1" />
+  <line x1="480" y1="0" x2="480" y2="1080" stroke="#333" stroke-width="1" />
+  <line x1="720" y1="0" x2="720" y2="1080" stroke="#333" stroke-width="1" />
+  <line x1="960" y1="0" x2="960" y2="1080" stroke="#333" stroke-width="1" />
+  <line x1="1200" y1="0" x2="1200" y2="1080" stroke="#333" stroke-width="1" />
+  <line x1="1440" y1="0" x2="1440" y2="1080" stroke="#333" stroke-width="1" />
+  <line x1="1680" y1="0" x2="1680" y2="1080" stroke="#333" stroke-width="1" />
+  
+  <!-- Nodes -->
+  <rect x="80" y="40" width="160" height="80" fill="#444" rx="10" />
+  <rect x="320" y="40" width="160" height="80" fill="#444" rx="10" />
+  <rect x="560" y="40" width="160" height="80" fill="#444" rx="10" />
+  <rect x="800" y="40" width="160" height="80" fill="#444" rx="10" />
+  <rect x="1040" y="40" width="160" height="80" fill="#444" rx="10" />
+  <rect x="1280" y="40" width="160" height="80" fill="#444" rx="10" />
+  <rect x="1520" y="40" width="160" height="80" fill="#444" rx="10" />
+  
+  <!-- Node text -->
+  <text x="120" y="80" font-size="24" font-family="Arial" fill="#fff">Ingest</text>
+  <text x="360" y="80" font-size="24" font-family="Arial" fill="#fff">Clean/Feature</text>
+  <text x="600" y="80" font-size="24" font-family="Arial" fill="#fff">Train Models</text>
+  <text x="840" y="80" font-size="24" font-family="Arial" fill="#fff">Ensemble Forecast</text>
+  <text x="1080" y="80" font-size="24" font-family="Arial" fill="#fff">Validate</text>
+  <text x="1280" y="80" font-size="24" font-family="Arial" fill="#fff">Publish</text>
+  <text x="1520" y="80" font-size="24" font-family="Arial" fill="#fff">Monitor Anomalies</text>
+  
+  <!-- Arrows -->
+  <line x1="240" y1="80" x2="320" y2="80" stroke="#66cc00" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="480" y1="80" x2="560" y2="80" stroke="#66cc00" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="720" y1="80" x2="800" y2="80" stroke="#66cc00" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="960" y1="80" x2="1040" y2="80" stroke="#66cc00" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="1200" y1="80" x2="1280" y2="80" stroke="#66cc00" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="1440" y1="80" x2="1520" y2="80" stroke="#66cc00" stroke-width="2" marker-end="url(#arrowhead)" />
+  
+  <!-- Arrowhead definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#66cc00" />
+    </marker>
+  </defs>
+</svg>

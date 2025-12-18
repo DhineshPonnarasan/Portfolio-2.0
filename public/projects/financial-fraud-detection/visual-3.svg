@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#2b2b2b" rx="10" />
+  
+  <!-- Ingest -->
+  <rect x="100" y="100" width="200" height="100" fill="#1a1a1a" rx="10" />
+  <text x="150" y="170" font-size="24" font-family="Arial" fill="#66ccff">Ingest</text>
+  <text x="150" y="200" font-size="18" font-family="Arial" fill="#999999">Kafka Event Stream</text>
+  
+  <!-- Normalize -->
+  <rect x="400" y="100" width="200" height="100" fill="#1a1a1a" rx="10" />
+  <text x="450" y="170" font-size="24" font-family="Arial" fill="#66ccff">Normalize</text>
+  <text x="450" y="200" font-size="18" font-family="Arial" fill="#999999">Data Preprocessing</text>
+  
+  <!-- Autoencoder Reconstruction Error -->
+  <rect x="700" y="100" width="250" height="100" fill="#1a1a1a" rx="10" />
+  <text x="750" y="170" font-size="24" font-family="Arial" fill="#66ccff">Autoencoder Reconstruction Error</text>
+  <text x="750" y="200" font-size="18" font-family="Arial" fill="#999999">Deep Learning Model</text>
+  
+  <!-- Threshold Logic -->
+  <rect x="1000" y="100" width="200" height="100" fill="#1a1a1a" rx="10" />
+  <text x="1050" y="170" font-size="24" font-family="Arial" fill="#66ccff">Threshold Logic</text>
+  <text x="1050" y="200" font-size="18" font-family="Arial" fill="#999999">Anomaly Detection</text>
+  
+  <!-- Case Creation -->
+  <rect x="1300" y="100" width="200" height="100" fill="#1a1a1a" rx="10" />
+  <text x="1350" y="170" font-size="24" font-family="Arial" fill="#66ccff">Case Creation</text>
+  <text x="1350" y="200" font-size="18" font-family="Arial" fill="#999999">Fraud Case Management</text>
+  
+  <!-- Analyst Feedback -->
+  <rect x="1600" y="100" width="200" height="100" fill="#1a1a1a" rx="10" />
+  <text x="1650" y="170" font-size="24" font-family="Arial" fill="#66ccff">Analyst Feedback</text>
+  <text x="1650" y="200" font-size="18" font-family="Arial" fill="#999999">Human-in-the-Loop</text>
+  
+  <!-- Connections -->
+  <path d="M300 150L400 150" stroke="#66ccff" stroke-width="5" fill="none" />
+  <path d="M600 150L700 150" stroke="#66ccff" stroke-width="5" fill="none" />
+  <path d="M950 150L1000 150" stroke="#66ccff" stroke-width="5" fill="none" />
+  <path d="M1200 150L1300 150" stroke="#66ccff" stroke-width="5" fill="none" />
+  <path d="M1500 150L1600 150" stroke="#66ccff" stroke-width="5" fill="none" />
+  
+  <!-- Pill Boxes -->
+  <rect x="50" y="50" width="20" height="20" fill="#ffa07a" rx="50%" />
+  <rect x="50" y="80" width="20" height="20" fill="#ffa07a" rx="50%" />
+  <rect x="50" y="110" width="20" height="20" fill="#ffa07a" rx="50%" />
+  
+  <!-- Orange Glow -->
+  <ellipse cx="100" cy="100" rx="50" ry="50" fill="#ffa07a" opacity="0.5" />
+</svg>

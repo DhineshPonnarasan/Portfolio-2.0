@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#2f2f2f" rx="10" />
+  
+  <!-- Header -->
+  <rect x="10" y="10" width="1900" height="50" fill="#333" rx="5" />
+  <text x="20" y="35" font-size="20" font-family="Arial" fill="#66ccff">Big Data Demand Forecasting Pipeline</text>
+  
+  <!-- Timeline Forecast -->
+  <rect x="50" y="70" width="1800" height="300" fill="#444" rx="5" />
+  <path d="M 100 120 L 1800 120" stroke="#66ccff" stroke-width="2" />
+  <path d="M 100 200 L 1800 200" stroke="#66ccff" stroke-width="2" />
+  <path d="M 100 150 L 1800 250" stroke="#33ccff" stroke-width="2" />
+  <path d="M 100 250 L 1800 150" stroke="#33ccff" stroke-width="2" />
+  <text x="50" y="90" font-size="16" font-family="Arial" fill="#fff">Forecast</text>
+  
+  <!-- SKU Table -->
+  <rect x="50" y="380" width="1800" height="400" fill="#444" rx="5" />
+  <text x="50" y="350" font-size="16" font-family="Arial" fill="#fff">SKU Table</text>
+  <rect x="60" y="390" width="200" height="30" fill="#555" rx="5" />
+  <text x="70" y="410" font-size="14" font-family="Arial" fill="#fff">SKU-001</text>
+  <rect x="270" y="390" width="50" height="30" fill="#66ccff" rx="5" />
+  <text x="275" y="410" font-size="14" font-family="Arial" fill="#fff">+5%</text>
+  <rect x="60" y="430" width="200" height="30" fill="#555" rx="5" />
+  <text x="70" y="450" font-size="14" font-family="Arial" fill="#fff">SKU-002</text>
+  <rect x="270" y="430" width="50" height="30" fill="#66ccff" rx="5" />
+  <text x="275" y="450" font-size="14" font-family="Arial" fill="#fff">+3%</text>
+  
+  <!-- Alert Ribbon -->
+  <rect x="10" y="50" width="200" height="30" fill="#ff6666" rx="5" />
+  <text x="20" y="70" font-size="14" font-family="Arial" fill="#fff">Stockout Alert!</text>
+  
+  <!-- Confidence Band -->
+  <path d="M 100 150 L 1800 250" stroke="#33ccff" stroke-width="2" stroke-dasharray="5,5" />
+  <path d="M 100 250 L 1800 150" stroke="#33ccff" stroke-width="2" stroke-dasharray="5,5" />
+</svg>

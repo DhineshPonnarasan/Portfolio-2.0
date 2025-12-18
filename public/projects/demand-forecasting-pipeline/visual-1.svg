@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#212121" rx="0" />
+  
+  <!-- Header -->
+  <rect x="0" y="0" width="1920" height="80" fill="#2f2f2f" rx="0" />
+  <text x="50" y="60" font-size="24" font-family="Arial" fill="#66d9ef">DemandFlow Pipeline</text>
+  
+  <!-- Hero Panel -->
+  <rect x="50" y="150" width="1820" height="400" fill="#333333" rx="10" />
+  <text x="60" y="200" font-size="36" font-family="Arial" fill="#66d9ef">Forecast Overview</text>
+  
+  <!-- Multi-line Seasonal Plot -->
+  <path d="M 100 250 L 200 220 L 300 280 L 400 240 L 500 260" stroke="#ff9900" stroke-width="2" fill="none" />
+  <path d="M 100 270 L 200 300 L 300 230 L 400 290 L 500 250" stroke="#0099ff" stroke-width="2" fill="none" />
+  <path d="M 100 290 L 200 260 L 300 310 L 400 280 L 500 270" stroke="#ff66cc" stroke-width="2" fill="none" />
+  
+  <!-- SKU KPI Cards -->
+  <rect x="600" y="200" width="200" height="100" fill="#444444" rx="10" />
+  <text x="610" y="230" font-size="18" font-family="Arial" fill="#66d9ef">SKU 1</text>
+  <text x="610" y="260" font-size="24" font-family="Arial" fill="#ff9900">1200 units</text>
+  
+  <rect x="820" y="200" width="200" height="100" fill="#444444" rx="10" />
+  <text x="830" y="230" font-size="18" font-family="Arial" fill="#66d9ef">SKU 2</text>
+  <text x="830" y="260" font-size="24" font-family="Arial" fill="#0099ff">900 units</text>
+  
+  <rect x="1040" y="200" width="200" height="100" fill="#444444" rx="10" />
+  <text x="1050" y="230" font-size="18" font-family="Arial" fill="#66d9ef">SKU 3</text>
+  <text x="1050" y="260" font-size="24" font-family="Arial" fill="#ff66cc">1100 units</text>
+  
+  <!-- Anomaly Flags -->
+  <rect x="1400" y="200" width="20" height="20" fill="#ff0000" rx="5" />
+  <text x="1420" y="220" font-size="18" font-family="Arial" fill="#66d9ef">Anomaly detected</text>
+  
+  <!-- Teal/Orange Glow -->
+  <ellipse cx="960" cy="500" rx="100" ry="50" fill="#0099ff" opacity="0.5" />
+  <ellipse cx="960" cy="500" rx="80" ry="40" fill="#ff9900" opacity="0.5" />
+</svg>

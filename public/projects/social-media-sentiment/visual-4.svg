@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#1a1d23" rx="10" />
+  
+  <!-- Hover Card -->
+  <rect x="50" y="50" width="1820" height="980" fill="#2f343a" rx="10" />
+  
+  <!-- Post Snippet -->
+  <text x="70" y="120" font-size="24" font-family="Open Sans" fill="#fff">"Just had the best experience with @BrandName! Their customer service is top-notch #BrandName #CustomerService"</text>
+  
+  <!-- Sentiment Gauge -->
+  <circle cx="970" cy="200" r="40" fill="#34c759" />
+  <text x="940" y="220" font-size="18" font-family="Open Sans" fill="#fff">Positive</text>
+  
+  <!-- Topic Tags -->
+  <rect x="70" y="250" width="200" height="40" fill="#2f343a" rx="5" />
+  <text x="80" y="280" font-size="18" font-family="Open Sans" fill="#fff">Customer Service</text>
+  <rect x="280" y="250" width="150" height="40" fill="#2f343a" rx="5" />
+  <text x="290" y="280" font-size="18" font-family="Open Sans" fill="#fff">Brand Health</text>
+  
+  <!-- Confidence Badges -->
+  <circle cx="1470" cy="200" r="20" fill="#4c5154" />
+  <text x="1450" y="220" font-size="14" font-family="Open Sans" fill="#fff">90%</text>
+  <circle cx="1520" cy="200" r="20" fill="#4c5154" />
+  <text x="1500" y="220" font-size="14" font-family="Open Sans" fill="#fff">95%</text>
+  
+  <!-- Language Filter Toggle -->
+  <rect x="70" y="350" width="100" height="40" fill="#2f343a" rx="5" />
+  <text x="80" y="380" font-size="18" font-family="Open Sans" fill="#fff">English</text>
+  <rect x="180" y="350" width="100" height="40" fill="#2f343a" rx="5" />
+  <text x="190" y="380" font-size="18" font-family="Open Sans" fill="#fff">Spanish</text>
+  
+  <!-- Neon Accents -->
+  <rect x="50" y="50" width="1820" height="980" fill="none" stroke="#3a86ff" stroke-width="2" rx="10" />
+  <line x1="70" y1="120" x2="70" y2="400" stroke="#3a86ff" stroke-width="2" />
+  <line x1="1800" y1="120" x2="1800" y2="400" stroke="#3a86ff" stroke-width="2" />
+</svg>

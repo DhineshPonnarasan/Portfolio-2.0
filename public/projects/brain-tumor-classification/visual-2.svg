@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <!-- Dark background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#2f2f2f" rx="10" />
+  
+  <!-- PACS/MRI storage block -->
+  <rect x="100" y="100" width="200" height="100" fill="#444444" rx="10" />
+  <text x="110" y="170" font-size="24" font-family="Arial" fill="#66ccff">PACS/MRI Storage</text>
+  
+  <!-- Preprocessing block -->
+  <rect x="350" y="100" width="200" height="100" fill="#444444" rx="10" />
+  <text x="360" y="170" font-size="24" font-family="Arial" fill="#66ccff">Preprocessing</text>
+  
+  <!-- Arrow from PACS/MRI storage to preprocessing -->
+  <line x1="300" y1="150" x2="350" y2="150" stroke="#66ccff" stroke-width="2" />
+  <polygon points="350,145 360,150 350,155" fill="#66ccff" />
+  
+  <!-- CNN inference cluster block -->
+  <rect x="600" y="100" width="250" height="100" fill="#444444" rx="10" />
+  <text x="610" y="170" font-size="24" font-family="Arial" fill="#66ccff">CNN Inference Cluster</text>
+  <image x="680" y="120" width="40" height="40" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20height%3D%2240%22%3E%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%2240%22%20height%3D%2240%22%20fill%3D%22%2366ccff%22%20rx%3D%2210%22%2F%3E%3Ctext%20x%3D%2210%22%20y%3D%2225%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20fill%3D%22%23ffffff%22%3E%3C%2Ftext%3E%3C%2Fsvg%3E" />
+  
+  <!-- Arrow from preprocessing to CNN inference cluster -->
+  <line x1="550" y1="150" x2="600" y2="150" stroke="#66ccff" stroke-width="2" />
+  <polygon points="600,145 610,150 600,155" fill="#66ccff" />
+  
+  <!-- Grad-CAM explainer block -->
+  <rect x="900" y="100" width="200" height="100" fill="#444444" rx="10" />
+  <text x="910" y="170" font-size="24" font-family="Arial" fill="#66ccff">Grad-CAM Explainer</text>
+  
+  <!-- Arrow from CNN inference cluster to Grad-CAM explainer -->
+  <line x1="850" y1="150" x2="900" y2="150" stroke="#66ccff" stroke-width="2" />
+  <polygon points="900,145 910,150 900,155" fill="#66ccff" />
+  
+  <!-- Report generator block -->
+  <rect x="1150" y="100" width="200" height="100" fill="#444444" rx="10" />
+  <text x="1160" y="170" font-size="24" font-family="Arial" fill="#66ccff">Report Generator</text>
+  
+  <!-- Arrow from Grad-CAM explainer to report generator -->
+  <line x1="1100" y1="150" x2="1150" y2="150" stroke="#66ccff" stroke-width="2" />
+  <polygon points="1150,145 1160,150 1150,155" fill="#66ccff" />
+  
+  <!-- Clinician portal block -->
+  <rect x="1400" y="100" width="200" height="100" fill="#444444" rx="10" />
+  <text x="1410" y="170" font-size="24" font-family="Arial" fill="#66ccff">Clinician Portal</text>
+  <image x="1480" y="120" width="40" height="40" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20height%3D%2240%22%3E%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%2240%22%20height%3D%2240%22%20fill%3D%22%2366ccff%22%20rx%3D%2210%22%2F%3E%3Ctext%20x%3D%2210%22%20y%3D%2225%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20fill%3D%22%23ffffff%22%3E%3C%2Ftext%3E%3C%2Fsvg%3E" />
+  
+  <!-- Arrow from report generator to clinician portal -->
+  <line x1="1350" y1="150" x2="1400" y2="150" stroke="#66ccff" stroke-width="2" />
+  <polygon points="1400,145 1410,150 1400,155" fill="#66ccff" />
+  
+  <!-- Cloud icon -->
+  <image x="50" y="50" width="40" height="40" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20height%3D%2240%22%3E%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%2240%22%20height%3D%2240%22%20fill%3D%22%2366ccff%22%20rx%3D%2210%22%2F%3E%3Ctext%20x%3D%2210%22%20y%3D%2225%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20fill%3D%22%23ffffff%22%3ECloud%3C%2Ftext%3E%3C%2Fsvg%3E" />
+  
+  <!-- Container icon -->
+  <image x="1700" y="50" width="40" height="40" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20height%3D%2240%22%3E%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%2240%22%20height%3D%2240%22%20fill%3D%22%2366ccff%22%20rx%3D%2210%22%2F%3E%3Ctext%20x%3D%2210%22%20y%3D%2225%22%20font-size%3D%2218%22%20font-family%3D%22Arial%22%20fill%3D%22%23ffffff%22%3EContainer%3C%2Ftext%3E%3C%2Fsvg%3E" />
+</svg>
