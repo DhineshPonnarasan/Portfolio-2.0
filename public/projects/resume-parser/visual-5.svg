@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#1A1D23" rx="10" />
+  
+  <!-- Candidate Card 1 -->
+  <rect x="50" y="50" width="300" height="200" fill="#2A2D34" rx="10" />
+  <text x="60" y="70" font-size="24" font-family="Arial" fill="#66CCFF">John Doe</text>
+  <text x="60" y="110" font-size="18" font-family="Arial" fill="#8B94A7">Software Engineer</text>
+  <text x="60" y="150" font-size="18" font-family="Arial" fill="#8B94A7">Fit: 85%</text>
+  
+  <!-- Timeline Line Chart -->
+  <path d="M 350 250 L 450 220 L 550 280 L 650 250" stroke="#66CCFF" stroke-width="2" fill="none" />
+  <circle cx="350" cy="250" r="5" fill="#66CCFF" />
+  <circle cx="450" cy="220" r="5" fill="#66CCFF" />
+  <circle cx="550" cy="280" r="5" fill="#66CCFF" />
+  <circle cx="650" cy="250" r="5" fill="#66CCFF" />
+  
+  <!-- Action Buttons -->
+  <rect x="700" y="50" width="100" height="40" fill="#2A2D34" rx="5" />
+  <text x="710" y="75" font-size="18" font-family="Arial" fill="#66CCFF">Shortlist</text>
+  <rect x="820" y="50" width="100" height="40" fill="#2A2D34" rx="5" />
+  <text x="830" y="75" font-size="18" font-family="Arial" fill="#66CCFF">Schedule</text>
+  
+  <!-- Candidate Card 2 -->
+  <rect x="50" y="300" width="300" height="200" fill="#2A2D34" rx="10" />
+  <text x="60" y="320" font-size="24" font-family="Arial" fill="#66CCFF">Jane Smith</text>
+  <text x="60" y="360" font-size="18" font-family="Arial" fill="#8B94A7">Data Scientist</text>
+  <text x="60" y="400" font-size="18" font-family="Arial" fill="#8B94A7">Fit: 90%</text>
+  
+  <!-- Timeline Line Chart -->
+  <path d="M 350 550 L 450 580 L 550 520 L 650 550" stroke="#66CCFF" stroke-width="2" fill="none" />
+  <circle cx="350" cy="550" r="5" fill="#66CCFF" />
+  <circle cx="450" cy="580" r="5" fill="#66CCFF" />
+  <circle cx="550" cy="520" r="5" fill="#66CCFF" />
+  <circle cx="650" cy="550" r="5" fill="#66CCFF" />
+  
+  <!-- Action Buttons -->
+  <rect x="700" y="300" width="100" height="40" fill="#2A2D34" rx="5" />
+  <text x="710" y="325" font-size="18" font-family="Arial" fill="#66CCFF">Shortlist</text>
+  <rect x="820" y="300" width="100" height="40" fill="#2A2D34" rx="5" />
+  <text x="830" y="325" font-size="18" font-family="Arial" fill="#66CCFF">Schedule</text>
+</svg>

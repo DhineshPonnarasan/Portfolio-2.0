@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Portfolio: System Architecture Diagrams (Animated)</title>
+<style>
+  :root{--blue:#1f6feb;--black:#111;--dash:4}
+  html,body{height:100%;margin:0;background:#ffffff;color:var(--black);font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+  .wrap{max-width:1300px;margin:28px auto;padding:18px}
+  h1{font-size:22px;margin:6px 0 18px;font-weight:700}
+  .diagram{background:#fff;border-radius:10px;padding:20px;margin-bottom:28px;box-shadow:0 2px 6px rgba(0,0,0,0.06)}
+  .title{font-weight:700;margin:0 0 14px;font-size:18px}
+
+  svg{width:100%;height:auto}
+
+  /* Animated outer border */
+  .group-rect{
+    fill:none;
+    stroke:var(--black);
+    stroke-width:1.4;
+    stroke-dasharray:10 6;
+    animation:borderFlow 4s linear infinite;
+  }
+  @keyframes borderFlow {
+    from { stroke-dashoffset:20; }
+    to { stroke-dashoffset:0; }
+  }
+
+  /* Animated box borders */
+  .box rect{
+    fill:#ffffff;
+    stroke:var(--blue);
+    stroke-width:1.4;
+    stroke-dasharray:8 4;
+    animation:borderGlow 3.3s linear infinite;
+  }
+  @keyframes borderGlow {
+    from { stroke-dashoffset:16; }
+    to { stroke-dashoffset:0; }
+  }
+
+  /* Text styling */
+  .box text{font-size:13px;fill:var(--black)}
+
+  /* Arrow animation */
+  .arrow{
+    stroke:var(--black);
+    stroke-width:1.4;
+    fill:none;
+    marker-end:url(#arrowhead);
+    stroke-dasharray:6 6;
+    animation:dash 2s linear infinite;
+  }
+  @keyframes dash{from{stroke-dashoffset:12}to{stroke-dashoffset:0}}
+
+  /* Box hover pop effect */
+  .box rect{transform-origin:center;transition:0.25s ease}
+  .box:hover rect{transform:scale(1.03)}
+
+  .legend{font-size:12px;color:#444;margin-top:8px}
+  .note{font-size:13px;color:#222;margin-top:10px}
+
+  /* Responsive tweaks */
+  @media (max-width:800px){
+    svg{height:640px}
+    .box text{font-size:12px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Ultra-Detailed Animated System Architecture Diagrams — Portfolio Edition 🚀</h1>
+  <p class="note">Each diagram is a self-contained, recruiter-friendly architecture you can paste under the "System Architecture" heading of each project's detail page. Subtle animations are enabled for arrows, box borders, and outer outlines to give a modern polished feel (can be disabled for exports).</p>
+
+  <!-- DIAGRAM 1: Customer Churn -->
+  <div class="diagram" id="d1">
+    <div class="title">1. Customer Churn Decision Intelligence System — FULL PIPELINE</div>
+    <svg viewBox="0 0 1600 620" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#111"/>
+        </marker>
+      </defs>
+      <rect x="6" y="6" width="1588" height="608" class="group-rect" rx="8"/>
+
+      <g class="box" transform="translate(30,40)">
+        <rect width="300" height="140" rx="8" />
+        <text x="18" y="30">📥 Data Collection</text>
+        <text x="18" y="54" font-size="12">• Web/App Events (SDKs)</text>
+        <text x="18" y="72" font-size="12">• Transaction Logs</text>
+        <text x="18" y="90" font-size="12">• CRM, Support Tickets, Surveys</text>
+        <text x="18" y="108" font-size="12">• Scheduled Batch Exports</text>
+      </g>
+
+      <g class="box" transform="translate(360,40)">
+        <rect width="320" height="160" rx="8" />
+        <text x="18" y="30">🧰 Ingestion & Streaming</text>
+        <text x="18" y="54" font-size="12">• Kafka / Kinesis for event streams</text>
+        <text x="18" y="72" font-size="12">• CDC (Debezium) for DB changes</text>
+        <text x="18" y="90" font-size="12">• Batch landing on cloud storage</text>
+        <text x="18" y="108" font-size="12">• Schema registry + validations</text>
+      </g>
+
+      <g class="box" transform="translate(720,40)">
+        <rect width="360" height="200" rx="8" />
+        <text x="18" y="30">🧹 Data Preprocessing & Cleaning</text>
+        <text x="18" y="54" font-size="12">• De-duplication, imputation</text>
+        <text x="18" y="72" font-size="12">• Outlier handling & smoothing</text>
+        <text x="18" y="90" font-size="12">• Feature windowing & sessionization</text>
+        <text x="18" y="108" font-size="12">• Normalization, categorical encoding</text>
+        <text x="18" y="126" font-size="12">• Data lineage & audit logs</text>
+      </g>
+
+      <g class="box" transform="translate(1120,40)">
+        <rect width="420" height="200" rx="8" />
+        <text x="18" y="30">🧬 Feature Engineering & Feature Store</text>
+        <text x="18" y="54" font-size="12">• Behavioral metrics: RFM, frequency</text>
+        <text x="18" y="72" font-size="12">• Temporal features: rolling means</text>
+        <text x="18" y="90" font-size="12">• Derived features: product affinity</text>
+        <text x="18" y="108" font-size="12">• Feature Store (online + offline)</text>
+        <text x="18" y="126" font-size="12">• Versioned feature sets for reproducibility</text>
+      </g>
+
+      <g class="box" transform="translate(30,220)">
+        <rect width="520" height="220" rx="8" />
+        <text x="18" y="38">🤖 Model Training & Validation</text>
+        <text x="18" y="62" font-size="12">• Training (XGBoost / CatBoost / LightGBM)</text>
+        <text x="18" y="82" font-size="12">• Hyperparameter tuning (Optuna)</text>
+        <text x="18" y="102" font-size="12">• Cross-validation & backtesting</text>
+        <text x="18" y="122" font-size="12">• Explainability (SHAP) artifact generation</text>
+        <text x="18" y="142" font-size="12">• Performance & fairness checks</text>
+      </g>
+
+      <g class="box" transform="translate(580,220)">
+        <rect width="420" height="220" rx="8" />
+        <text x="18" y="38">📦 Model Registry & CI/CD</text>
+        <text x="18" y="62" font-size="12">• MLflow tracking + model registry</text>
+        <text x="18" y="82" font-size="12">• Automated model packaging (Docker)</text>
+        <text x="18" y="102" font-size="12">• Canary releases & blue/green deploy</text>
+        <text x="18" y="122" font-size="12">• Unit & integration tests for models</text>
+        <text x="18" y="142" font-size="12">• Artifact storage (S3 / GCS)</text>
+      </g>
+
+      <g class="box" transform="translate(1120,220)">
+        <rect width="420" height="220" rx="8" />
+        <text x="18" y="38">⚡ Deployment & Serving</text>
+        <text x="18" y="62" font-size="12">• FastAPI + gRPC microservices</text>
+        <text x="18" y="82" font-size="12">• Autoscaling (Kubernetes / HPA)</text>
+        <text x="18" y="102" font-size="12">• Low-latency cache (Redis / Memcached)</text>
+        <text x="18" y="122" font-size="12">• Batch scoring pipelines</text>
+        <text x="18" y="142" font-size="12">• Edge/On-prem adapters if needed</text>
+      </g>
+
+      <g class="box" transform="translate(30,460)">
+        <rect width="520" height="120" rx="8" />
+        <text x="18" y="60">📊 Monitoring, Observability & Feedback</text>
+        <text x="18" y="84" font-size="12">• Prometheus + Grafana metrics</text>
+        <text x="18" y="102" font-size="12">• Drift detection & alerting</text>
+      </g>
+
+      <g class="box" transform="translate(580,460)">
+        <rect width="960" height="120" rx="8" />
+        <text x="18" y="40">🏁 Business Applications & Feedback Loop</text>
+        <text x="18" y="64" font-size="12">• CRM triggers (email, push)</text>
+        <text x="18" y="82" font-size="12">• A/B tested interventions</text>
+        <text x="18" y="100" font-size="12">• Human-in-the-loop labeling & feedback</text>
+      </g>
+
+      <!-- Arrows (flow) -->
+      <path class="arrow" d="M330 110 L360 110" />
+      <path class="arrow" d="M680 130 L720 130" />
+      <path class="arrow" d="M1080 160 L1120 160" />
+      <path class="arrow" d="M300 320 L360 320" />
+      <path class="arrow" d="M1000 320 L1120 320" />
+      <path class="arrow" d="M300 520 L360 520" />
+
+    </svg>
+    <div class="legend">Tip: Use this architecture under the "System Architecture" heading on the project page. Want an SVG export (no animation) for embedding? Tell me which diagram(s).</div>
+  </div>
+
+  <!-- DIAGRAM 2: Social Media Sentiment -->
+  <div class="diagram" id="d2">
+    <div class="title">2. Large-Scale Social Media Sentiment Intelligence Platform</div>
+    <svg viewBox="0 0 1600 720" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#111"/>
+        </marker>
+      </defs>
+      <rect x="6" y="6" width="1588" height="708" class="group-rect" rx="8"/>
+
+      <g class="box" transform="translate(30,40)">
+        <rect width="300" height="120" rx="8" />
+        <text x="18" y="30">🌐 Social Media Firehose</text>
+        <text x="18" y="54" font-size="12">• APIs: Twitter, Reddit, Instagram</text>
+        <text x="18" y="74" font-size="12">• Webhooks & Scrapers</text>
+        <text x="18" y="94" font-size="12">• Rate-limit & sampling policies</text>
+      </g>
+
+      <g class="box" transform="translate(360,40)">
+        <rect width="320" height="140" rx="8" />
+        <text x="18" y="30">🔁 Ingestion Queue</text>
+        <text x="18" y="54" font-size="12">• Kafka with partitioning</text>
+        <text x="18" y="74" font-size="12">• Schema validation & dedupe</text>
+        <text x="18" y="94" font-size="12">• Backpressure handling</text>
+      </g>
+
+      <g class="box" transform="translate(720,40)">
+        <rect width="360" height="200" rx="8" />
+        <text x="18" y="30">⚡ Stream Processing (Spark/Flink)</text>
+        <text x="18" y="54" font-size="12">• Tokenization & normalization</text>
+        <text x="18" y="72" font-size="12">• Language detection & routing</text>
+        <text x="18" y="90" font-size="12">• Real-time feature extraction</text>
+        <text x="18" y="108" font-size="12">• Windowed aggregations</text>
+      </g>
+
+      <g class="box" transform="translate(1120,40)">
+        <rect width="420" height="200" rx="8" />
+        <text x="18" y="30">🧠 NLP Inference Cluster</text>
+        <text x="18" y="54" font-size="12">• BERT / mBERT fine-tuned models</text>
+        <text x="18" y="72" font-size="12">• Batch & streaming serving</text>
+        <text x="18" y="90" font-size="12">• GPU-backed pods (autoscaling)</text>
+        <text x="18" y="108" font-size="12">• Multi-lingual pipelines</text>
+      </g>
+
+      <g class="box" transform="translate(30,240)">
+        <rect width="520" height="220" rx="8" />
+        <text x="18" y="38">📚 Topic Modeling & Enrichment</text>
+        <text x="18" y="62" font-size="12">• LDA / NMF / Embedding clustering</text>
+        <text x="18" y="82" font-size="12">• Entity extraction & normalization</text>
+        <text x="18" y="102" font-size="12">• Sentiment scoring & confidence</text>
+        <text x="18" y="122" font-size="12">• Noise filtering & moderation</text>
+      </g>
+
+      <g class="box" transform="translate(580,240)">
+        <rect width="420" height="200" rx="8" />
+        <text x="18" y="38">📊 Real-Time Analytics & Storage</text>
+        <text x="18" y="62" font-size="12">• Real-time metrics store (Redis / Druid)</text>
+        <text x="18" y="82" font-size="12">• Long-term storage (Parquet / S3)</text>
+        <text x="18" y="102" font-size="12">• Alerts for spikes & anomalies</text>
+      </g>
+
+      <g class="box" transform="translate(1120,280)">
+        <rect width="420" height="180" rx="8" />
+        <text x="18" y="42">🚨 Autoscaling Microservices</text>
+        <text x="18" y="66" font-size="12">• Kubernetes with HPA / VPA</text>
+        <text x="18" y="86" font-size="12">• Observability (Prom/Grafana)</text>
+        <text x="18" y="106" font-size="12">• Circuit-breakers & retries</text>
+      </g>
+
+      <g class="box" transform="translate(30,500)">
+        <rect width="1510" height="160" rx="8" />
+        <text x="18" y="36">📣 Business Dashboards & Action Layer</text>
+        <text x="18" y="60" font-size="12">• Grafana / PowerBI dashboards</text>
+        <text x="18" y="80" font-size="12">• Alerting for PR/Brand teams</text>
+        <text x="18" y="100" font-size="12">• APIs for downstream systems</text>
+      </g>
+
+      <!-- arrows -->
+      <path class="arrow" d="M330 100 L360 100" />
+      <path class="arrow" d="M680 130 L720 130" />
+      <path class="arrow" d="M1080 160 L1120 160" />
+      <path class="arrow" d="M300 320 L360 320" />
+      <path class="arrow" d="M1000 360 L1120 360" />
+      <path class="arrow" d="M300 520 L360 520" />
+    </svg>
+    <div class="legend">Designed for global-scale streaming and multilingual inference; includes autoscaling and real-time dashboards to impress recruiters.</div>
+  </div>
+
+  <!-- DIAGRAM 3: Brain Tumor Classification -->
+  <div class="diagram" id="d3">
+    <div class="title">3. Deep Learning Brain Tumor Classification</div>
+    <svg viewBox="0 0 1400 640" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <marker id="arrow3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#111"/>
+        </marker>
+      </defs>
+      <rect x="6" y="6" width="1388" height="628" class="group-rect" rx="8"/>... (file truncated for brevity)
+  <!-- DIAGRAM 4: Financial Fraud Detection -->
+<div class="diagram" id="d4">
+  <div class="title">4. Financial Fraud Detection Engine</div>
+  <svg viewBox="0 0 1400 620" preserveAspectRatio="xMidYMid meet">
+    <defs>
+      <marker id="arrow4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#111"/>
+      </marker>
+    </defs>
+    <rect x="6" y="6" width="1388" height="608" class="group-rect" rx="8"/>
+
+    <g class="box" transform="translate(30,40)">
+      <rect width="300" height="120" rx="8" />
+      <text x="18" y="30">💳 Transaction Sources</text>
+      <text x="18" y="54" font-size="12">• POS, Online Payments, APIs</text>
+      <text x="18" y="74" font-size="12">• Third-party feeds</text>
+    </g>
+
+    <g class="box" transform="translate(360,40)">
+      <rect width="320" height="140" rx="8" />
+      <text x="18" y="30">🔁 Stream Ingestion</text>
+      <text x="18" y="54" font-size="12">• Kafka for high-throughput</text>
+      <text x="18" y="74" font-size="12">• Enrichment (geolocation, device)</text>
+      <text x="18" y="94" font-size="12">• Real-time feature extraction</text>
+    </g>
+
+    <g class="box" transform="translate(720,40)">
+      <rect width="320" height="160" rx="8" />
+      <text x="18" y="30">🧮 Detection Models</text>
+      <text x="18" y="54" font-size="12">• Autoencoder anomaly scoring</text>
+      <text x="18" y="74" font-size="12">• Isolation Forest & ensemble</text>
+      <text x="18" y="94" font-size="12">• Rule-based triage fallback</text>
+    </g>
+
+    <g class="box" transform="translate(30,220)">
+      <rect width="520" height="160" rx="8" />
+      <text x="18" y="40">⚡ Real-Time Scoring & Actions</text>
+      <text x="18" y="64" font-size="12">• <20ms latency edge scoring</text>
+      <text x="18" y="84" font-size="12">• Block / flag / hold actions</text>
+      <text x="18" y="104" font-size="12">• Notification to fraud ops</text>
+    </g>
+
+    <g class="box" transform="translate(580,220)">
+      <rect width="480" height="160" rx="8" />
+      <text x="18" y="40">🧾 Incident Management & Ops</text>
+      <text x="18" y="64" font-size="12">• Case workflows & investigator UI</text>
+      <text x="18" y="84" font-size="12">• Feedback loop to label confirmed fraud</text>
+      <text x="18" y="104" font-size="12">• Model retraining with labeled cases</text>
+    </g>
+
+    <g class="box" transform="translate(30,420)">
+      <rect width="1030" height="160" rx="8" />
+      <text x="18" y="48">🔎 Monitoring & Compliance</text>
+      <text x="18" y="72" font-size="12">• Explainability for flagged transactions</text>
+      <text x="18" y="92" font-size="12">• Audit logs & regulatory reporting</text>
+    </g>
+
+    <!-- arrows -->
+    <path class="arrow" d="M330 100 L360 100" />
+    <path class="arrow" d="M680 130 L720 130" />
+    <path class="arrow" d="M300 300 L360 300" />
+    <path class="arrow" d="M560 300 L580 300" />
+  </svg>
+  <div class="legend">Engine built for finance-grade latency, accuracy, and auditability. Great to showcase for fintech roles.</div>
+</div>
+<!-- DIAGRAM 5: YOLOv8 Vision -->
+<div class="diagram" id="d5">
+  <div class="title">5. YOLOv8 Real-Time Vision Inference Engine</div>
+  <svg viewBox="0 0 1400 640" preserveAspectRatio="xMidYMid meet">
+    <defs>
+      <marker id="arrow5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#111"/>
+      </marker>
+    </defs>
+    <rect x="6" y="6" width="1388" height="628" class="group-rect" rx="8"/>
+
+    <g class="box" transform="translate(30,40)">
+      <rect width="300" height="120" rx="8" />
+      <text x="18" y="30">📷 Video Sources</text>
+      <text x="18" y="54" font-size="12">• RTSP / WebRTC / File input</text>
+      <text x="18" y="74" font-size="12">• Multi-camera ingest</text>
+    </g>
+
+    <g class="box" transform="translate(360,40)">
+      <rect width="320" height="140" rx="8" />
+      <text x="18" y="30">🔧 Preprocessing & Decoding</text>
+      <text x="18" y="54" font-size="12">• Frame extraction & resizing</text>
+      <text x="18" y="74" font-size="12">• Color-space conversion</text>
+      <text x="18" y="94" font-size="12">• Frame batching</text>
+    </g>
+
+    <g class="box" transform="translate(720,40)">
+      <rect width="360" height="200" rx="8" />
+      <text x="18" y="30">🚀 YOLOv8 Inference</text>
+      <text x="18" y="54" font-size="12">• TensorRT optimized models</text>
+      <text x="18" y="74" font-size="12">• Batch & streaming inference</text>
+      <text x="18" y="94" font-size="12">• NMS, tracking, re-id</text>
+      <text x="18" y="114" font-size="12">• Hardware acceleration (CUDA)</text>
+    </g>
+
+    <g class="box" transform="translate(1120,40)">
+      <rect width="240" height="160" rx="8" />
+      <text x="18" y="30">🖧 Edge / Cloud Deployment</text>
+      <text x="18" y="54" font-size="12">• Jetson / Edge TPU support</text>
+      <text x="18" y="74" font-size="12">• Cloud GPUs for scale</text>
+    </g>
+
+    <g class="box" transform="translate(30,220)">
+      <rect width="1330" height="220" rx="8" />
+      <text x="18" y="52">📈 Outputs & Integrations</text>
+      <text x="18" y="76" font-size="12">• Visual overlays & heatmaps</text>
+      <text x="18" y="96" font-size="12">• Alarms / Webhooks</text>
+      <text x="18" y="116" font-size="12">• Analytics & event store</text>
+    </g>
+
+    <!-- arrows -->
+    <path class="arrow" d="M330 100 L360 100" />
+    <path class="arrow" d="M680 130 L720 130" />
+    <path class="arrow" d="M1060 140 L1120 140" />
+  </svg>
+  <div class="legend">High-FPS vision pipeline with edge-first design—perfect for robotics, surveillance, and real-time analytics showcases.</div>
+</div>
+<!-- DIAGRAM 6: Hybrid Recommendation -->
+<div class="diagram" id="d6">
+  <div class="title">6. Hybrid Recommendation Engine</div>
+  <svg viewBox="0 0 1400 640" preserveAspectRatio="xMidYMid meet">
+    <defs>
+      <marker id="arrow6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#111"/>
+      </marker>
+    </defs>
+    <rect x="6" y="6" width="1388" height="628" class="group-rect" rx="8"/>
+
+    <g class="box" transform="translate(30,40)">
+      <rect width="300" height="120" rx="8" />
+      <text x="18" y="30">👤 User Events & Catalog</text>
+      <text x="18" y="54" font-size="12">• Clicks, views, purchases, ratings</text>
+      <text x="18" y="74" font-size="12">• Product / Content catalog</text>
+    </g>
+
+    <g class="box" transform="translate(360,40)">
+      <rect width="320" height="140" rx="8" />
+      <text x="18" y="30">🔢 Embedding Service</text>
+      <text x="18" y="54" font-size="12">• User & item embeddings (NCF)</text>
+      <text x="18" y="74" font-size="12">• Feature store sync</text>
+    </g>
+
+    <g class="box" transform="translate(720,40)">
+      <rect width="360" height="160" rx="8" />
+      <text x="18" y="30">🔎 FAISS Vector Search</text>
+      <text x="18" y="54" font-size="12">• ANN search (HNSW / IVF)</text>
+      <text x="18" y="74" font-size="12">• Millisecond-level retrieval</text>
+      <text x="18" y="94" font-size="12">• Re-ranking & diversity</text>
+    </g>
+
+    <g class="box" transform="translate(1120,40)">
+      <rect width="240" height="120" rx="8" />
+      <text x="18" y="30">⚡ Serving API</text>
+      <text x="18" y="54" font-size="12">• Personalization endpoint</text>
+      <text x="18" y="74" font-size="12">• Cache for hot users</text>
+    </g>
+
+    <g class="box" transform="translate(30,220)">
+      <rect width="1330" height="260" rx="8" />
+      <text x="18" y="52">🔁 Offline Training & Continuous Learning</text>
+      <text x="18" y="76" font-size="12">• Batch re-training with new signals</text>
+      <text x="18" y="96" font-size="12">• Cold-start solutions (content-based)</text>
+      <text x="18" y="116" font-size="12">• A/B testing & online metrics</text>
+    </g>
+
+    <!-- arrows -->
+    <path class="arrow" d="M330 100 L360 100" />
+    <path class="arrow" d="M680 120 L720 120" />
+    <path class="arrow" d="M1060 100 L1120 100" />
+  </svg>
+  <div class="legend">Shows both retrieval & ranking components—great for product/system-focused roles.</div>
+</div>
+<!-- DIAGRAM 7: Big Data Forecasting -->
+<div class="diagram" id="d7">
+  <div class="title">7. Big Data Demand Forecasting Pipeline</div>
+  <svg viewBox="0 0 1400 700" preserveAspectRatio="xMidYMid meet">
+    <defs>
+      <marker id="arrow7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#111"/>
+      </marker>
+    </defs>
+    <rect x="6" y="6" width="1388" height="688" class="group-rect" rx="8"/>
+
+    <g class="box" transform="translate(30,40)">
+      <rect width="320" height="140" rx="8" />
+      <text x="18" y="30">🏷️ Raw Data Sources</text>
+      <text x="18" y="54" font-size="12">• POS, Inventory, Promotions</text>
+      <text x="18" y="74" font-size="12">• Weather & Events data</text>
+      <text x="18" y="94" font-size="12">• Third-party forecasts</text>
+    </g>
+
+    <g class="box" transform="translate(380,40)">
+      <rect width="320" height="160" rx="8" />
+      <text x="18" y="30">⚙️ Distributed ETL (PySpark)</text>
+      <text x="18" y="54" font-size="12">• Distributed feature calculation</text>
+      <text x="18" y="74" font-size="12">• Join & aggregation across SKUs</text>
+      <text x="18" y="94" font-size="12">• Data partitioning & optimization</text>
+    </g>
+
+    <g class="box" transform="translate(730,40)">
+      <rect width="320" height="160" rx="8" />
+      <text x="18" y="30">🧠 Forecast Modeling</text>
+      <text x="18" y="54" font-size="12">• Prophet for seasonality</text>
+      <text x="18" y="74" font-size="12">• XGBoost for residual corrections</text>
+      <text x="18" y="94" font-size="12">• Hierarchical modeling (brand→SKU)</text>
+    </g>
+
+    <g class="box" transform="translate(30,220)">
+      <rect width="380" height="180" rx="8" />
+      <text x="18" y="42">📦 Model Serving & Reporting</text>
+      <text x="18" y="66" font-size="12">• REST batch & online predictions</text>
+      <text x="18" y="86" font-size="12">• Automated reporting & dashboards</text>
+    </g>
+
+    <g class="box" transform="translate(430,220)">
+      <rect width="980" height="320" rx="8" />
+      <text x="18" y="42">📊 Business Integrations</text>
+      <text x="18" y="66" font-size="12">• Inventory planners & replenishment</text>
+      <text x="18" y="86" font-size="12">• Promotion impact simulations</text>
+      <text x="18" y="106" font-size="12">• Anomaly detection on sales spikes</text>
+    </g>
+
+    <!-- arrows -->
+    <path class="arrow" d="M350 110 L380 110" />
+    <path class="arrow" d="M710 120 L730 120" />
+    <path class="arrow" d="M350 300 L430 300" />
+  </svg>
+  <div class="legend">Enterprise forecasting pipeline with hierarchical models and distributed ETL—ideal for supply chain roles.</div>
+</div>
+<!-- DIAGRAM 8: Resume Parser -->
+<div class="diagram" id="d8">
+  <div class="title">8. Intelligent Resume Parser & Skill Extraction</div>
+  <svg viewBox="0 0 1400 640" preserveAspectRatio="xMidYMid meet">
+    <defs>
+      <marker id="arrow8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#111"/>
+      </marker>
+    </defs>
+    <rect x="6" y="6" width="1388" height="628" class="group-rect" rx="8"/>
+
+    <g class="box" transform="translate(30,40)">
+      <rect width="300" height="120" rx="8" />
+      <text x="18" y="30">📄 Resume Ingest</text>
+      <text x="18" y="54" font-size="12">• Multi-format: PDF, DOCX, TXT</text>
+      <text x="18" y="74" font-size="12">• OCR for image-based resumes</text>
+    </g>
+
+    <g class="box" transform="translate(360,40)">
+      <rect width="320" height="140" rx="8" />
+      <text x="18" y="30">🧹 Parsing & Normalization</text>
+      <text x="18" y="54" font-size="12">• Section detection (education, exp)</text>
+      <text x="18" y="74" font-size="12">• Date normalization & role mapping</text>
+    </g>
+
+    <g class="box" transform="translate(720,40)">
+      <rect width="360" height="160" rx="8" />
+      <text x="18" y="30">🧠 NER & Semantic Extraction</text>
+      <text x="18" y="54" font-size="12">• BERT / spaCy NER pipelines</text>
+      <text x="18" y="74" font-size="12">• Skill canonicalization</text>
+      <text x="18" y="94" font-size="12">• Semantic similarity (S-BERT)</text>
+    </g>
+
+    <g class="box" transform="translate(30,220)">
+      <rect width="680" height="180" rx="8" />
+      <text x="18" y="42">🎯 Candidate Ranking & Scoring</text>
+      <text x="18" y="66" font-size="12">• Custom ranking algorithm</text>
+      <text x="18" y="86" font-size="12">• Skill match score & fit metrics</text>
+      <text x="18" y="106" font-size="12">• Hiring funnel integration</text>
+    </g>
+
+    <g class="box" transform="translate(730,220)">
+      <rect width="688" height="180" rx="8" />
+      <text x="18" y="42">📡 APIs & Dashboard</text>
+      <text x="18" y="66" font-size="12">• Search & filter APIs</text>
+      <text x="18" y="86" font-size="12">• Recruiter dashboard & exports</text>
+      <text x="18" y="106" font-size="12">• Bulk processing & analytics</text>
+    </g>
+
+    <!-- arrows -->
+    <path class="arrow" d="M330 100 L360 100" />
+    <path class="arrow" d="M680 120 L720 120" />
+    <path class="arrow" d="M710 300 L730 300" />
+  </svg>
+  <div class="legend">Clear pipeline from ingest to ranking—great for product and HR-tech positions.</div>
+</div>
+<!-- DIAGRAM 9: Cloud Data Warehouse -->
+<div class="diagram" id="d9">
+  <div class="title">9. Cloud-Native Data Warehouse & ETL System</div>
+  <svg viewBox="0 0 1400 640" preserveAspectRatio="xMidYMid meet">
+    <defs>
+      <marker id="arrow9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#111"/>
+      </marker>
+    </defs>
+    <rect x="6" y="6" width="1388" height="628" class="group-rect" rx="8"/>
+
+    <g class="box" transform="translate(30,40)">
+      <rect width="300" height="120" rx="8" />
+      <text x="18" y="30">🏛 Legacy Data Sources</text>
+      <text x="18" y="54" font-size="12">• OLTP DBs, CSVs, APIs</text>
+      <text x="18" y="74" font-size="12">• External partner feeds</text>
+    </g>
+
+    <g class="box" transform="translate(360,40)">
+      <rect width="320" height="160" rx="8" />
+      <text x="18" y="30">🛠 ETL Orchestration (Airflow)</text>
+      <text x="18" y="54" font-size="12">• Scheduled ingestion & retries</text>
+      <text x="18" y="74" font-size="12">• Data quality checks (DQ)</text>
+      <text x="18" y="94" font-size="12">• Lineage & observability</text>
+    </g>
+
+    <g class="box" transform="translate(730,40)">
+      <rect width="320" height="160" rx="8" />
+      <text x="18" y="30">🧩 dbt Transformations</text>
+      <text x="18" y="54" font-size="12">• Modular SQL models</text>
+      <text x="18" y="74" font-size="12">• Tests & docs generation</text>
+      <text x="18" y="94" font-size="12">• Versioned analytics models</text>
+    </g>
+
+    <g class="box" transform="translate(30,220)">
+      <rect width="980" height="180" rx="8" />
+      <text x="18" y="42">☁️ Warehouse (Snowflake / BigQuery)</text>
+      <text x="18" y="66" font-size="12">• Partitioning & compute scaling</text>
+      <text x="18" y="86" font-size="12">• Access control & RBAC</text>
+      <text x="18" y="106" font-size="12">• Materialized views for speed</text>
+    </g>
+
+    <g class="box" transform="translate(1020,220)">
+      <rect width="300" height="180" rx="8" />
+      <text x="18" y="42">📊 BI & Self-Service</text>
+      <text x="18" y="66" font-size="12">• Power BI / Looker / Superset</text>
+      <text x="18" y="86" font-size="12">• Data products & marts</text>
+    </g>
+
+    <!-- arrows -->
+    <path class="arrow" d="M330 100 L360 100" />
+    <path class="arrow" d="M680 120 L720 120" />
+    <path class="arrow" d="M820 300 L980 300" />
+  </svg>
+  <div class="legend">Shows reliable, production-grade data platform components for analytics-focused roles.</div>
+</div>
+<!-- DIAGRAM 10: Quantum Blood Group Classification -->
+<div class="diagram" id="d10">
+  <div class="title">10. Blood Group Classification Using Quantum Deep Learning</div>
+  <svg viewBox="0 0 1400 640" preserveAspectRatio="xMidYMid meet">
+    <defs>
+      <marker id="arrow10" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#111"/>
+      </marker>
+    </defs>
+    <rect x="6" y="6" width="1388" height="628" class="group-rect" rx="8"/>
+
+    <g class="box" transform="translate(30,40)">
+      <rect width="320" height="140" rx="8" />
+      <text x="18" y="30">🔬 Biomedical Image Capture</text>
+      <text x="18" y="54" font-size="12">• Microscopy / Imaging devices</text>
+      <text x="18" y="74" font-size="12">• Standardized capture pipeline</text>
+    </g>
+
+    <g class="box" transform="translate(380,40)">
+      <rect width="320" height="160" rx="8" />
+      <text x="18" y="30">🧹 Preprocessing & Classical CNN</text>
+      <text x="18" y="54" font-size="12">• Resize, denoise, stain normalization</text>
+      <text x="18" y="74" font-size="12">• CNN feature extractor (PyTorch)</text>
+    </g>
+
+    <g class="box" transform="translate(730,40)">
+      <rect width="320" height="200" rx="8" />
+      <text x="18" y="30">⚛️ Variational Quantum Circuit (VQC)</text>
+      <text x="18" y="54" font-size="12">• PennyLane / Qiskit simulated circuits</text>
+      <text x="18" y="74" font-size="12">• Quantum feature mapping</text>
+      <text x="18" y="94" font-size="12">• Hybrid classical–quantum training loop</text>
+    </g>
+
+    <g class="box" transform="translate(30,220)">
+      <rect width="680" height="180" rx="8" />
+      <text x="18" y="42">🎯 Classifier & Evaluation</text>
+      <text x="18" y="66" font-size="12">• Accuracy & stability metrics</text>
+      <text x="18" y="86" font-size="12">• Ablation studies vs classical baseline</text>
+    </g>
+
+    <g class="box" transform="translate(730,220)">
+      <rect width="688" height="180" rx="8" />
+      <text x="18" y="42">📦 Deployment (Simulation & Hybrid)</text>
+      <text x="18" y="66" font-size="12">• Simulated quantum execution</text>
+      <text x="18" y="86" font-size="12">• Dockerized hybrid pipelines</text>
+      <text x="18" y="106" font-size="12">• Research experimentation dashboard</text>
+    </g>
+
+    <!-- arrows -->
+    <path class="arrow" d="M350 110 L380 110" />
+    <path class="arrow" d="M700 140 L730 140" />
+    <path class="arrow" d="M350 300 L730 300" />
+  </svg>
+  <div class="legend">Shows cutting-edge hybrid quantum workflow—unique and attention-grabbing for research and R&D roles.</div>
+</div>

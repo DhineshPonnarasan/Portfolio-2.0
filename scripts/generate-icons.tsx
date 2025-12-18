@@ -236,7 +236,7 @@ Object.entries(icons).forEach(([filename, Icon]) => {
     try {
         const color = iconColors[filename] || '#FFFFFF'; // Default to white if not found
         // Render icon to static markup
-        const svgString = renderToStaticMarkup(React.createElement(Icon, { size: 48, color: color }));
+        const svgString = renderToStaticMarkup(React.createElement(Icon, { size: 48, color: color } as any));
         
         // Ensure xmlns is present (react-icons usually adds it, but just in case)
         // Also we might want to ensure it has width/height or viewBox

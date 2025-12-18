@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#212121" rx="10" />
+  
+  <!-- Grid -->
+  <rect x="100" y="100" width="1720" height="880" fill="none" stroke="#444" stroke-width="2" rx="10" />
+  <line x1="100" y1="500" x2="1820" y2="500" stroke="#444" stroke-width="2" />
+  
+  <!-- IP Cameras/WebRTC -->
+  <rect x="150" y="150" width="200" height="100" fill="#333" rx="10" />
+  <text x="160" y="190" font-size="24" font-family="Arial" fill="#66CCFF">IP Cameras</text>
+  <text x="160" y="220" font-size="24" font-family="Arial" fill="#66CCFF">WebRTC</text>
+  
+  <!-- Preprocessor -->
+  <rect x="450" y="150" width="200" height="100" fill="#333" rx="10" />
+  <text x="460" y="190" font-size="24" font-family="Arial" fill="#66CCFF">Preprocessor</text>
+  
+  <!-- YOLOv8 Inference Nodes -->
+  <rect x="750" y="150" width="200" height="100" fill="#333" rx="10" />
+  <text x="760" y="190" font-size="24" font-family="Arial" fill="#66CCFF">YOLOv8 Inference</text>
+  <text x="760" y="220" font-size="24" font-family="Arial" fill="#66CCFF">Nodes</text>
+  
+  <!-- TensorRT Optimizer -->
+  <rect x="1050" y="150" width="200" height="100" fill="#333" rx="10" />
+  <text x="1060" y="190" font-size="24" font-family="Arial" fill="#66CCFF">TensorRT</text>
+  <text x="1060" y="220" font-size="24" font-family="Arial" fill="#66CCFF">Optimizer</text>
+  
+  <!-- Streaming Gateway -->
+  <rect x="1350" y="150" width="200" height="100" fill="#333" rx="10" />
+  <text x="1360" y="190" font-size="24" font-family="Arial" fill="#66CCFF">Streaming</text>
+  <text x="1360" y="220" font-size="24" font-family="Arial" fill="#66CCFF">Gateway</text>
+  
+  <!-- Monitoring Dashboard -->
+  <rect x="150" y="600" width="400" height="200" fill="#333" rx="10" />
+  <text x="160" y="640" font-size="24" font-family="Arial" fill="#66CCFF">Monitoring</text>
+  <text x="160" y="670" font-size="24" font-family="Arial" fill="#66CCFF">Dashboard</text>
+  
+  <!-- Arrows -->
+  <line x1="350" y1="200" x2="450" y2="200" stroke="#66CCFF" stroke-width="4" marker-end="url(#arrowhead)" />
+  <line x1="650" y1="200" x2="750" y2="200" stroke="#66CCFF" stroke-width="4" marker-end="url(#arrowhead)" />
+  <line x1="950" y1="200" x2="1050" y2="200" stroke="#66CCFF" stroke-width="4" marker-end="url(#arrowhead)" />
+  <line x1="1250" y1="200" x2="1350" y2="200" stroke="#66CCFF" stroke-width="4" marker-end="url(#arrowhead)" />
+  <line x1="1550" y1="200" x2="150" y2="600" stroke="#66CCFF" stroke-width="4" marker-end="url(#arrowhead)" />
+  
+  <!-- Arrowhead -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#66CCFF" />
+    </marker>
+  </defs>
+</svg>

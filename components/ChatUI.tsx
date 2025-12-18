@@ -1,6 +1,7 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+import type { WheelEvent } from 'react';
 import { Bot, User, Trash2, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import ChatInput from './ChatInput';
@@ -23,11 +24,12 @@ interface ChatUIProps {
 }
 
 const SUGGESTIONS = [
-    "Explain the architecture of a project",
     "Summarize my experience for a recruiter",
     "List technical skills",
-    "Show project details",
-    "Help me understand Dhinesh's ML experience"
+    "Explain architecture: customer-churn-intelligence",
+    "Explain architecture: hybrid-recommendation-engine",
+    "How does Box 3 inform Box 4 in the fraud engine?",
+    "Where could latency creep in between Box 4 and Box 5 of the YOLOv8 system?"
 ];
 
 const ChatUI = ({ messages, isLoading, onSend, onClear, onClose }: ChatUIProps) => {
@@ -38,12 +40,31 @@ const ChatUI = ({ messages, isLoading, onSend, onClear, onClose }: ChatUIProps) 
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
 
+    const handleWheel = useCallback((event: WheelEvent<HTMLDivElement>) => {
+        const container = scrollContainerRef.current;
+        if (!container) return;
+
+        const delta = event.deltaY;
+        const isAtTop = container.scrollTop <= 0;
+        const isAtBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 1;
+        const canScrollUp = delta < 0 && !isAtTop;
+        const canScrollDown = delta > 0 && !isAtBottom;
+
+        if (!canScrollDown && !canScrollUp) {
+            return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+        container.scrollTop += delta;
+    }, []);
+
     useEffect(() => {
         scrollToBottom();
     }, [messages.length, isLoading]);
 
     return (
-        <div className="flex flex-col h-full bg-zinc-950/95 backdrop-blur-sm text-zinc-200 overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
+        <div className="flex flex-col h-full min-h-0 bg-zinc-950/95 backdrop-blur-sm text-zinc-200 rounded-2xl border border-white/10 shadow-2xl">
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-white/10 bg-zinc-900/50 shrink-0">
                 <div className="flex items-center gap-3">
@@ -51,7 +72,7 @@ const ChatUI = ({ messages, isLoading, onSend, onClear, onClose }: ChatUIProps) 
                         <Bot size={20} />
                     </div>
                     <div>
-                        <h3 className="font-semibold text-white">Chitti AI</h3>
+                        <h3 className="font-semibold text-white">Chitti</h3>
                         <p className="text-xs text-zinc-500 flex items-center gap-1">
                             <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
                             Online
@@ -79,7 +100,9 @@ const ChatUI = ({ messages, isLoading, onSend, onClear, onClose }: ChatUIProps) 
             {/* Messages Area */}
             <div 
                 ref={scrollContainerRef}
-                className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar min-h-0"
+                className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar min-h-0 touch-auto"
+                style={{ touchAction: 'pan-y', overscrollBehavior: 'contain' }}
+                onWheel={handleWheel}
             >
                 <AnimatePresence initial={false}>
                     {messages.map((msg, index) => (
@@ -157,20 +180,21 @@ const ChatUI = ({ messages, isLoading, onSend, onClear, onClose }: ChatUIProps) 
                         transition={{ delay: 0.2 }}
                         className="mt-4"
                     >
-                        <p className="text-xs text-zinc-500 mb-3 px-1">Suggested questions:</p>
-                        <div className="flex flex-col md:flex-row flex-wrap gap-2">
-                            {SUGGESTIONS.map((suggestion, idx) => (
-                                <motion.button
-                                    key={idx}
-                                    initial={{ opacity: 0, y: 5 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.1 * idx }}
-                                    onClick={() => onSend(suggestion)}
-                                    className="text-left md:text-center px-4 py-2 rounded-md bg-zinc-800/50 border border-white/5 text-sm text-zinc-300 hover:bg-zinc-700 hover:text-white hover:border-white/20 hover:shadow-md transition-all duration-200"
-                                >
-                                    {suggestion}
-                                </motion.button>
-                            ))}
+                        <div className="max-h-40 overflow-y-auto pr-1">
+                            <div className="flex flex-col md:flex-row flex-wrap gap-2">
+                                {SUGGESTIONS.map((suggestion, idx) => (
+                                    <motion.button
+                                        key={suggestion}
+                                        initial={{ opacity: 0, y: 5 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.08 * idx }}
+                                        onClick={() => onSend(suggestion)}
+                                        className="text-left md:text-center px-4 py-2 rounded-md bg-zinc-800/50 border border-white/5 text-sm text-zinc-300 hover:bg-zinc-700 hover:text-white hover:border-white/20 hover:shadow-md transition-all duration-200"
+                                    >
+                                        {suggestion}
+                                    </motion.button>
+                                ))}
+                            </div>
                         </div>
                     </motion.div>
                 )}

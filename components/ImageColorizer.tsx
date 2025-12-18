@@ -150,11 +150,19 @@ const ImageColorizer: React.FC = () => {
             
             setProcessedUrl(canvas.toDataURL('image/png'));
         } catch (err) {
+            let message = 'Failed to process image. Please try again.';
+            if (err instanceof Error && err.message) {
+                message = err.message;
+            } else if (typeof err === 'string') {
+                message = err;
+            } else if (err && typeof err === 'object') {
+                message = JSON.stringify(err);
+            }
             setError({
-                message: 'Failed to process image. Please try again.',
+                message,
                 code: 'PROCESSING_FAILED',
             });
-            console.error(err);
+            console.error('Image processing error:', err);
         } finally {
             setIsProcessing(false);
         }

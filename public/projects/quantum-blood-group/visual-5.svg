@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#2b2b2b" rx="10" />
+  
+  <!-- Prediction Card -->
+  <rect x="100" y="100" width="400" height="200" fill="#3b3b3b" rx="10" />
+  <text x="120" y="140" font-size="24" font-family="Arial" fill="#fff">Blood Group Prediction</text>
+  <text x="120" y="180" font-size="18" font-family="Arial" fill="#ccc">Probabilities:</text>
+  <text x="120" y="210" font-size="18" font-family="Arial" fill="#fff">A+: 0.42</text>
+  <text x="120" y="240" font-size="18" font-family="Arial" fill="#fff">A-: 0.31</text>
+  <text x="120" y="270" font-size="18" font-family="Arial" fill="#fff">B+: 0.15</text>
+  <text x="120" y="300" font-size="18" font-family="Arial" fill="#fff">B-: 0.12</text>
+  
+  <!-- Quantum Confidence Badge -->
+  <circle cx="350" cy="250" r="20" fill="#7a288a" />
+  <text x="320" y="260" font-size="14" font-family="Arial" fill="#fff">QC: 0.85</text>
+  
+  <!-- Certainty Line -->
+  <path d="M 500 100 L 500 300" stroke="#7a288a" stroke-width="2" stroke-linecap="round" />
+  <path d="M 500 100 L 550 150" stroke="#7a288a" stroke-width="2" stroke-linecap="round" />
+  <path d="M 550 150 L 600 200" stroke="#7a288a" stroke-width="2" stroke-linecap="round" />
+  <path d="M 600 200 L 650 250" stroke="#7a288a" stroke-width="2" stroke-linecap="round" />
+  <path d="M 650 250 L 700 300" stroke="#7a288a" stroke-width="2" stroke-linecap="round" />
+  
+  <!-- Batch Info -->
+  <text x="700" y="320" font-size="18" font-family="Arial" fill="#ccc">Batch 1-5</text>
+  <text x="700" y="350" font-size="18" font-family="Arial" fill="#ccc">Certainty: 0.8</text>
+  
+  <!-- Neon Accents -->
+  <rect x="0" y="0" width="1920" height="10" fill="#7a288a" />
+  <rect x="0" y="1070" width="1920" height="10" fill="#7a288a" />
+  <rect x="0" y="0" width="10" height="1080" fill="#7a288a" />
+  <rect x="1910" y="0" width="10" height="1080" fill="#7a288a" />
+</svg>

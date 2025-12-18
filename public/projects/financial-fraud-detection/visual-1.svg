@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#1a1d23" rx="0" />
+  
+  <!-- Hero Section -->
+  <rect x="100" y="100" width="1720" height="800" fill="#2a2d34" rx="10" />
+  
+  <!-- Transaction Risk Grid -->
+  <g transform="translate(150, 150)">
+    <rect x="0" y="0" width="400" height="400" fill="none" stroke="#444" rx="5" />
+    <g transform="translate(10, 10)">
+      <rect x="0" y="0" width="50" height="50" fill="#ff9900" rx="5" />
+      <rect x="60" y="0" width="50" height="50" fill="#00ffff" rx="5" />
+      <rect x="0" y="60" width="50" height="50" fill="#ff9900" rx="5" />
+      <rect x="60" y="60" width="50" height="50" fill="#00ffff" rx="5" />
+    </g>
+  </g>
+  
+  <!-- Anomaly Pulse Indicator -->
+  <circle cx="950" cy="400" r="20" fill="#ff9900" />
+  <circle cx="950" cy="400" r="10" fill="#00ffff" />
+  
+  <!-- Time-Series Line -->
+  <path d="M 500 500 L 550 520 L 600 480 L 650 500 L 700 520 L 750 480" stroke="#00ffff" stroke-width="2" fill="none" />
+  
+  <!-- Header Text -->
+  <text x="100" y="50" font-size="36" font-family="Arial" fill="#fff">FraudShield Engine</text>
+  
+  <!-- Tagline Text -->
+  <text x="100" y="90" font-size="24" font-family="Arial" fill="#ccc">Real-time Transaction Risk Detection</text>
+  
+  <!-- Call-to-Action Button -->
+  <rect x="1500" y="900" width="200" height="50" fill="#00ffff" rx="5" />
+  <text x="1550" y="930" font-size="18" font-family="Arial" fill="#1a1d23">Get Started</text>
+</svg>

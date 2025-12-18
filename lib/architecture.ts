@@ -1,6 +1,7 @@
 
 import { Groq } from 'groq-sdk';
 import { PROJECTS } from '@/lib/data';
+import { ARCHITECTURE_DIAGRAMS } from '@/lib/architecture-diagrams';
 import { IProject } from '@/types';
 
 const groq = new Groq({
@@ -15,53 +16,40 @@ export const findProject = (query: string): IProject | undefined => {
     );
 };
 
-export const generateArchitecturePrompt = (project: IProject) => {
-    return `
-You are a Senior Software Architect with 15+ years of experience in distributed systems, AI/ML pipelines, and cloud infrastructure.
+export const generateArchitecturePrompt = (project: IProject, diagram: string) => {
+    const description = Array.isArray(project.description)
+        ? project.description.join(' ')
+        : project.description;
+    const techStackText = project.techStack?.length
+        ? project.techStack.join(', ')
+        : project.techAndTechniques?.slice(0, 5).join(', ') ?? 'N/A';
 
-Your task is to generate a Master's-level architecture explanation for the following project:
+    return `You are a senior software architect explaining this system in one confident voice.
+- Reference the ASCII diagram strictly by Box numbers (1 through 6) and arrows.
+- Describe how work flows from Box 1 → Box 6, highlighting why each step exists.
+- Use crisp Markdown paragraphs—no Mermaid, no alternate diagrams.
+- Stay under 220 words and avoid speculation.
 
-**Project Title:** ${project.title}
-**Description:** ${project.description}
-**Tech Stack:** ${project.techStack.join(', ')}
-**Key Features:** ${project.points ? project.points.join('; ') : 'N/A'}
+Project Title: ${project.title}
+Description: ${description}
+Tech Stack: ${techStackText}
 
-Please provide a comprehensive technical deep-dive covering:
+ASCII architecture (immutable reference):
+${diagram}
 
-1.  **High-Level System Architecture:** Explain the overall design pattern (e.g., Microservices, Event-Driven, Monolith, Serverless).
-2.  **Data Flow & Pipeline Stages:** Step-by-step breakdown of how data moves through the system.
-3.  **ML/DL Model Components (if applicable):** Detail the model architecture, training pipeline, inference optimization, and data preprocessing.
-4.  **Backend & Microservices:** Explain the API design, database schema choices, and service communication.
-5.  **Deployment & Infrastructure:** Describe the CI/CD pipeline, containerization (Docker/K8s), and cloud services used.
-
-**CRITICAL REQUIREMENT:**
-You MUST include a **Mermaid.js** architecture diagram that visually represents the system.
-Do NOT say "Not available". You are capable of generating text-based Mermaid code.
-The diagram is MANDATORY.
-
-Use the following EXACT format for the diagram:
-
-\`\`\`mermaid
-graph TD;
-    Client[Client Layer] -->|Request| API[API Gateway];
-    API -->|Load Balance| ServiceA[Service A];
-    ... (rest of the diagram)
-\`\`\`
-
-**Output Format:**
-- Start with a Mermaid diagram immediately if possible, or after a brief intro.
-- Return CLEAN Markdown.
-- Use clear headings (##).
-- Be professional, technical, and concise.
-- Do not use conversational filler.
-`;
+Write the explanation.`;
 };
 
 export async function generateArchitectureExplanation(project: IProject) {
-    const prompt = generateArchitecturePrompt(project);
+    const diagram = ARCHITECTURE_DIAGRAMS[project.id];
+
+    if (!diagram || !process.env.GROQ_API_KEY) {
+        return buildConceptualArchitectureExplanation(project);
+    }
+
+    const prompt = generateArchitecturePrompt(project, diagram);
 
     try {
-        let content = '';
         const chatCompletion = await groq.chat.completions.create({
             messages: [
                 { role: 'system', content: "You are an expert Software Architect." },
@@ -72,43 +60,27 @@ export async function generateArchitectureExplanation(project: IProject) {
             max_tokens: 2048,
         });
 
-        content = chatCompletion.choices[0]?.message?.content || "Failed to generate architecture explanation.";
-
-        // Check if Mermaid diagram is missing
-        if (!content.includes('```mermaid')) {
-            console.log(`Mermaid diagram missing for ${project.title}. Retrying diagram generation...`);
-            
-            const diagramPrompt = `
-Based on the following project description, generate a valid Mermaid.js architecture diagram.
-Project: ${project.title}
-Tech Stack: ${project.techStack.join(', ')}
-
-Output ONLY the mermaid code block.
-
-\`\`\`mermaid
-graph TD;
-...
-\`\`\`
-`;
-            const diagramCompletion = await groq.chat.completions.create({
-                messages: [
-                    { role: 'system', content: "You are an expert Software Architect." },
-                    { role: 'user', content: diagramPrompt }
-                ],
-                model: 'llama-3.3-70b-versatile',
-                temperature: 0.1,
-                max_tokens: 1024,
-            });
-
-            const diagram = diagramCompletion.choices[0]?.message?.content || '';
-            if (diagram.includes('```mermaid')) {
-                content = diagram + "\n\n" + content;
-            }
-        }
-
-        return content;
+        return chatCompletion.choices[0]?.message?.content || buildConceptualArchitectureExplanation(project);
     } catch (error) {
         console.error("Error generating architecture:", error);
-        return "An error occurred while generating the architecture explanation. Please try again later.";
+        return buildConceptualArchitectureExplanation(project);
     }
+}
+
+export function buildConceptualArchitectureExplanation(project?: IProject, requestedName?: string) {
+    const title = project?.title || requestedName || 'the requested system';
+    const description = Array.isArray(project?.description)
+        ? project?.description[0]
+        : project?.description || '';
+    const techList = project?.techAndTechniques || project?.techStack || project?.skills || [];
+    const highlightTech = techList.slice(0, 4).join(', ');
+
+    return `Architecture overview for ${title}:
+1. **Signals & Sources** — Reliable data ingestion collects telemetry, metrics, and external datasets and validates them for consistency.
+2. **Feature Engineering & Processing** — Cleaned inputs are enriched with behavioral, temporal, and contextual features while early quality checks guard drift.
+3. **Modeling & Inference** — Ensembles or transformer layers learn the decision boundaries, with automated retraining for evolving workloads.
+4. **Serving & Delivery** — Dockerized microservices or FastAPI endpoints expose low-latency results to downstream dashboards.
+5. **Observation & Feedback** — Monitoring, alerts, and business review cycles feed corrections back into the pipeline.
+${highlightTech ? `Key technologies: ${highlightTech}.` : ''}
+${description ? `Summary: ${description}` : ''}`.trim();
 }

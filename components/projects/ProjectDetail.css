@@ -1,0 +1,73 @@
+/* System Architecture Diagram Styles - ASCII-Safe */
+.system-architecture {
+  background: transparent !important;
+  color: var(--foreground) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+  box-shadow: none !important;
+  transition: none !important;
+  width: 100% !important;
+  backdrop-filter: none !important;
+  white-space: pre !important;
+  word-wrap: normal !important;
+  word-break: normal !important;
+  text-wrap: nowrap !important;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace !important;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0 !important;
+}
+
+/* Preserve ASCII spacing in child containers */
+.system-architecture > div,
+.system-architecture .arch-box,
+.system-architecture .arch-arrow {
+  white-space: pre !important;
+  white-space: pre-wrap !important;
+  tab-size: 4 !important;
+  -moz-tab-size: 4 !important;
+  word-wrap: normal !important;
+  overflow-wrap: normal !important;
+  word-break: keep-all !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace !important;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+  color: var(--foreground) !important;
+}
+
+.system-architecture .diagram {
+  width: 100%;
+  margin: 0;
+  display: block;
+  padding: 0;
+  white-space: pre !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 900px) {
+  .system-architecture .diagram {
+    width: 100%;
+    overflow-x: auto;
+    padding: 0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .system-architecture {
+    background: transparent !important;
+    color: var(--foreground) !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+}

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <!-- Dark background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#2b2b2b" rx="10" />
+  
+  <!-- Grid lines -->
+  <line x1="0" y1="100" x2="1920" y2="100" stroke="#444" stroke-width="1" />
+  <line x1="0" y1="300" x2="1920" y2="300" stroke="#444" stroke-width="1" />
+  <line x1="0" y1="500" x2="1920" y2="500" stroke="#444" stroke-width="1" />
+  <line x1="0" y1="700" x2="1920" y2="700" stroke="#444" stroke-width="1" />
+  <line x1="0" y1="900" x2="1920" y2="900" stroke="#444" stroke-width="1" />
+  
+  <line x1="300" y1="0" x2="300" y2="1080" stroke="#444" stroke-width="1" />
+  <line x1="700" y1="0" x2="700" y2="1080" stroke="#444" stroke-width="1" />
+  <line x1="1100" y1="0" x2="1100" y2="1080" stroke="#444" stroke-width="1" />
+  <line x1="1500" y1="0" x2="1500" y2="1080" stroke="#444" stroke-width="1" />
+  
+  <!-- Interaction Events -->
+  <rect x="100" y="50" width="200" height="50" fill="#3498db" rx="10" />
+  <text x="150" y="85" font-size="24" font-family="Arial" fill="#fff" text-anchor="middle">Interaction Events</text>
+  
+  <!-- Feature Store -->
+  <rect x="400" y="50" width="200" height="50" fill="#f1c40f" rx="10" />
+  <text x="450" y="85" font-size="24" font-family="Arial" fill="#fff" text-anchor="middle">Feature Store</text>
+  
+  <!-- FAISS Candidate Retrieval -->
+  <rect x="800" y="50" width="250" height="50" fill="#2ecc71" rx="10" />
+  <text x="875" y="85" font-size="24" font-family="Arial" fill="#fff" text-anchor="middle">FAISS Candidate Retrieval</text>
+  
+  <!-- NCF + MF Ranker -->
+  <rect x="1200" y="50" width="250" height="50" fill="#9b59b6" rx="10" />
+  <text x="1275" y="85" font-size="24" font-family="Arial" fill="#fff" text-anchor="middle">NCF + MF Ranker</text>
+  
+  <!-- API Gateway -->
+  <rect x="100" y="250" width="200" height="50" fill="#1abc9c" rx="10" />
+  <text x="150" y="285" font-size="24" font-family="Arial" fill="#fff" text-anchor="middle">API Gateway</text>
+  
+  <!-- Experience Layer -->
+  <rect x="400" y="250" width="200" height="50" fill="#16a085" rx="10" />
+  <text x="450" y="285" font-size="24" font-family="Arial" fill="#fff" text-anchor="middle">Experience Layer</text>
+  
+  <!-- Arrows -->
+  <path d="M 300 75 L 400 75" stroke="#fff" stroke-width="2" fill="none" />
+  <path d="M 600 75 L 800 75" stroke="#fff" stroke-width="2" fill="none" />
+  <path d="M 1050 75 L 1200 75" stroke="#fff" stroke-width="2" fill="none" />
+  <path d="M 1450 75 L 1500 150" stroke="#fff" stroke-width="2" fill="none" />
+  <path d="M 150 225 L 100 225" stroke="#fff" stroke-width="2" fill="none" />
+  <path d="M 450 225 L 400 225" stroke="#fff" stroke-width="2" fill="none" />
+</svg>

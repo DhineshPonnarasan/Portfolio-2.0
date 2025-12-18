@@ -1,24 +1,10 @@
 'use client';
 import { cn } from '@/lib/utils';
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
 import { MoveUpRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { GENERAL_INFO, SOCIAL_LINKS } from '@/lib/data';
 import Link from 'next/link';
-import QuotePopup from './QuotePopup';
-
-const TECH_QUOTES = [
-    "Code is like humor. When you have to explain it, it’s bad. – Cory House",
-    "First, solve the problem. Then, write the code. – John Johnson",
-    "Simplicity is the soul of efficiency. – Austin Freeman",
-    "Make it work, make it right, make it fast. – Kent Beck",
-    "Clean code always looks like it was written by someone who cares. – Robert C. Martin",
-    "The only way to do great work is to love what you do. – Steve Jobs",
-    "It’s not a bug; it’s an undocumented feature.",
-    "Talk is cheap. Show me the code. – Linus Torvalds",
-    "Programs must be written for people to read, and only incidentally for machines to execute. – Harold Abelson",
-    "Truth can only be found in one place: the code. – Robert C. Martin"
-];
 
 const MENU_LINKS = [
     {
@@ -65,51 +51,20 @@ const MENU_LINKS = [
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [quote, setQuote] = useState<{ text: string; visible: boolean }>({ text: '', visible: false });
-    const quoteTimer = useRef<NodeJS.Timeout | null>(null);
     const router = useRouter();
 
-    const handleLogoClick = (e: React.MouseEvent) => {
-        // We don't prevent default so navigation still happens if needed, 
-        // but since it's likely already on home or just refreshing, it's fine.
-        // If user is already at '/', next/link prevents full reload which is good.
-        
-        const randomQuote = TECH_QUOTES[Math.floor(Math.random() * TECH_QUOTES.length)];
-        setQuote({ text: randomQuote, visible: true });
-        
-        if (quoteTimer.current) clearTimeout(quoteTimer.current);
-        
-        quoteTimer.current = setTimeout(() => {
-            setQuote(prev => ({ ...prev, visible: false }));
-        }, 15000);
-    };
-
-    // Cleanup timer on unmount
     useEffect(() => {
-        return () => {
-            if (quoteTimer.current) clearTimeout(quoteTimer.current);
-        };
-    }, []);
+        if (isMenuOpen) {
+            document.body.classList.add('menu-open');
+        } else {
+            document.body.classList.remove('menu-open');
+        }
+        return () => document.body.classList.remove('menu-open');
+    }, [isMenuOpen]);
 
     return (
         <>
             <div className="sticky top-0 z-[4]">
-                <Link
-                    href="/"
-                    onClick={handleLogoClick}
-                    className="absolute top-5 left-5 z-[5] font-anton text-2xl tracking-wider mix-blend-difference text-white hover:text-primary transition-colors"
-                >
-                    ~/import_dhinesh 
-                </Link>
-
-                <QuotePopup 
-                    text={quote.text} 
-                    isVisible={quote.visible} 
-                    onClose={() => {
-                        setQuote(prev => ({ ...prev, visible: false }));
-                        if (quoteTimer.current) clearTimeout(quoteTimer.current);
-                    }}
-                />
 
                 <button
                     className={cn(
@@ -150,7 +105,7 @@ const Navbar = () => {
 
             <div
                 className={cn(
-                    'fixed top-0 right-0 h-[100dvh] w-[500px] max-w-[calc(100vw-3rem)] transform translate-x-full transition-transform duration-700 z-[3] overflow-hidden gap-y-14',
+                    'menu-panel fixed top-0 right-0 h-[100dvh] w-[500px] max-w-[calc(100vw-3rem)] transform translate-x-full transition-transform duration-700 z-[3] overflow-hidden gap-y-14',
                     'flex flex-col lg:justify-center py-10',
                     { 'translate-x-0': isMenuOpen },
                 )}
@@ -166,13 +121,13 @@ const Navbar = () => {
 
                 <div className="grow flex md:items-center w-full max-w-[300px] mx-8 sm:mx-auto">
                     <div className="flex gap-10 lg:justify-between max-lg:flex-col w-full">
-                        <div className="max-lg:order-2">
+                        <div className="max-lg:order-2 menu-group">
                             <p className="text-muted-foreground mb-5 md:mb-8">
                                 SOCIAL
                             </p>
                             <ul className="space-y-3">
                                 {SOCIAL_LINKS && SOCIAL_LINKS.map((link) => (
-                                    <li key={link.name}>
+                                    <li key={link.name} className="menu-link" style={{ '--item-index': 1 } as CSSProperties}>
                                         <a
                                             href={link.url}
                                             target="_blank"
@@ -185,13 +140,13 @@ const Navbar = () => {
                                 ))}
                             </ul>
                         </div>
-                        <div className="">
+                        <div className="menu-group">
                             <p className="text-muted-foreground mb-5 md:mb-8">
                                 MENU
                             </p>
                             <ul className="space-y-3">
-                                {MENU_LINKS.map((link) => (
-                                    <li key={link.name}>
+                                {MENU_LINKS.map((link, idx) => (
+                                    <li key={link.name} className="menu-link" style={{ '--item-index': idx + 2 } as CSSProperties}>
                                         <button
                                             onClick={() => {
                                                 router.push(link.url);
@@ -219,7 +174,7 @@ const Navbar = () => {
                     </div>
                 </div>
 
-                <div className="w-full max-w-[300px] mx-8 sm:mx-auto">
+                <div className="w-full max-w-[300px] mx-8 sm:mx-auto menu-group menu-contact">
                     <p className="text-muted-foreground mb-4">GET IN TOUCH</p>
                     <a href={`mailto:${GENERAL_INFO.email}`} className="block hover:text-white transition-colors mb-2">
                         {GENERAL_INFO.email}

@@ -1,4 +1,5 @@
 import { IProject, IPublication, IEducation, IContribution } from '@/types';
+import { MERMAID_DIAGRAMS } from './mermaid-templates';
 
 export const GENERAL_INFO = {
     email: 'dhineshponnarasan@gmail.com',
@@ -25,7 +26,11 @@ export const MY_STACK = {
             icon: '/logo/java.svg',
         },
         {
-            name: 'C/C++',
+            name: 'C',
+            icon: '/logo/c.svg',
+        },
+        {
+            name: 'C++',
             icon: '/logo/cplusplus.svg',
         },
         {
@@ -264,6 +269,18 @@ export const MY_STACK = {
             name: 'Tableau',
             icon: '/logo/tableau.svg',
         },
+        {
+            name: 'ETL',
+            icon: '/logo/etl.svg',
+        },
+        {
+            name: 'MLOps',
+            icon: '/logo/mlops.png',
+        },
+        {
+            name: 'A/B Testing',
+            icon: '/logo/ab-testing.png',
+        },
     ],
     'Big Data & Cloud Platforms': [
         {
@@ -313,10 +330,6 @@ export const MY_STACK = {
         {
             name: 'AWS SageMaker',
             icon: '/logo/aws-sagemaker.svg',
-        },
-        {
-            name: 'Vercel',
-            icon: '/logo/vercel.svg',
         },
         {
             name: 'Supabase',
@@ -371,6 +384,10 @@ export const MY_STACK = {
             icon: '/logo/streamlit.svg',
         },
         {
+            name: 'Postman',
+            icon: '/logo/postman-icon.svg',
+        },
+        {
             name: 'Next.js',
             icon: '/logo/next-js.svg',
         },
@@ -407,755 +424,607 @@ export const MY_STACK = {
             icon: '/logo/jira.svg',
         },
         {
-            name: 'Vercel Deployment',
-            icon: '/logo/vercel-deployment.svg',
+            name: 'Render',
+            icon: '/logo/render-official.svg',
         },
         {
-            name: 'Supabase Backend',
-            icon: '/logo/supabase-backend.svg',
+            name: 'Vercel',
+            icon: '/logo/vercel-black.svg',
         },
     ],
 };
 
 export const PROJECTS: IProject[] = [
+    // 1. Customer Churn Decision Intelligence System
     {
-        "title": "Large-Scale Social Media Sentiment Intelligence Platform",
-        "slug": "social-media-sentiment",
-        "techStack": [
-            "Spark",
-            "Kafka",
-            "Transformers",
-            "BERT",
-            "NLP",
-            "Python"
+        id: 1,
+        title: "Customer Churn Decision Intelligence System",
+        slug: "customer-churn-intelligence",
+        year: 2024,
+        visuals: [],
+        techAndTechniques: [
+            "🧬 Gradient Boosting Ensemble (XGBoost, CatBoost)",
+            "📊 MLflow Experiment Tracking & Model Registry",
+            "🔄 Airflow Automated Retraining + Drift Monitoring",
+            "📈 SHAP Explainability",
+            "⚡ Real-Time Scoring with FastAPI",
+            "🧹 Data Engineering Pipelines (ETL + Feature Store)"
         ],
-        "thumbnail": "/projects/social-media-sentiment/ui.svg",
-        "longThumbnail": "/projects/social-media-sentiment/ui.svg",
-        "images": [
-            "/projects/social-media-sentiment/ui.svg",
-            "/projects/social-media-sentiment/architecture.svg",
-            "/projects/social-media-sentiment/visualization-1.svg",
-            "/projects/social-media-sentiment/visualization-2.svg"
+        description: [
+            "Built to proactively identify high-risk customers before churn occurs, enabling data-driven retention strategies.",
+            "Uses ensemble boosting models to capture non-linear churn indicators and complex user patterns.",
+            "SHAP explainability reveals why users churn, helping non-technical teams take effective action.",
+            "MLflow manages full model lifecycle, ensuring reproducibility, traceability, and version safety.",
+            "Automated Airflow pipelines perform retraining, drift detection, and scheduled monitoring.",
+            "Real-time prediction layer enables immediate scoring at user interaction points.",
+            "Engineered with modular components suitable for enterprise-scale deployment."
         ],
-        "year": 2025,
-        "description": "A distributed real-time NLP system engineered to process millions of streaming posts using Spark, Kafka, and transformer-based deep learning. This platform addresses the challenge of analyzing noisy, multilingual social media text at scale by leveraging a microservices architecture. It ingests high-velocity data streams via Kafka, processes them using Spark Streaming for low-latency throughput, and applies fine-tuned BERT models for nuanced sentiment and topic classification. The system provides real-time actionable insights through live dashboards, enabling businesses to monitor brand health and emerging trends instantly.",
-        "keyFeatures": [
-            "Spark + Kafka real-time streaming NLP pipeline.",
-            "Multilingual BERT sentiment + topic classification.",
-            "Microservice inference with autoscaling.",
-            "Real-time dashboards + alerts."
+        metrics: [
+            "✅ 21% improvement in prediction accuracy over baseline models.",
+            "✅ <50 ms API latency for real-time scoring.",
+            "✅ 38% reduction in performance decay through automated drift monitoring."
         ],
-        "technicalHighlights": [
-            "Optimized Spark Streaming for sub-second latency.",
-            "Implemented custom BERT model fine-tuning for noisy social data.",
-            "Deployed scalable inference using Docker and Kubernetes."
+        keyFeatures: [
+            "🔍 SHAP-based interpretable AI",
+            "🔄 Automated retraining workflows",
+            "⚡ Real-time scoring API",
+            "🛡️ Robust drift detection pipeline"
         ],
-        "whatIBuilt": [
-            "Designed and implemented the end-to-end data pipeline.",
-            "Trained and deployed NLP models for sentiment analysis.",
-            "Built real-time monitoring and alerting systems."
+        skills: [
+            "Python, FastAPI, MLflow, Airflow",
+            "XGBoost, CatBoost, SHAP",
+            "Pandas, NumPy, Scikit-learn",
+            "Docker, CI/CD, Cloud Deployment"
         ],
-        "skills": [
-            "Distributed Computing (Apache Spark, Kafka)",
-            "NLP & Transformers (BERT, tokenization, multilingual NLP)",
-            "Real-time Systems Engineering",
-            "Microservices Architecture (batching, caching, autoscaling)",
-            "Data Engineering & Streaming Pipelines",
-            "Dashboarding & BI (Power BI)"
-        ],
-        "gallery": [
-            {
-                "src": "/projects/social-media-sentiment/ui.svg",
-                "alt": "Large-Scale Social Media Sentiment Intelligence Platform - UI Dashboard"
-            },
-            {
-                "src": "/projects/social-media-sentiment/architecture.svg",
-                "alt": "Large-Scale Social Media Sentiment Intelligence Platform - System Architecture"
-            },
-            {
-                "src": "/projects/social-media-sentiment/visualization-1.svg",
-                "alt": "Large-Scale Social Media Sentiment Intelligence Platform - Visualization"
-            },
-            {
-                "src": "/projects/social-media-sentiment/visualization-2.svg",
-                "alt": "Large-Scale Social Media Sentiment Intelligence Platform - Metrics"
-            }
+        interestingHighlights: [
+            "🔍 Converts raw predictions into actionable business insights.",
+            "🧩 Highly modular design enables plug-and-play model experimentation.",
+            "🚀 Built to operate continuously with minimal human intervention."
         ]
     },
+    // 2. Large-Scale Social Media Sentiment Intelligence Platform
     {
-        "title": "Customer Churn Decision Intelligence System",
-        "slug": "customer-churn-intelligence",
-        "techStack": [
-            "XGBoost",
-            "CatBoost",
-            "MLflow",
-            "Airflow",
-            "FastAPI"
+        id: 2,
+        title: "Large-Scale Social Media Sentiment Intelligence Platform",
+        slug: "social-media-sentiment",
+        year: 2024,
+        visuals: [],
+        techAndTechniques: [
+            "🌊 Spark Streaming + Kafka Real-Time Pipeline",
+            "🧠 Transformer Models (BERT, Multilingual BERT)",
+            "🚀 Microservices Autoscaling Architecture",
+            "📚 Topic Modeling + Sentiment Classification",
+            "📊 Real-Time Dashboarding (BI Visualization)"
         ],
-        "thumbnail": "/projects/customer-churn-intelligence/ui.svg",
-        "longThumbnail": "/projects/customer-churn-intelligence/ui.svg",
-        "images": [
-            "/projects/customer-churn-intelligence/ui.svg",
-            "/projects/customer-churn-intelligence/architecture.svg",
-            "/projects/customer-churn-intelligence/visualization-1.svg",
-            "/projects/customer-churn-intelligence/visualization-2.svg"
+        description: [
+            "Processes millions of social media posts in real time to capture public sentiment shifts instantly.",
+            "Spark Streaming powers high-throughput ingestion and distributed text transformation.",
+            "Fine-tuned transformer models deliver context-sensitive sentiment and topic detection.",
+            "Kafka handles high-velocity data pipelines with guaranteed delivery.",
+            "Autoscaling microservices respond dynamically to social event spikes.",
+            "Dashboards provide real-time visibility into brand reputation and emerging topics.",
+            "Designed for global-scale workloads with multilingual capability."
         ],
-        "year": 2024,
-        "description": "End-to-end ML lifecycle system enabling churn prediction, interpretability, and real-time scoring. This project focuses on reducing customer attrition by identifying high-risk users before they leave. It utilizes an ensemble of gradient boosting models (XGBoost, CatBoost) managed via MLflow for versioning and reproducibility. The pipeline is orchestrated with Airflow for automated retraining and drift detection. A key differentiator is the integration of SHAP values to provide explainable AI insights, allowing non-technical stakeholders to understand the \"why\" behind every churn prediction.",
-        "keyFeatures": [
-            "MLflow lifecycle management.",
-            "Automated Airflow retraining.",
-            "SHAP interpretability.",
-            "FastAPI live scoring."
+        metrics: [
+            "📊 2.5M+ posts/hour processing throughput.",
+            "📊 17% improvement in sentiment accuracy after custom BERT fine-tuning.",
+            "📊 <1 second end-to-end latency for streaming inference.",
+            "📊 28% cost reduction through intelligent autoscaling."
         ],
-        "technicalHighlights": [
-            "Improved model accuracy by 21% using ensemble methods.",
-            "Implemented automated model drift detection.",
-            "Reduced inference latency to under 50ms."
+        keyFeatures: [
+            "🌍 Multilingual sentiment + topic classification",
+            "⚡ Streaming data processing with fault tolerance",
+            "📈 Real-time trend monitoring and alerts",
+            "🔧 Microservices with autoscaling"
         ],
-        "whatIBuilt": [
-            "Developed the entire ML pipeline from data ingestion to deployment.",
-            "Implemented model explainability features for stakeholders.",
-            "Built the real-time scoring API."
+        skills: [
+            "Python, PySpark, Kafka",
+            "BERT, HuggingFace Transformers",
+            "Docker, Kubernetes",
+            "Power BI / Grafana dashboards"
         ],
-        "skills": [
-            "Machine Learning Lifecycle (MLflow, Airflow)",
-            "Gradient-boosting Models (XGBoost, CatBoost)",
-            "Explainable AI (SHAP)",
-            "Model Deployment (FastAPI, CI/CD)",
-            "Production Model Monitoring"
-        ],
-        "gallery": [
-            {
-                "src": "/projects/customer-churn-intelligence/ui.svg",
-                "alt": "Customer Churn Decision Intelligence System - UI Dashboard"
-            },
-            {
-                "src": "/projects/customer-churn-intelligence/architecture.svg",
-                "alt": "Customer Churn Decision Intelligence System - System Architecture"
-            },
-            {
-                "src": "/projects/customer-churn-intelligence/visualization-1.svg",
-                "alt": "Customer Churn Decision Intelligence System - Visualization"
-            },
-            {
-                "src": "/projects/customer-churn-intelligence/visualization-2.svg",
-                "alt": "Customer Churn Decision Intelligence System - Metrics"
-            }
+        interestingHighlights: [
+            "📈 Detects viral trends before they peak.",
+            "🎯 Designed to handle unpredictable surge patterns such as political events or celebrity news."
         ]
     },
+    // 3. Deep Learning Brain Tumor Classification
     {
-        "title": "Deep Learning Brain Tumor Classification",
-        "slug": "brain-tumor-classification",
-        "techStack": [
-            "TensorFlow",
-            "CNN",
-            "Computer Vision"
+        id: 3,
+        title: "Deep Learning Brain Tumor Classification",
+        slug: "brain-tumor-classification",
+        year: 2025,
+        visuals: [],
+        techAndTechniques: [
+            "🧬 EfficientNet / ResNet CNN Architectures",
+            "🔥 Grad-CAM++ Visual Explainability",
+            "🤖 TensorFlow + Computer Vision",
+            "🖼️ Medical Image Preprocessing Pipelines",
+            "📦 Containerized Model Deployment"
         ],
-        "thumbnail": "/projects/brain-tumor-classification/ui.svg",
-        "longThumbnail": "/projects/brain-tumor-classification/ui.svg",
-        "images": [
-            "/projects/brain-tumor-classification/ui.svg",
-            "/projects/brain-tumor-classification/architecture.svg",
-            "/projects/brain-tumor-classification/visualization-1.svg",
-            "/projects/brain-tumor-classification/visualization-2.svg"
+        description: [
+            "🧬 Classifies brain tumor types from MRI scans with near-clinical precision.",
+            "🧠 Advanced CNNs extract deep spatial features from complex medical imagery.",
+            "🔥 Grad-CAM++ provides interpretable tumor-region heatmaps for radiologist review.",
+            "🔄 Data augmentation ensures robustness across MRI devices and noise variations.",
+            "📦 Containerized inference enables seamless integration into hospital systems.",
+            "⚡ Optimized for GPU processing with fast inference speeds.",
+            "👨‍⚕️ Designed to support doctors with AI-driven secondary diagnosis."
         ],
-        "year": 2024,
-        "description": "Production-ready tumor detection model designed to assist radiologists with high-precision MRI analysis. The system employs advanced Convolutional Neural Networks (EfficientNet/ResNet) to classify brain tumors with state-of-the-art accuracy. Beyond classification, it integrates Grad-CAM++ to generate visual heatmaps, highlighting the specific regions of the MRI scan that influenced the model's decision. This explainability layer is crucial for clinical trust and adoption. The solution is containerized for easy deployment in hospital IT environments.",
-        "keyFeatures": [
-            "EfficientNet/ResNet MRI models.",
-            "Grad-CAM++ overlays.",
-            "Containerized inference API."
+        metrics: [
+            "📊 98.2% classification accuracy on MRI dataset.",
+            "⚡ ~90 ms inference per scan on GPU.",
+            "🧠 33% improvement in interpretability quality with Grad-CAM++."
         ],
-        "technicalHighlights": [
-            "Achieved 98% accuracy on MRI dataset.",
-            "Implemented advanced data augmentation techniques.",
-            "Integrated explainable AI to assist radiologists."
+        keyFeatures: [
+            "⭐ High-precision deep learning classification",
+            "⭐ Medical-grade explainability",
+            "⭐ Fast, scalable inference service"
         ],
-        "whatIBuilt": [
-            "Trained and optimized deep learning models.",
-            "Developed the explainability module.",
-            "Deployed the model as a containerized service."
+        skills: [
+            "🛠️ Python, TensorFlow, Keras",
+            "🛠️ OpenCV, NumPy",
+            "🛠️ FastAPI, Docker",
+            "🛠️ GPU-accelerated processing"
         ],
-        "skills": [
-            "Deep Learning (CNNs, ResNet, EfficientNet)",
-            "Medical Imaging (MRI preprocessing, augmentation)",
-            "Explainable AI (Grad-CAM++)",
-            "MLOps / Containerized Inference APIs",
-            "Model Optimization & Evaluation"
+        interestingHighlights: [
+            "✨ Bridges AI and radiology by providing interpretable model decisions.",
+            "✨ Enables faster diagnosis in emergency imaging workflows."
         ],
-        "gallery": [
-            {
-                "src": "/projects/brain-tumor-classification/ui.svg",
-                "alt": "Deep Learning Brain Tumor Classification - UI Dashboard"
-            },
-            {
-                "src": "/projects/brain-tumor-classification/architecture.svg",
-                "alt": "Deep Learning Brain Tumor Classification - System Architecture"
-            },
-            {
-                "src": "/projects/brain-tumor-classification/visualization-1.svg",
-                "alt": "Deep Learning Brain Tumor Classification - Visualization"
-            },
-            {
-                "src": "/projects/brain-tumor-classification/visualization-2.svg",
-                "alt": "Deep Learning Brain Tumor Classification - Metrics"
-            }
-        ]
+        // visuals, architectureDiagram, and workflowDiagram removed
     },
+    // 4. Financial Fraud Detection Engine
     {
-        "title": "Financial Fraud Detection Engine",
-        "slug": "financial-fraud-detection",
-        "techStack": [
-            "Autoencoder",
-            "Kafka",
-            "Python",
-            "Anomaly Detection"
+        id: 4,
+        title: "Financial Fraud Detection Engine",
+        slug: "financial-fraud-detection",
+        year: 2024,
+        visuals: [],
+        techAndTechniques: [
+            "🧬 Autoencoder + Isolation Forest Hybrid Modeling",
+            "🛠️ Behavioral Feature Engineering",
+            "📡 Kafka-Based Real-Time Streaming",
+            "🚨 Anomaly Detection Algorithms",
+            "⚡ Real-time Scoring APIs"
         ],
-        "thumbnail": "/projects/financial-fraud-detection/ui.svg",
-        "longThumbnail": "/projects/financial-fraud-detection/ui.svg",
-        "images": [
-            "/projects/financial-fraud-detection/ui.svg",
-            "/projects/financial-fraud-detection/architecture.svg",
-            "/projects/financial-fraud-detection/visualization-1.svg",
-            "/projects/financial-fraud-detection/visualization-2.svg"
+        description: [
+            "🛡️ Detects fraudulent transactions in real time by learning normal financial behavior patterns.",
+            "🔍 Autoencoders reconstruct legitimate patterns while identifying deviations as anomalies.",
+            "🌲 Isolation Forest boosts detection of rare fraudulent events.",
+            "⚡ Kafka streams enable millions of transactions to be scored instantly.",
+            "🧠 Behavioral features enhance understanding of user spending patterns.",
+            "🔄 System continuously adapts to evolving fraud signatures.",
+            "🚀 Designed for mission-critical financial systems requiring precision + speed."
         ],
-        "year": 2024,
-        "description": "Hybrid fraud detection engine combining deep learning and anomaly models to combat sophisticated financial crime. This system addresses the severe class imbalance in fraud datasets by using Autoencoders to learn normal transaction patterns and flag deviations. It operates in real-time, scoring millions of transactions via a Kafka event backbone. By augmenting traditional rules-based systems with unsupervised deep learning, the engine significantly reduces false positives while catching novel, previously unseen fraud patterns that static rules miss.",
-        "keyFeatures": [
-            "Autoencoder + Isolation Forest hybrid.",
-            "Real-time Kafka event scoring.",
-            "Behavior-based feature mapping."
+        metrics: [
+            "📊 27% reduction in false positives.",
+            "⚡ 18 ms average scoring latency.",
+            "🧠 3.2× increase in new/unseen fraud detection."
         ],
-        "technicalHighlights": [
-            "Reduced false positives by 27%.",
-            "Implemented real-time anomaly scoring.",
-            "Designed a scalable event processing architecture."
+        keyFeatures: [
+            "⭐ Real-time anomaly detection",
+            "⭐ High-throughput streaming architecture",
+            "⭐ Behavior-based feature mapping"
         ],
-        "whatIBuilt": [
-            "Developed the hybrid anomaly detection model.",
-            "Built the real-time scoring pipeline.",
-            "Implemented feature engineering for behavioral patterns."
+        skills: [
+            "🛠️ Python, TensorFlow, Scikit-learn",
+            "🛠️ Kafka, FastAPI",
+            "🛠️ Docker, CI/CD",
+            "🛠️ Feature Engineering, Data Pipelines"
         ],
-        "skills": [
-            "Anomaly Detection (Autoencoders, Isolation Forest)",
-            "Behavioral Feature Engineering",
-            "Real-time Event Processing (Kafka)",
-            "Statistical Modeling",
-            "Fraud Risk Scoring & Alerting Systems"
+        interestingHighlights: [
+            "✨ Designed to evolve with new fraud patterns, not rely on outdated rules.",
+            "✨ Suitable for banks, fintech apps, and high-volume trading platforms."
         ],
-        "gallery": [
-            {
-                "src": "/projects/financial-fraud-detection/ui.svg",
-                "alt": "Financial Fraud Detection Engine - UI Dashboard"
-            },
-            {
-                "src": "/projects/financial-fraud-detection/architecture.svg",
-                "alt": "Financial Fraud Detection Engine - System Architecture"
-            },
-            {
-                "src": "/projects/financial-fraud-detection/visualization-1.svg",
-                "alt": "Financial Fraud Detection Engine - Visualization"
-            },
-            {
-                "src": "/projects/financial-fraud-detection/visualization-2.svg",
-                "alt": "Financial Fraud Detection Engine - Metrics"
-            }
-        ]
+        // visuals, architectureDiagram, and workflowDiagram removed
     },
+    // 5. YOLOv8 Real-Time Vision Inference Engine
     {
-        "title": "YOLOv8 Real-Time Vision Inference Engine",
-        "slug": "yolov8-inference-engine",
-        "techStack": [
-            "YOLOv8",
-            "PyTorch",
-            "TensorRT",
-            "OpenCV"
+        id: 5,
+        title: "YOLOv8 Real-Time Vision Inference Engine",
+        slug: "yolov8-inference-engine",
+        year: 2024,
+        visuals: [],
+        techAndTechniques: [
+            "🎯 YOLOv8 Object Detection",
+            "⚡ TensorRT Hardware Acceleration",
+            "🖥️ Computer Vision Optimization",
+            "📡 WebRTC + FastAPI Streaming",
+            "🌐 Edge Inference Deployment"
         ],
-        "thumbnail": "/projects/yolov8-inference-engine/ui.svg",
-        "longThumbnail": "/projects/yolov8-inference-engine/ui.svg",
-        "images": [
-            "/projects/yolov8-inference-engine/ui.svg",
-            "/projects/yolov8-inference-engine/architecture.svg",
-            "/projects/yolov8-inference-engine/visualization-1.svg",
-            "/projects/yolov8-inference-engine/visualization-2.svg"
+        description: [
+            "🤖 Provides high-FPS real-time object detection for robotics and surveillance applications.",
+            "⚡ TensorRT acceleration boosts YOLOv8 performance significantly on GPU and edge hardware.",
+            "📡 WebRTC integration enables ultra-low-latency live video streaming.",
+            "🖥️ Supports edge devices like Jetson for portable, efficient deployment.",
+            "🔄 Uses augmentation strategies to improve model robustness.",
+            "⏱️ Designed for environments where milliseconds decide safety outcomes.",
+            "📈 Highly scalable for enterprise vision analytics."
         ],
-        "year": 2024,
-        "description": "High-throughput object detection system optimized for edge inference and real-time video analytics. Built on the state-of-the-art YOLOv8 architecture, this engine is engineered for speed and efficiency. It leverages TensorRT optimization to accelerate inference on NVIDIA hardware, achieving high frame rates suitable for live video streams. The system integrates with WebRTC for low-latency video transmission, making it ideal for applications like security monitoring, industrial safety, and autonomous navigation where milliseconds matter.",
-        "keyFeatures": [
-            "YOLOv8 training with augmentation.",
-            "Hardware-accelerated inference.",
-            "WebRTC + FastAPI streaming."
+        metrics: [
+            "📊 FPS improved from 18 → 55 after TensorRT optimization.",
+            "⚡ Latency reduced by 64% on edge hardware.",
+            "🎯 14% increase in detection precision with custom augmentation."
         ],
-        "technicalHighlights": [
-            "Optimized inference speed to 30-60 FPS.",
-            "Implemented TensorRT acceleration for edge devices.",
-            "Built a low-latency video streaming pipeline."
+        keyFeatures: [
+            "⭐ High-FPS object detection",
+            "⭐ Hardware-accelerated inference",
+            "⭐ Low-latency video analytics pipeline"
         ],
-        "whatIBuilt": [
-            "Trained and optimized object detection models.",
-            "Implemented hardware acceleration.",
-            "Developed the real-time video inference system."
+        skills: [
+            "🛠️ Python, PyTorch, OpenCV",
+            "🛠️ TensorRT, CUDA",
+            "🛠️ FastAPI, WebRTC",
+            "🛠️ Edge device optimization"
         ],
-        "skills": [
-            "Computer Vision (YOLOv8, object detection)",
-            "Edge Inference Optimization (TensorRT)",
-            "High-throughput Streaming (WebRTC)",
-            "PyTorch Model Deployment",
-            "Latency Optimization"
+        interestingHighlights: [
+            "✨ Enables near-instant decision-making in real-world robotics.",
+            "✨ Designed to run efficiently even with limited hardware resources."
         ],
-        "gallery": [
-            {
-                "src": "/projects/yolov8-inference-engine/ui.svg",
-                "alt": "YOLOv8 Real-Time Vision Inference Engine - UI Dashboard"
-            },
-            {
-                "src": "/projects/yolov8-inference-engine/architecture.svg",
-                "alt": "YOLOv8 Real-Time Vision Inference Engine - System Architecture"
-            },
-            {
-                "src": "/projects/yolov8-inference-engine/visualization-1.svg",
-                "alt": "YOLOv8 Real-Time Vision Inference Engine - Visualization"
-            },
-            {
-                "src": "/projects/yolov8-inference-engine/visualization-2.svg",
-                "alt": "YOLOv8 Real-Time Vision Inference Engine - Metrics"
-            }
-        ]
+        // visuals, architectureDiagram, and workflowDiagram removed
     },
+    // 6. Hybrid Recommendation Engine
     {
-        "title": "Hybrid Recommendation Engine",
-        "slug": "hybrid-recommendation-engine",
-        "techStack": [
-            "FAISS",
-            "NCF",
-            "Matrix Factorization",
-            "Python"
+        id: 6,
+        title: "Hybrid Recommendation Engine",
+        slug: "hybrid-recommendation-engine",
+        year: 2024,
+        visuals: [],
+        techAndTechniques: [
+            "🧩 Matrix Factorization + Neural Collaborative Filtering",
+            "🔎 FAISS Vector Similarity Search",
+            "🏅 Ranking Algorithms",
+            "🧬 Embedding Engineering",
+            "⚡ Real-Time Recommendation Inference"
         ],
-        "thumbnail": "/projects/hybrid-recommendation-engine/ui.svg",
-        "longThumbnail": "/projects/hybrid-recommendation-engine/ui.svg",
-        "images": [
-            "/projects/hybrid-recommendation-engine/ui.svg",
-            "/projects/hybrid-recommendation-engine/architecture.svg",
-            "/projects/hybrid-recommendation-engine/visualization-1.svg",
-            "/projects/hybrid-recommendation-engine/visualization-2.svg"
+        description: [
+            "⭐ Generates personalized recommendations using a hybrid architecture combining MF and NCF.",
+            "⚡ FAISS provides millisecond-level retrieval from millions of embeddings.",
+            "📈 Ranking algorithms refine recommendations for better user relevance.",
+            "🧊 Handles cold-start users through hybrid modeling.",
+            "🏢 Built for scalable content platforms requiring instant personalization.",
+            "🔍 Embedding optimization improves long-tail item discovery.",
+            "🔄 Supports continuous real-time updates as user behavior shifts."
         ],
-        "year": 2023,
-        "description": "Enterprise-grade recommendation engine featuring a multi-stage ranking architecture for personalized user experiences. The system solves the \"cold start\" problem and improves long-tail recommendations by combining Matrix Factorization with Neural Collaborative Filtering (NCF). It utilizes FAISS for lightning-fast vector similarity search, enabling the retrieval of relevant items from a catalog of millions in milliseconds. The architecture supports real-time updates, ensuring that user interactions are immediately reflected in future recommendations.",
-        "keyFeatures": [
-            "Matrix factorization embeddings.",
-            "Neural collaborative filtering.",
-            "FAISS vector search."
+        metrics: [
+            "📊 35% improvement in MAP@10 ranking relevance.",
+            "⚡ <10 ms FAISS search latency.",
+            "🎯 22% increase in cold-start recommendation accuracy."
         ],
-        "technicalHighlights": [
-            "Improved recommendation relevance by 35%.",
-            "Implemented sub-10ms vector search.",
-            "Designed a scalable recommendation pipeline."
+        keyFeatures: [
+            "⭐ Real-time vector search",
+            "⭐ Personalized ranking pipeline",
+            "⭐ Hybrid neural + classical modeling"
         ],
-        "whatIBuilt": [
-            "Developed the hybrid recommendation algorithms.",
-            "Implemented the vector search infrastructure.",
-            "Optimized the ranking system for performance."
+        skills: [
+            "🛠️ Python, PyTorch",
+            "🛠️ FAISS, NumPy",
+            "🛠️ FastAPI",
+            "🛠️ Docker, microservices"
         ],
-        "skills": [
-            "Recommender Systems (NCF, Matrix Factorization)",
-            "Vector Similarity Search (FAISS)",
-            "Ranking Algorithms",
-            "Embedding Engineering",
-            "ML API Serving"
+        interestingHighlights: [
+            "✨ Built for large-scale catalog systems like Netflix/Spotify.",
+            "✨ Strong performance even with sparse data."
         ],
-        "gallery": [
-            {
-                "src": "/projects/hybrid-recommendation-engine/ui.svg",
-                "alt": "Hybrid Recommendation Engine - UI Dashboard"
-            },
-            {
-                "src": "/projects/hybrid-recommendation-engine/architecture.svg",
-                "alt": "Hybrid Recommendation Engine - System Architecture"
-            },
-            {
-                "src": "/projects/hybrid-recommendation-engine/visualization-1.svg",
-                "alt": "Hybrid Recommendation Engine - Visualization"
-            },
-            {
-                "src": "/projects/hybrid-recommendation-engine/visualization-2.svg",
-                "alt": "Hybrid Recommendation Engine - Metrics"
-            }
-        ]
+        // visuals, architectureDiagram, and workflowDiagram removed
     },
+    // 7. Big Data Demand Forecasting Pipeline
     {
-        "title": "Big Data Demand Forecasting Pipeline",
-        "slug": "demand-forecasting-pipeline",
-        "techStack": [
-            "PySpark",
-            "Prophet",
-            "Big Data",
-            "XGBoost"
+        id: 7,
+        title: "Big Data Demand Forecasting Pipeline",
+        slug: "demand-forecasting-pipeline",
+        year: 2024,
+        visuals: [],
+        techAndTechniques: [
+            "🔥 PySpark Large-Scale ETL",
+            "🔮 Prophet + XGBoost Hybrid Forecasting",
+            "📈 Hierarchical Time-Series Modeling",
+            "🚨 Anomaly Detection",
+            "📊 Automated Reporting Dashboards"
         ],
-        "thumbnail": "/projects/demand-forecasting-pipeline/ui.svg",
-        "longThumbnail": "/projects/demand-forecasting-pipeline/ui.svg",
-        "images": [
-            "/projects/demand-forecasting-pipeline/ui.svg",
-            "/projects/demand-forecasting-pipeline/architecture.svg",
-            "/projects/demand-forecasting-pipeline/visualization-1.svg",
-            "/projects/demand-forecasting-pipeline/visualization-2.svg"
+        description: [
+            "📊 Predicts retail demand across millions of rows and hundreds of SKUs.",
+            "⚡ PySpark performs distributed feature engineering and processing.",
+            "🔮 Hybrid Prophet-XGBoost models capture trends, seasonality, and nonlinear interactions.",
+            "🏷️ Hierarchical models support predictions from brand → category → SKU.",
+            "🚨 Automated anomaly detection flags unexpected sales spikes or drops.",
+            "📈 BI dashboards provide interpretable demand trends.",
+            "🏢 Scalable architecture built for enterprise-level forecasting."
         ],
-        "year": 2023,
-        "description": "Distributed demand forecasting framework engineered for retail analytics at scale. This pipeline processes massive datasets using PySpark to handle data ingestion and feature engineering across distributed clusters. It implements a hybrid forecasting approach, combining the trend and seasonality decomposition of Prophet with the gradient boosting power of XGBoost. The system automatically detects anomalies in sales data and generates accurate demand predictions at the SKU level, enabling retailers to optimize inventory levels and reduce stockouts.",
-        "keyFeatures": [
-            "PySpark ingestion & feature engineering.",
-            "Prophet + XGBoost hybrid forecasting.",
-            "Automated reporting dashboards."
+        metrics: [
+            "📊 18% improvement in forecast accuracy.",
+            "⚡ 40% reduction in ETL processing time.",
+            "🎯 92% anomaly detection precision on sales fluctuations."
         ],
-        "technicalHighlights": [
-            "Processed multi-million row datasets efficiently.",
-            "Implemented hierarchical forecasting models.",
-            "Automated anomaly detection in sales data."
+        keyFeatures: [
+            "⭐ Hierarchical forecasting engine",
+            "⭐ Scalable PySpark ETL",
+            "⭐ Automated anomaly monitoring"
         ],
-        "whatIBuilt": [
-            "Built the distributed data processing pipeline.",
-            "Developed and tuned forecasting models.",
-            "Created automated reporting dashboards."
+        skills: [
+            "🛠️ Python, SQL",
+            "🛠️ PySpark, XGBoost, Prophet",
+            "🛠️ Airflow, Docker",
+            "🛠️ Databricks, Power BI"
         ],
-        "skills": [
-            "PySpark ETL & Data Engineering",
-            "Time-Series Forecasting (Prophet, DeepAR, XGBoost)",
-            "Big Data Processing & Optimization",
-            "Automated Anomaly Detection",
-            "Dashboarding for Forecast Analytics"
+        interestingHighlights: [
+            "✨ Helps retailers reduce stockouts and overstocking dramatically.",
+            "✨ Handles extreme seasonality (festivals, promotions, weather spikes)."
         ],
-        "gallery": [
-            {
-                "src": "/projects/demand-forecasting-pipeline/ui.svg",
-                "alt": "Big Data Demand Forecasting Pipeline - UI Dashboard"
-            },
-            {
-                "src": "/projects/demand-forecasting-pipeline/architecture.svg",
-                "alt": "Big Data Demand Forecasting Pipeline - System Architecture"
-            },
-            {
-                "src": "/projects/demand-forecasting-pipeline/visualization-1.svg",
-                "alt": "Big Data Demand Forecasting Pipeline - Visualization"
-            },
-            {
-                "src": "/projects/demand-forecasting-pipeline/visualization-2.svg",
-                "alt": "Big Data Demand Forecasting Pipeline - Metrics"
-            }
-        ]
+        // visuals, architectureDiagram, and workflowDiagram removed
     },
+    // 8. Intelligent Resume Parser & Skill Extraction
     {
-        "title": "Intelligent Resume Parser & Skill Extraction",
-        "slug": "resume-parser",
-        "techStack": [
-            "BERT",
-            "spaCy",
-            "NLP"
+        id: 8,
+        title: "Intelligent Resume Parser & Skill Extraction",
+        slug: "resume-parser",
+        year: 2023,
+        visuals: [],
+        techAndTechniques: [
+            "🤖 BERT + spaCy NER Pipelines",
+            "🔗 Semantic Similarity Modeling",
+            "📝 Rule-Based Post-Processing",
+            "🏅 Custom Candidate Ranking Algorithms",
+            "🧹 Resume Text Normalization"
         ],
-        "thumbnail": "/projects/resume-parser/ui.svg",
-        "longThumbnail": "/projects/resume-parser/ui.svg",
-        "images": [
-            "/projects/resume-parser/ui.svg",
-            "/projects/resume-parser/architecture.svg",
-            "/projects/resume-parser/visualization-1.svg",
-            "/projects/resume-parser/visualization-2.svg"
+        description: [
+            "💼🤖 Extracts skills, roles, experience, and education using transformer-powered NLP.",
+            "🧠 BERT enables context-aware understanding of candidate profiles.",
+            "🔗 Semantic similarity scoring matches resumes to job descriptions effectively.",
+            "📊 Custom ranking algorithm evaluates candidate-job fit across multiple features.",
+            "📄 Handles diverse resume formats (PDF, DOCX, text).",
+            "🌍 Robust parser designed for global multi-domain resumes.",
+            "⚡ Enables faster shortlisting and candidate filtering."
         ],
-        "year": 2023,
-        "description": "Automated resume understanding and candidate scoring system driven by advanced NLP. This tool moves beyond simple keyword matching by using Named Entity Recognition (NER) to extract structured data (skills, experience, education) from unstructured resume text. Powered by fine-tuned BERT models and spaCy, it understands context and variations in job titles and skill descriptions. The system includes a ranking engine that scores candidates against job descriptions, streamlining the recruitment process and surfacing the best talent.",
-        "keyFeatures": [
-            "BERT + spaCy NER pipeline.",
-            "92% extraction accuracy.",
-            "Ranking engine for scoring."
+        metrics: [
+            "📊 92–95% extraction accuracy across resume types.",
+            "📈 31% improvement in matching precision with semantic scoring.",
+            "⚡ <1 second average processing time per resume."
         ],
-        "technicalHighlights": [
-            "Fine-tuned BERT for entity extraction.",
-            "Implemented a custom ranking algorithm.",
-            "Achieved high accuracy on diverse resume formats."
+        keyFeatures: [
+            "⭐ Transformer-driven NER",
+            "⭐ Ranking-based candidate scoring",
+            "⭐ Multi-format resume ingestion"
         ],
-        "whatIBuilt": [
-            "Developed the NLP pipeline for entity extraction.",
-            "Built the candidate scoring engine.",
-            "Optimized the system for accuracy and performance."
+        skills: [
+            "🛠️ Python, spaCy, Transformers",
+            "🛠️ Sentence-BERT, NumPy",
+            "🛠️ FastAPI, Docker"
         ],
-        "skills": [
-            "NLP (BERT, spaCy, NER)",
-            "Information Extraction & Classification",
-            "Semantic Similarity Modeling",
-            "Text Preprocessing & Tokenization",
-            "Pipeline Deployment"
+        interestingHighlights: [
+            "✨ Mimics a recruiter’s reading logic using AI.",
+            "✨ Can process thousands of resumes in minutes."
         ],
-        "gallery": [
-            {
-                "src": "/projects/resume-parser/ui.svg",
-                "alt": "Intelligent Resume Parser & Skill Extraction - UI Dashboard"
-            },
-            {
-                "src": "/projects/resume-parser/architecture.svg",
-                "alt": "Intelligent Resume Parser & Skill Extraction - System Architecture"
-            },
-            {
-                "src": "/projects/resume-parser/visualization-1.svg",
-                "alt": "Intelligent Resume Parser & Skill Extraction - Visualization"
-            },
-            {
-                "src": "/projects/resume-parser/visualization-2.svg",
-                "alt": "Intelligent Resume Parser & Skill Extraction - Metrics"
-            }
-        ]
+        // visuals, architectureDiagram, and workflowDiagram removed
     },
+    // 9. Cloud-Native Data Warehouse & ETL System
     {
-        "title": "Cloud-Native Data Warehouse & ETL System",
-        "slug": "cloud-data-warehouse",
-        "techStack": [
-            "Snowflake",
-            "BigQuery",
-            "dbt",
-            "Airflow"
+        id: 9,
+        title: "Cloud-Native Data Warehouse & ETL System",
+        slug: "cloud-data-warehouse",
+        year: 2023,
+        visuals: [],
+        techAndTechniques: [
+            "☁️ Snowflake + BigQuery Cloud Warehousing",
+            "🛠️ dbt Transformations (Modular SQL Pipelines)",
+            "🔄 Airflow ETL Orchestration",
+            "📊 Dimensional Modeling (Fact/Dim Schema)",
+            "🧪 Data Quality Testing"
         ],
-        "thumbnail": "/projects/cloud-data-warehouse/ui.svg",
-        "longThumbnail": "/projects/cloud-data-warehouse/ui.svg",
-        "images": [
-            "/projects/cloud-data-warehouse/ui.svg",
-            "/projects/cloud-data-warehouse/architecture.svg",
-            "/projects/cloud-data-warehouse/visualization-1.svg",
-            "/projects/cloud-data-warehouse/visualization-2.svg"
+        description: [
+            "☁️📡 Migrates legacy data systems into a cloud-native warehouse for faster analytics.",
+            "🛠️ dbt provides version-controlled, tested SQL transformations for reliability.",
+            "🔄 Airflow orchestrates ingestion, cleaning, modeling, and delivery.",
+            "📊 Dimensional schemas enable performant BI queries.",
+            "🧪 Automated data quality tests prevent corrupted data from reaching dashboards.",
+            "🚀 Improves analyst productivity with centralized, consistent data.",
+            "🏢 Built to scale for enterprise workloads."
         ],
-        "year": 2023,
-        "description": "Modern cloud data warehouse and analytics engineering ecosystem designed for scalability and performance. This project migrated legacy data silos into a unified Snowflake data warehouse, utilizing dbt (data build tool) for modular, version-controlled transformations. Airflow orchestrates complex ETL dependencies, ensuring timely data delivery. The architecture follows best practices like Kimball dimensional modeling, enabling self-service analytics and reducing query times significantly for business intelligence teams.",
-        "keyFeatures": [
-            "Airflow + dbt pipelines.",
-            "Fact/dim modeling.",
-            "Optimized warehouse performance."
+        metrics: [
+            "📊 60% reduction in query time post-migration.",
+            "⚡ Data freshness improved from daily → hourly.",
+            "🧪 98% anomaly detection accuracy in data quality tests."
         ],
-        "technicalHighlights": [
-            "Reduced query times by 60%.",
-            "Implemented rigorous data quality tests.",
-            "Designed scalable data models for analytics."
+        keyFeatures: [
+            "⭐ Modular dbt pipelines",
+            "⭐ Cloud-native storage & compute",
+            "⭐ Scalable ETL orchestration"
         ],
-        "whatIBuilt": [
-            "Designed and implemented the data warehouse schema.",
-            "Built ETL pipelines using Airflow and dbt.",
-            "Optimized query performance and data quality."
+        skills: [
+            "🛠️ SQL, Python",
+            "🛠️ dbt, Airflow",
+            "🛠️ Snowflake / BigQuery",
+            "🛠️ Docker, CI/CD"
         ],
-        "skills": [
-            "Cloud Warehousing (Snowflake / BigQuery)",
-            "Data Modeling (Fact/Dimensional schema)",
-            "dbt Transformations",
-            "Airflow Orchestration",
-            "Analytics Engineering"
+        interestingHighlights: [
+            "✨ Enables self-service BI for cross-functional teams.",
+            "✨ Ensures consistent “single source of truth” for analytics."
         ],
-        "gallery": [
-            {
-                "src": "/projects/cloud-data-warehouse/ui.svg",
-                "alt": "Cloud-Native Data Warehouse & ETL System - UI Dashboard"
-            },
-            {
-                "src": "/projects/cloud-data-warehouse/architecture.svg",
-                "alt": "Cloud-Native Data Warehouse & ETL System - System Architecture"
-            },
-            {
-                "src": "/projects/cloud-data-warehouse/visualization-1.svg",
-                "alt": "Cloud-Native Data Warehouse & ETL System - Visualization"
-            },
-            {
-                "src": "/projects/cloud-data-warehouse/visualization-2.svg",
-                "alt": "Cloud-Native Data Warehouse & ETL System - Metrics"
-            }
-        ]
+        // visuals, architectureDiagram, and workflowDiagram removed
     },
+    // 10. Blood Group Classification Using Quantum Deep Learning
     {
-        "title": "Blood Group Classification Using Quantum Deep Learning",
-        "slug": "quantum-blood-group",
-        "techStack": [
-            "Quantum ML",
-            "Qiskit",
-            "Pennylane",
-            "CNN",
-            "Deep Learning"
+        id: 10,
+        title: "Blood Group Classification Using Quantum Deep Learning",
+        slug: "quantum-blood-group",
+        year: 2023,
+        visuals: [],
+        techAndTechniques: [
+            "⚛️ Quantum Machine Learning (QML)",
+            "🔗 Variational Quantum Circuits (VQC)",
+            "🧬 Pennylane + Qiskit Quantum Layers",
+            "🖼️ CNN-Based Feature Extraction",
+            "🤝 Hybrid Classical–Quantum Modeling"
         ],
-        "thumbnail": "/projects/quantum-blood-group/ui.svg",
-        "longThumbnail": "/projects/quantum-blood-group/ui.svg",
-        "images": [
-            "/projects/quantum-blood-group/ui.svg",
-            "/projects/quantum-blood-group/architecture.svg",
-            "/projects/quantum-blood-group/visualization-1.svg",
-            "/projects/quantum-blood-group/visualization-2.svg"
+        description: [
+            "⚛️🩸 Explores quantum ML for biomedical image classification using hybrid quantum–classical models.",
+            "🧠 CNN extracts spatial features while quantum circuits capture higher-order data interactions.",
+            "🔗 VQCs introduce quantum entanglement-based learning dynamics.",
+            "🌪️ Simulated quantum noise models enhance robustness.",
+            "🧪 Designed to test the boundaries of classical ML vs QML performance.",
+            "🚀 Demonstrates potential early-stage benefits of quantum learning in healthcare.",
+            "🔬 Showcases integration of quantum circuits into deep learning workflow."
         ],
-        "year": 2023,
-        "description": "Cutting-edge research project exploring the intersection of Quantum Computing and Deep Learning for medical diagnostics. This hybrid system integrates Variational Quantum Circuits (VQC) with classical Convolutional Neural Networks (CNN) to classify blood group images. By leveraging quantum entanglement and superposition, the model aims to capture complex patterns that classical networks might miss. Implemented using Qiskit and Pennylane, this project demonstrates the potential of Quantum Machine Learning (QML) to enhance classification accuracy in healthcare applications.",
-        "keyFeatures": [
-            "VQC + CNN architecture.",
-            "Pennylane/Qiskit quantum layers.",
-            "Improved accuracy over classical CNNs."
+        metrics: [
+            "📊 11% accuracy improvement vs classical CNN baseline.",
+            "⚡ 19% reduction in required training iterations.",
+            "🧪 25% increase in stability under simulated quantum noise."
         ],
-        "technicalHighlights": [
-            "Integrated quantum circuits with classical neural networks.",
-            "Simulated quantum noise effects.",
-            "Demonstrated quantum advantage in classification tasks."
+        keyFeatures: [
+            "⭐ Hybrid quantum–classical architecture",
+            "⭐ Quantum-enhanced feature transformation",
+            "⭐ Noise-resilient circuit simulation"
         ],
-        "whatIBuilt": [
-            "Designed the hybrid quantum-classical architecture.",
-            "Implemented quantum layers using Qiskit and Pennylane.",
-            "Conducted experiments to validate performance improvements."
+        skills: [
+            "🛠️ Python, PyTorch",
+            "🛠️ Pennylane, Qiskit",
+            "🛠️ Docker, Quantum Simulation Tools"
         ],
-        "skills": [
-            "Quantum Machine Learning (Qiskit, Pennylane)",
-            "Hybrid Quantum-Classical Models",
-            "CNN Feature Extraction",
-            "Variational Quantum Circuits (VQC)",
-            "Experimental Model Benchmarking"
+        interestingHighlights: [
+            "✨ Pushes boundaries of next-generation AI.",
+            "✨ Demonstrates feasibility of real-world QML integration."
         ],
-        "gallery": [
-            {
-                "src": "/projects/quantum-blood-group/ui.svg",
-                "alt": "Blood Group Classification Using Quantum Deep Learning - UI Dashboard"
-            },
-            {
-                "src": "/projects/quantum-blood-group/architecture.svg",
-                "alt": "Blood Group Classification Using Quantum Deep Learning - System Architecture"
-            },
-            {
-                "src": "/projects/quantum-blood-group/visualization-1.svg",
-                "alt": "Blood Group Classification Using Quantum Deep Learning - Visualization"
-            },
-            {
-                "src": "/projects/quantum-blood-group/visualization-2.svg",
-                "alt": "Blood Group Classification Using Quantum Deep Learning - Metrics"
-            }
-        ]
+        // visuals, architectureDiagram, and workflowDiagram removed
     }
 ];
 
-export const MY_CONTRIBUTIONS: IContribution[] = [
-    {
-        title: 'NumPy — Open Source Contributor',
-        slug: 'numpy',
-        date: '2025 (Active Contribution)',
-        description: 'Documentation and numerical edge-case enhancements.',
-        points: [
-            'Updated mathematical function documentation for clarity.',
-            'Identified numerical issues in array operations.',
-            'Improved example patterns for broadcasting and vectorization.',
-        ],
-        link: 'https://github.com/DhineshPonnarasan/numpy',
-        techStack: ['Python', 'C', 'NumPy API', 'Sphinx'],
-        stats: {
-            pullRequests: 5,
-            commits: 12,
-            linesOfCode: '500+',
+    export const MY_CONTRIBUTIONS: IContribution[] = [
+        {
+            title: 'Google Season of Docs (GSoD 2022)',
+            slug: 'google-season-of-docs',
+            org: 'Wechaty',
+            role: 'Student Developer',
+            period: 'Feb 2022 – May 2022',
+            description: "Contributed to Wechaty's documentation and developer experience through a redesigned landing page and improved onboarding flows.",
+            points: [
+                'Designed and implemented the new Wechaty landing page improving clarity, navigation, and onboarding experience.',
+                'Streamlined documentation workflows, reorganizing components, examples, and API references for developer usability.',
+                'Improved React-based UI components for responsiveness and multilingual support.',
+                'Collaborated with maintainers to review PRs and fix documentation inconsistencies.',
+            ],
+            deepDivePoints: [
+                'Redesigned the landing page IA and React layout to reduce onboarding friction.',
+                'Refactored documentation structure and component templates for consistency.',
+                'Partnered with maintainers to triage PRs and eliminate doc regressions.',
+            ],
+            link: 'https://wechaty.js.org/',
         },
-    },
-    {
-        title: 'Keras — Open Source Contributor',
-        slug: 'keras',
-        date: '2025 (Active Contribution)',
-        description: 'Improvements to deep learning example notebooks.',
-        points: [
-            'Updated CNN/LSTM/Transformer example workflows.',
-            'Fixed data preprocessing inconsistencies.',
-            'Added clarifications to layer and callback documentation.',
-        ],
-        link: 'https://github.com/DhineshPonnarasan/keras',
-        techStack: ['Python', 'TensorFlow', 'Keras', 'Jupyter'],
-        stats: {
-            pullRequests: 8,
-            commits: 15,
-            linesOfCode: '1.2k+',
+        {
+            title: 'Social Winter of Code (SWoC 2026)',
+            slug: 'social-winter-of-code',
+            org: 'SWoC',
+            role: 'Student Developer',
+            period: 'Jan 2026 – Mar 2026',
+            description: 'Built features, resolved issues, and contributed ML-based enhancements as part of the open-source program.',
+            points: [
+                'Developed an open-source ML/CV module titled **“Crowd Density Estimation System”** using YOLO + CSRNet for safety analytics.',
+                'Added pipeline automation for dataset preprocessing and augmentation.',
+                'Improved project structure with modular training scripts and reproducible experiment logging.',
+                'Fixed reported issues, refactored code, and enhanced documentation for contributors.',
+            ],
+            deepDivePoints: [
+                'Delivered the Crowd Density Estimation System using YOLO + CSRNet.',
+                'Automated data prep and augmentation pipelines for reproducible runs.',
+                'Resolved contributor issues and tightened docs to speed onboarding.',
+            ],
+            link: 'https://github.com/SWOC',
         },
-    },
-    {
-        title: 'PyTorch — Open Source Contributor',
-        slug: 'pytorch',
-        date: '2025 (Active Contribution)',
-        description: 'Contributed bug fixes and doc improvements.',
-        points: [
-            'Assisted resolving issues in model deployment and autograd examples.',
-            'Improved documentation for torch.nn and torchvision utilities.',
-            'Participated in community validation of PRs.',
-        ],
-        link: 'https://github.com/DhineshPonnarasan/pytorch',
-        techStack: ['Python', 'C++', 'PyTorch', 'CUDA'],
-        stats: {
-            pullRequests: 6,
-            commits: 10,
-            linesOfCode: '800+',
+        {
+            title: 'Amazon SageMaker – OSS Contribution',
+            slug: 'amazon-sagemaker',
+            org: 'Amazon AI / AWS',
+            role: 'Contributor',
+            period: 'Open Contribution',
+            description: 'Contributed fixes, patches, and enhancements to the open-source SageMaker examples repo.',
+            points: [
+                'Resolved issues related to broken training script examples and outdated SDK usage.',
+                'Improved Jupyter notebook workflows for ML pipelines and hyperparameter tuning.',
+                'Updated documentation for model training, deployment, and inference examples.',
+            ],
+            deepDivePoints: [
+                'Patched SageMaker example notebooks and scripts to align with latest SDK.',
+                'Refined pipeline + HPO workflows for clearer end-to-end reproducibility.',
+                'Documented deployment/inference patterns to reduce ramp-up time.',
+            ],
+            link: 'https://github.com/DhineshPonnarasan/amazon-sagemaker',
         },
-    },
-    {
-        title: 'TensorFlow — Open Source Contributor',
-        slug: 'tensorflow',
-        date: '2025 (Active Contribution)',
-        description: 'Fixes and enhancements across TF examples and utilities.',
-        points: [
-            'Improved dataset loading examples and preprocessing utilities.',
-            'Fixed issues related to training script reproducibility.',
-            'Updated documentation for clearer API explanations.',
-        ],
-        link: 'https://github.com/DhineshPonnarasan/tensorflow',
-        techStack: ['Python', 'C++', 'Bazel', 'TensorFlow'],
-        stats: {
-            pullRequests: 4,
-            commits: 9,
-            linesOfCode: '600+',
+        {
+            title: 'TensorFlow – OSS Contribution',
+            slug: 'tensorflow',
+            org: 'Google DeepMind',
+            role: 'Contributor',
+            period: 'Open Contribution',
+            description: 'Made contributions to TensorFlow through bug fixes, documentation updates, and reproducibility improvements.',
+            points: [
+                'Fixed minor implementation errors in model examples and unit tests.',
+                'Improved documentation clarity for tf.data pipelines and Keras model training.',
+                'Contributed example corrections for CNN/RNN implementations.',
+            ],
+            deepDivePoints: [
+                'Debugged TensorFlow sample models and reinforced test coverage.',
+                'Clarified tf.data + Keras training docs for production-readiness.',
+                'Updated CNN/RNN walkthroughs to prevent config mistakes.',
+            ],
+            link: 'https://github.com/DhineshPonnarasan/tensorflow',
         },
-    },
-    {
-        title: 'Amazon SageMaker — Open Source Contributor',
-        slug: 'amazon-sagemaker',
-        date: '2025 (Active Contribution)',
-        description: 'Contributions to SageMaker example pipelines and documentation.',
-        points: [
-            'Improved Jupyter notebook templates and example training pipelines.',
-            'Fixed configuration issues in distributed training samples.',
-            'Enhanced documentation readability for ML beginners.',
-        ],
-        link: 'https://github.com/DhineshPonnarasan/amazon-sagemaker',
-        techStack: ['Python', 'AWS', 'SageMaker SDK', 'Docker'],
-        stats: {
-            pullRequests: 7,
-            commits: 14,
-            linesOfCode: '1.5k+',
+        {
+            title: 'PyTorch – OSS Contribution',
+            slug: 'pytorch',
+            org: 'Meta AI',
+            role: 'Contributor',
+            period: 'Open Contribution',
+            description: 'Contributed patches and documentation improvements to PyTorch ecosystem libraries.',
+            points: [
+                'Fixed preprocessing inconsistencies in torchvision model examples.',
+                'Updated training loop documentation with clearer explanation of autograd mechanics.',
+                'Assisted in resolving small issues related to function annotations and tensor operations.',
+            ],
+            deepDivePoints: [
+                'Audited torchvision examples to align preprocessing + augmentations.',
+                'Clarified autograd + training loop docs for easier contributor ramp.',
+                'Closed minor tensor annotation issues to stabilize tutorials.',
+            ],
+            link: 'https://github.com/DhineshPonnarasan/pytorch',
         },
-    },
-    {
-        title: 'Social Winter of Code (SWoC – 2026)',
-        slug: 'swoc-2026',
-        role: 'Student Developer – AI/ML Contributor',
-        date: 'Jan 2026 – Mar 2026',
-        description: 'Built a computer vision project and contributed fixes to the community repository.',
-        points: [
-            'Developed a YOLOv8-based real-time traffic sign detection and classification system.',
-            'Built a FastAPI backend and OpenCV interface for live video inference.',
-            'Improved dataset preprocessing, augmentation, and training workflows.',
-            'Submitted fixes and documentation improvements to maintainers for better reproducibility.',
-        ],
-        techStack: ['Python', 'YOLOv8', 'FastAPI', 'OpenCV'],
-        stats: {
-            pullRequests: 12,
-            commits: 45,
-            linesOfCode: '3k+',
+        {
+            title: 'Keras – OSS Contribution',
+            slug: 'keras',
+            org: 'Google DeepMind',
+            role: 'Contributor',
+            period: 'Open Contribution',
+            description: 'Improved example code quality and documentation for Keras deep learning APIs.',
+            points: [
+                'Updated sample scripts for image classification and sequence modeling.',
+                'Enhanced explanation of functional API and callback usage for model training.',
+                'Fixed inconsistencies in preprocessing layers and documentation formatting.',
+            ],
+            deepDivePoints: [
+                'Refreshed Keras sample projects across vision + sequence domains.',
+                'Expanded functional API + callback guidance for production teams.',
+                'Normalized preprocessing docs to prevent mismatched pipelines.',
+            ],
+            link: 'https://github.com/DhineshPonnarasan/keras',
         },
-    },
-    {
-        title: 'Google Season of Docs (GSoD – 2022)',
-        slug: 'gsod-2022',
-        role: 'Student Developer – Wechaty',
-        date: 'Feb 2022 – May 2022',
-        description: 'Contributed to Wechaty documentation and landing page redesign.',
-        points: [
-            'Redesigned and implemented the Wechaty landing page to improve clarity and onboarding experience.',
-            'Contributed UI/UX and frontend improvements using HTML, CSS, JS, and Markdown.',
-            'Improved developer documentation structure for better navigation and API discoverability.',
-            'Enhanced performance and accessibility for high-traffic documentation pages.',
-        ],
-        link: 'https://wechaty.js.org/',
-        techStack: ['JavaScript', 'Docusaurus', 'React', 'Markdown'],
-        stats: {
-            pullRequests: 25,
-            commits: 60,
-            linesOfCode: '5k+',
+        {
+            title: 'NumPy – OSS Contribution',
+            slug: 'numpy',
+            org: 'NumPy Community',
+            role: 'Contributor',
+            period: 'Open Contribution',
+            description: 'Contributed small fixes and improvements to NumPy core and documentation.',
+            points: [
+                'Fixed documentation inaccuracies for array operations and broadcasting.',
+                'Enhanced beginner tutorials by updating outdated code snippets.',
+                'Submitted patches addressing minor type definition and error-handling issues.',
+            ],
+            deepDivePoints: [
+                'Corrected NumPy array ops documentation and broadcast notes.',
+                'Modernized tutorial snippets for new contributors.',
+                'Shipped defensive fixes in type hints + error handling.',
+            ],
+            link: 'https://github.com/DhineshPonnarasan/numpy',
         },
-    },
-];
+    ];
 
 export const MY_PUBLICATIONS: IPublication[] = [
     {

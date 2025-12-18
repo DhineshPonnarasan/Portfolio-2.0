@@ -31,8 +31,10 @@ export const metadata: Metadata = {
     description: 'Personal portfolio of Dhinesh Sadhu Subramaniam Ponnarasan',
 };
 
-import ChatWidget from '@/components/ChatWidget';
+import HomeChatWidget from '@/components/HomeChatWidget';
 import { LoadingProvider } from './context/LoadingContext';
+import CyberGridBackground from '../components/CyberGridBackground';
+import ScrollAnimator from '@/components/ScrollAnimator';
 
 export default function RootLayout({
     children,
@@ -53,7 +55,8 @@ export default function RootLayout({
             })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`}
             </Script>
             <body
-                className={`${antonFont.variable} ${robotoFlex.variable} antialiased`}
+                className={`${antonFont.variable} ${robotoFlex.variable} antialiased min-h-screen overflow-y-auto relative`}
+                suppressHydrationWarning
             >
                 <ReactLenis
                     root
@@ -75,9 +78,10 @@ export default function RootLayout({
                         <Preloader />
                         <CustomCursor />
                         <ParticleBackground />
+                        <ScrollAnimator />
                         <Navbar />
                         <ScrollProgressIndicator />
-                        <ChatWidget />
+                        <HomeChatWidget />
                         {children}
                     </LoadingProvider>
                 </ReactLenis>

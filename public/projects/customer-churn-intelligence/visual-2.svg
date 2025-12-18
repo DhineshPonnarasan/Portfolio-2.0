@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <!-- Dark background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#2f2f2f" rx="10" />
+  
+  <!-- Grid lines -->
+  <line x1="0" y1="200" x2="1920" y2="200" stroke="#444" stroke-width="1" />
+  <line x1="0" y1="400" x2="1920" y2="400" stroke="#444" stroke-width="1" />
+  <line x1="0" y1="600" x2="1920" y2="600" stroke="#444" stroke-width="1" />
+  <line x1="0" y1="800" x2="1920" y2="800" stroke="#444" stroke-width="1" />
+  <line x1="400" y1="0" x2="400" y2="1080" stroke="#444" stroke-width="1" />
+  <line x1="800" y1="0" x2="800" y2="1080" stroke="#444" stroke-width="1" />
+  <line x1="1200" y1="0" x2="1200" y2="1080" stroke="#444" stroke-width="1" />
+  <line x1="1600" y1="0" x2="1600" y2="1080" stroke="#444" stroke-width="1" />
+  
+  <!-- Data Lake -->
+  <rect x="100" y="50" width="200" height="100" fill="#3498db" rx="10" />
+  <text x="150" y="100" font-size="24" font-family="Arial" fill="#fff" text-anchor="middle">Data Lake</text>
+  
+  <!-- Airflow ETL -->
+  <rect x="400" y="50" width="200" height="100" fill="#f1c40f" rx="10" />
+  <text x="450" y="100" font-size="24" font-family="Arial" fill="#fff" text-anchor="middle">Airflow ETL</text>
+  
+  <!-- Feature Store -->
+  <rect x="700" y="50" width="200" height="100" fill="#2ecc71" rx="10" />
+  <text x="750" y="100" font-size="24" font-family="Arial" fill="#fff" text-anchor="middle">Feature Store</text>
+  
+  <!-- MLflow Registry -->
+  <rect x="1000" y="50" width="200" height="100" fill="#9b59b6" rx="10" />
+  <text x="1050" y="100" font-size="24" font-family="Arial" fill="#fff" text-anchor="middle">MLflow Registry</text>
+  
+  <!-- Ensemble Models -->
+  <rect x="1300" y="50" width="200" height="100" fill="#1abc9c" rx="10" />
+  <text x="1350" y="100" font-size="24" font-family="Arial" fill="#fff" text-anchor="middle">Ensemble Models (XGBoost, CatBoost)</text>
+  
+  <!-- FastAPI Scoring -->
+  <rect x="100" y="300" width="200" height="100" fill="#16a085" rx="10" />
+  <text x="150" y="350" font-size="24" font-family="Arial" fill="#fff" text-anchor="middle">FastAPI Scoring</text>
+  
+  <!-- Analytics Dashboard -->
+  <rect x="1300" y="300" width="200" height="100" fill="#e74c3c" rx="10" />
+  <text x="1350" y="350" font-size="24" font-family="Arial" fill="#fff" text-anchor="middle">Analytics Dashboard</text>
+  
+  <!-- Arrows -->
+  <line x1="300" y1="100" x2="400" y2="100" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="600" y1="100" x2="700" y2="100" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="900" y1="100" x2="1000" y2="100" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="1200" y1="100" x2="1300" y2="100" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="300" y1="350" x2="400" y2="350" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="150" y1="200" x2="150" y2="300" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="1350" y1="200" x2="1350" y2="300" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)" />
+  
+  <!-- Arrowhead definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#fff" />
+    </marker>
+  </defs>
+</svg>

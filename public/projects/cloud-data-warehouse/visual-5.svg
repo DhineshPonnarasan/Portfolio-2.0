@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#212121" rx="10" />
+  
+  <!-- Header -->
+  <rect x="10" y="10" width="1900" height="50" fill="#2f2f2f" rx="5" />
+  <text x="20" y="40" font-size="24" font-family="Arial" fill="#66ccff">Cloud-Native Data Warehouse & ETL System</text>
+  
+  <!-- Alert Banner -->
+  <rect x="10" y="70" width="1900" height="30" fill="#ff6666" rx="5" />
+  <text x="20" y="90" font-size="18" font-family="Arial" fill="#ffffff">Late Load Detected: 10 minutes behind schedule</text>
+  
+  <!-- Run Timeline -->
+  <rect x="10" y="110" width="1900" height="200" fill="#2f2f2f" rx="5" />
+  <path d="M 20 150 L 1800 150" stroke="#66ccff" stroke-width="2" fill="none" />
+  <circle cx="20" cy="150" r="10" fill="#66ccff" />
+  <circle cx="1800" cy="150" r="10" fill="#66ccff" />
+  <text x="20" y="170" font-size="18" font-family="Arial" fill="#ffffff">00:00:00</text>
+  <text x="1780" y="170" font-size="18" font-family="Arial" fill="#ffffff">23:59:59</text>
+  
+  <!-- Latency Line -->
+  <path d="M 20 250 L 100 220 L 200 250 L 300 280 L 400 250 L 500 220 L 600 250 L 700 280 L 800 250 L 900 220 L 1000 250 L 1100 280 L 1200 250 L 1300 220 L 1400 250 L 1500 280 L 1600 250 L 1700 220 L 1800 250" stroke="#66ccff" stroke-width="2" fill="none" />
+  <text x="20" y="270" font-size="18" font-family="Arial" fill="#ffffff">Latency: 100ms avg</text>
+  
+  <!-- SLA Table -->
+  <rect x="10" y="310" width="1900" height="300" fill="#2f2f2f" rx="5" />
+  <text x="20" y="330" font-size="18" font-family="Arial" fill="#ffffff">SLA Metrics</text>
+  <text x="20" y="360" font-size="18" font-family="Arial" fill="#ffffff">Metric 1: 99.9% uptime</text>
+  <text x="20" y="390" font-size="18" font-family="Arial" fill="#ffffff">Metric 2: 100ms avg latency</text>
+  <text x="20" y="420" font-size="18" font-family="Arial" fill="#ffffff">Metric 3: 100% data accuracy</text>
+  
+  <!-- Footer -->
+  <rect x="10" y="1010" width="1900" height="50" fill="#2f2f2f" rx="5" />
+  <text x="20" y="1030" font-size="18" font-family="Arial" fill="#66ccff">Cloud-Native Data Warehouse & ETL System - Operations Console</text>
+</svg>

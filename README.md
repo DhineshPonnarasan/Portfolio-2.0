@@ -4,7 +4,7 @@ Welcome to the source code of my personal portfolio website. This project showca
 
 ## ✨ Features
 
-- **🤖 Chitti AI Chatbot**: An intelligent virtual assistant powered by Groq API (Llama 3) to answer questions about my background.
+- **🤖 Chitti Chatbot**: An intelligent virtual assistant powered by Groq API (Llama 3) to answer questions about my background.
 - **🎨 Modern UI/UX**: Built with Next.js, Tailwind CSS, and Framer Motion for a seamless and interactive user experience.
 - **📂 Dynamic Project Gallery**: Auto-generated assets and detailed case studies for my engineering projects.
 - **⚡ Performance**: Optimized for speed, accessibility, and SEO.

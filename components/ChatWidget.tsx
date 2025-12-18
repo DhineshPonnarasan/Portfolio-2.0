@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { MessageCircle, X, Bot } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -11,11 +11,13 @@ import WelcomePopup from './WelcomePopup';
 
 const INITIAL_MESSAGE: Message = {
     role: 'assistant',
-    content: "Hi, I am Chitti — Dhinesh’s Virtual Assistant.\n\nAsk me anything about his projects, skills, or experience.",
+    content: "Hi, I am the Chitti — Dhinesh’s Virtual Assistant.\n\nAsk me anything about his projects, skills, or experience.",
 };
 
+const MAX_CONTEXT_MESSAGES = 6;
+
 const ChatWidget = () => {
-    const { isLoading: isPreloaderLoading, hasLoaded } = useLoading();
+    const { hasLoaded } = useLoading();
     const [isOpen, setIsOpen] = useState(false);
     const [showWelcome, setShowWelcome] = useState(false);
     const [iconShape, setIconShape] = useState<'circle' | 'square' | 'hexagon'>('circle');
@@ -23,6 +25,7 @@ const ChatWidget = () => {
     // Chat State
     const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
     const [isLoading, setIsLoading] = useState(false);
+    const assistantAppendedRef = useRef(false);
 
     // Shape Randomization & Welcome Popup
     useEffect(() => {
@@ -64,10 +67,42 @@ const ChatWidget = () => {
         };
     }, [isOpen]);
 
+    const appendOrUpdateAssistant = (content: string) => {
+        setMessages((prev) => {
+            const updated = [...prev];
+            const lastMsg = updated[updated.length - 1];
+
+            if (!assistantAppendedRef.current || lastMsg?.role !== 'assistant') {
+                assistantAppendedRef.current = true;
+                updated.push({ role: 'assistant', content });
+            } else {
+                updated[updated.length - 1] = { ...lastMsg, content };
+            }
+
+            return updated;
+        });
+    };
+
+    const showAssistantError = (message: string) => {
+        setMessages((prev) => {
+            const updated = [...prev];
+            const lastIndex = updated.length - 1;
+            if (updated[lastIndex]?.role === 'assistant') {
+                updated[lastIndex] = { ...updated[lastIndex], content: message };
+            } else {
+                updated.push({ role: 'assistant', content: message });
+            }
+            return updated;
+        });
+        assistantAppendedRef.current = true;
+    };
+
     const handleSend = async (content: string) => {
         // Add user message
         const userMessage: Message = { role: 'user', content };
-        setMessages((prev) => [...prev, userMessage]);
+        assistantAppendedRef.current = false;
+        const updatedMessages = [...messages, userMessage];
+        setMessages(updatedMessages);
         setIsLoading(true);
 
         try {
@@ -78,7 +113,9 @@ const ChatWidget = () => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    messages: [...messages, userMessage].map(({ role, content }) => ({ role, content })),
+                    messages: updatedMessages
+                        .slice(-MAX_CONTEXT_MESSAGES)
+                        .map(({ role, content }) => ({ role, content })),
                 }),
             });
 
@@ -93,25 +130,19 @@ const ChatWidget = () => {
             while (!done) {
                 const { value, done: doneReading } = await reader.read();
                 done = doneReading;
-                const chunkValue = decoder.decode(value, { stream: true });
-                accumulatedContent += chunkValue;
+                if (value) {
+                    const chunkValue = decoder.decode(value, { stream: true });
+                    accumulatedContent += chunkValue;
+                    appendOrUpdateAssistant(accumulatedContent);
+                }
+            }
 
-                // Update the last message (assistant's response) with new content
-                setMessages((prev) => {
-                    const newMessages = [...prev];
-                    const lastMsg = newMessages[newMessages.length - 1];
-                    if (lastMsg.role === 'assistant') {
-                        lastMsg.content = accumulatedContent;
-                    }
-                    return newMessages;
-                });
+            if (!assistantAppendedRef.current) {
+                appendOrUpdateAssistant("I couldn't generate a response. Please try again.");
             }
         } catch (error) {
             console.error('Chat Error:', error);
-            setMessages((prev) => [
-                ...prev,
-                { role: 'assistant', content: "I'm having trouble connecting right now. Please try again later." },
-            ]);
+            showAssistantError("I'm having trouble connecting right now. Please try again later.");
         } finally {
             setIsLoading(false);
         }
@@ -121,7 +152,7 @@ const ChatWidget = () => {
     if (!hasLoaded) return null;
 
     return (
-        <>
+        <div className="chat-widget-root">
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
@@ -132,7 +163,7 @@ const ChatWidget = () => {
                         className="fixed bottom-4 right-4 z-[50] w-[calc(100vw-32px)] md:w-[400px] h-[calc(100svh-100px)] md:h-[600px] flex flex-col"
                     >
                         {/* Chat UI */}
-                        <div className="flex-1 overflow-hidden relative h-full">
+                        <div className="flex-1 overflow-hidden relative h-full min-h-0">
                             <ChatUI 
                                 messages={messages} 
                                 isLoading={isLoading} 
@@ -181,7 +212,7 @@ const ChatWidget = () => {
                     </div>
                 )}
             </AnimatePresence>
-        </>
+        </div>
     );
 };
 

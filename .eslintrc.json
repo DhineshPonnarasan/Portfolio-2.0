@@ -1,8 +1,10 @@
 {
+    "root": true,
     "extends": ["next/core-web-vitals", "next/typescript"],
     "ignorePatterns": ["lib/pdfParser/pdf.js"],
     "rules": {
         "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+        "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^ignored" }],
         "react-hooks/exhaustive-deps": "off",
         "@typescript-eslint/no-explicit-any": "off"
     }

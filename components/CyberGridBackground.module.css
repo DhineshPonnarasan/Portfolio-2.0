@@ -1,0 +1,12 @@
+.cyberGrid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+  background: #0a0a0f;
+  opacity: 1;
+  mix-blend-mode: screen;
+  transition: opacity 0.3s;
+}

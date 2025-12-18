@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#212121" rx="10" />
+  
+  <!-- Header -->
+  <rect x="50" y="50" width="1820" height="100" fill="#2f2f2f" rx="5" />
+  <text x="100" y="120" font-size="36" font-family="Arial" fill="#66ccff">Nimbus Data Warehouse</text>
+  
+  <!-- Pipeline Health Cards -->
+  <rect x="100" y="200" width="300" height="200" fill="#333333" rx="10" />
+  <text x="120" y="240" font-size="24" font-family="Arial" fill="#66ccff">Pipeline Health</text>
+  <text x="120" y="280" font-size="18" font-family="Arial" fill="#999999">Last Run: 10 minutes ago</text>
+  <text x="120" y="320" font-size="18" font-family="Arial" fill="#66ccff">Status: Healthy</text>
+  
+  <rect x="450" y="200" width="300" height="200" fill="#333333" rx="10" />
+  <text x="470" y="240" font-size="24" font-family="Arial" fill="#66ccff">Data Freshness</text>
+  <text x="470" y="280" font-size="18" font-family="Arial" fill="#999999">Last Updated: 5 minutes ago</text>
+  <text x="470" y="320" font-size="18" font-family="Arial" fill="#66ccff">Status: Up-to-date</text>
+  
+  <!-- Query Latency Line Chart -->
+  <rect x="100" y="450" width="800" height="300" fill="#333333" rx="10" />
+  <path d="M 120 480 L 920 480" stroke="#66ccff" stroke-width="2" fill="none" />
+  <path d="M 120 520 L 920 520" stroke="#66ccff" stroke-width="2" fill="none" />
+  <path d="M 120 560 L 920 560" stroke="#66ccff" stroke-width="2" fill="none" />
+  <path d="M 150 480 L 150 560" stroke="#66ccff" stroke-width="2" fill="none" />
+  <path d="M 250 480 L 250 560" stroke="#66ccff" stroke-width="2" fill="none" />
+  <path d="M 350 480 L 350 560" stroke="#66ccff" stroke-width="2" fill="none" />
+  <path d="M 450 480 L 450 560" stroke="#66ccff" stroke-width="2" fill="none" />
+  <path d="M 550 480 L 550 560" stroke="#66ccff" stroke-width="2" fill="none" />
+  <path d="M 650 480 L 650 560" stroke="#66ccff" stroke-width="2" fill="none" />
+  <path d="M 750 480 L 750 560" stroke="#66ccff" stroke-width="2" fill="none" />
+  <path d="M 850 480 L 850 560" stroke="#66ccff" stroke-width="2" fill="none" />
+  <path d="M 950 480 L 950 560" stroke="#66ccff" stroke-width="2" fill="none" />
+  <path d="M 120 520 L 150 500 L 250 520 L 350 500 L 450 520 L 550 500 L 650 520 L 750 500 L 850 520 L 950 500" stroke="#66ccff" stroke-width="4" fill="none" />
+  
+  <!-- Freshness Badges -->
+  <rect x="1000" y="200" width="200" height="50" fill="#333333" rx="10" />
+  <text x="1020" y="230" font-size="18" font-family="Arial" fill="#66ccff">Fresh</text>
+  <rect x="1000" y="300" width="200" height="50" fill="#333333" rx="10" />
+  <text x="1020" y="330" font-size="18" font-family="Arial" fill="#66ccff">Stale</text>
+  
+  <!-- Cobalt/Cyan Glow -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#03055B" rx="10" opacity="0.2" />
+  <rect x="50" y="50" width="1820" height="100" fill="#0047AB" rx="5" opacity="0.2" />
+</svg>

@@ -25,7 +25,7 @@ describe('ChatWidget Component', () => {
         render(<ChatWidget />);
         // Wait for 1.5s delay
         await waitFor(() => {
-            expect(screen.getByText(/Hi, I'm Chitti the Chatbot/i)).toBeInTheDocument();
+            expect(screen.getByText(/Hi, I'm the Chitti/i)).toBeInTheDocument();
         }, { timeout: 2000 });
     });
 

@@ -1,7 +1,4 @@
 export type Next_Page_Url = string;
-// UrlObject;
-// | __next_route_internal_types__.StaticRoutes
-// | __next_route_internal_types__.DynamicRoutes;
 
 export type Variant =
     | 'primary'
@@ -15,15 +12,25 @@ export type Variant =
     | 'link'
     | 'no-color';
 
+export interface VisualAsset {
+    label: string;
+    prompt: string;
+    image: string;
+}
+
 export interface IProject {
+    id: number;
     title: string;
     year: number;
-    description: string;
+    description: string | string[];
     skills?: string[];
-    techStack: string[];
-    thumbnail: string;
-    longThumbnail: string;
-    images: string[];
+    techStack?: string[];
+    techAndTechniques?: string[];
+    metrics?: string[];
+    interestingHighlights?: string[];
+    thumbnail?: string;
+    longThumbnail?: string;
+    images?: string[];
     slug: string;
     liveUrl?: string;
     sourceCode?: string;
@@ -32,7 +39,10 @@ export interface IProject {
     technicalHighlights?: string[];
     whatIBuilt?: string[];
     architecture?: string;
-    gallery?: { src: string; alt: string }[];
+    gallery?: { src: string; alt?: string }[];
+    visuals: VisualAsset[];
+    architectureDiagram?: string;
+    workflowDiagram?: string;
 }
 
 export interface IPublication {
@@ -53,13 +63,17 @@ export interface IEducation {
     duration: string;
     coursework?: string;
     achievements?: string;
+}
+
 export interface IContribution {
     title: string;
     slug: string;
-    role?: string;
-    date: string;
+    org: string;
+    role: string;
+    period: string;
     description: string;
     points: string[];
+    deepDivePoints?: string[];
     link?: string;
     techStack?: string[];
     stats?: {
@@ -67,5 +81,4 @@ export interface IContribution {
         commits?: number;
         linesOfCode?: string;
     };
-}   link?: string;
 }

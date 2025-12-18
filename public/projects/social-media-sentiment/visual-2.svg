@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <!-- Dark background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#2f2f2f" rx="10" />
+  
+  <!-- Grid lines -->
+  <line x1="0" y1="100" x2="1920" y2="100" stroke="#444" stroke-width="1" />
+  <line x1="0" y1="300" x2="1920" y2="300" stroke="#444" stroke-width="1" />
+  <line x1="0" y1="500" x2="1920" y2="500" stroke="#444" stroke-width="1" />
+  <line x1="0" y1="700" x2="1920" y2="700" stroke="#444" stroke-width="1" />
+  <line x1="0" y1="900" x2="1920" y2="900" stroke="#444" stroke-width="1" />
+  
+  <!-- Social apps rectangle -->
+  <rect x="100" y="50" width="200" height="100" fill="#333" rx="10" />
+  <text x="150" y="100" font-size="24" font-family="Arial" fill="#66CCFF">Social Apps</text>
+  
+  <!-- Kafka ingestion rectangle -->
+  <rect x="400" y="50" width="200" height="100" fill="#333" rx="10" />
+  <text x="450" y="100" font-size="24" font-family="Arial" fill="#66CCFF">Kafka Ingestion</text>
+  
+  <!-- Spark streaming cluster rectangle -->
+  <rect x="700" y="50" width="250" height="100" fill="#333" rx="10" />
+  <text x="775" y="100" font-size="24" font-family="Arial" fill="#66CCFF">Spark Streaming Cluster</text>
+  
+  <!-- BERT inference microservices rectangle -->
+  <rect x="100" y="250" width="300" height="100" fill="#333" rx="10" />
+  <text x="175" y="300" font-size="24" font-family="Arial" fill="#66CCFF">BERT Inference Microservices</text>
+  
+  <!-- Feature store rectangle -->
+  <rect x="500" y="250" width="200" height="100" fill="#333" rx="10" />
+  <text x="550" y="300" font-size="24" font-family="Arial" fill="#66CCFF">Feature Store</text>
+  
+  <!-- Alert service rectangle -->
+  <rect x="800" y="250" width="200" height="100" fill="#333" rx="10" />
+  <text x="850" y="300" font-size="24" font-family="Arial" fill="#66CCFF">Alert Service</text>
+  
+  <!-- Web dashboard rectangle -->
+  <rect x="1100" y="250" width="200" height="100" fill="#333" rx="10" />
+  <text x="1150" y="300" font-size="24" font-family="Arial" fill="#66CCFF">Web Dashboard</text>
+  
+  <!-- Arrows -->
+  <line x1="300" y1="100" x2="400" y2="100" stroke="#66CCFF" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="600" y1="100" x2="700" y2="100" stroke="#66CCFF" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="950" y1="100" x2="100" y2="250" stroke="#66CCFF" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="400" y1="250" x2="500" y2="250" stroke="#66CCFF" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="700" y1="250" x2="800" y2="250" stroke="#66CCFF" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="1000" y1="250" x2="1100" y2="250" stroke="#66CCFF" stroke-width="2" marker-end="url(#arrowhead)" />
+  
+  <!-- Arrowhead definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#66CCFF" />
+    </marker>
+  </defs>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <!-- Charcoal background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#333" rx="10" />
+  
+  <!-- Raw stream node -->
+  <g transform="translate(100, 100)">
+    <rect x="0" y="0" width="200" height="50" fill="#444" rx="10" />
+    <text x="10" y="30" font-size="24" font-family="Open Sans" fill="#fff">Raw Stream</text>
+  </g>
+  
+  <!-- Language detect node -->
+  <g transform="translate(400, 100)">
+    <rect x="0" y="0" width="200" height="50" fill="#444" rx="10" />
+    <text x="10" y="30" font-size="24" font-family="Open Sans" fill="#fff">Language Detect</text>
+  </g>
+  
+  <!-- Tokenize node -->
+  <g transform="translate(700, 100)">
+    <rect x="0" y="0" width="200" height="50" fill="#444" rx="10" />
+    <text x="10" y="30" font-size="24" font-family="Open Sans" fill="#fff">Tokenize</text>
+  </g>
+  
+  <!-- Transformer sentiment/topic node -->
+  <g transform="translate(1000, 100)">
+    <rect x="0" y="0" width="250" height="50" fill="#444" rx="10" />
+    <text x="10" y="30" font-size="24" font-family="Open Sans" fill="#fff">Transformer Sentiment/Topic</text>
+  </g>
+  
+  <!-- Aggregate metrics node -->
+  <g transform="translate(100, 300)">
+    <rect x="0" y="0" width="200" height="50" fill="#444" rx="10" />
+    <text x="10" y="30" font-size="24" font-family="Open Sans" fill="#fff">Aggregate Metrics</text>
+  </g>
+  
+  <!-- Alert routing node -->
+  <g transform="translate(400, 300)">
+    <rect x="0" y="0" width="200" height="50" fill="#444" rx="10" />
+    <text x="10" y="30" font-size="24" font-family="Open Sans" fill="#fff">Alert Routing</text>
+  </g>
+  
+  <!-- Visualization node -->
+  <g transform="translate(700, 300)">
+    <rect x="0" y="0" width="200" height="50" fill="#444" rx="10" />
+    <text x="10" y="30" font-size="24" font-family="Open Sans" fill="#fff">Visualization</text>
+  </g>
+  
+  <!-- Connections -->
+  <path d="M 300 150 L 400 150" stroke="#09f" stroke-width="2" fill="none" />
+  <path d="M 600 150 L 700 150" stroke="#09f" stroke-width="2" fill="none" />
+  <path d="M 900 150 L 1000 150" stroke="#09f" stroke-width="2" fill="none" />
+  <path d="M 1250 150 L 100 300" stroke="#09f" stroke-width="2" fill="none" />
+  <path d="M 300 350 L 400 350" stroke="#09f" stroke-width="2" fill="none" />
+  <path d="M 600 350 L 700 350" stroke="#09f" stroke-width="2" fill="none" />
+  
+  <!-- Teal highlights -->
+  <rect x="95" y="95" width="10" height="10" fill="#09f" rx="5" />
+  <rect x="395" y="95" width="10" height="10" fill="#09f" rx="5" />
+  <rect x="695" y="95" width="10" height="10" fill="#09f" rx="5" />
+  <rect x="995" y="95" width="10" height="10" fill="#09f" rx="5" />
+  <rect x="95" y="295" width="10" height="10" fill="#09f" rx="5" />
+  <rect x="395" y="295" width="10" height="10" fill="#09f" rx="5" />
+  <rect x="695" y="295" width="10" height="10" fill="#09f" rx="5" />
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <!-- Background -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#1a1d23" rx="10" />
+  
+  <!-- Lineage View Container -->
+  <g transform="translate(100, 100)">
+    <!-- Dataset 1 -->
+    <rect x="0" y="0" width="200" height="100" fill="#2f343a" rx="5" />
+    <text x="10" y="30" font-size="18" fill="#66d9ef">Sales Data</text>
+    <circle cx="180" cy="50" r="10" fill="#34c759" />
+    
+    <!-- Dataset 2 -->
+    <rect x="250" y="0" width="200" height="100" fill="#2f343a" rx="5" />
+    <text x="260" y="30" font-size="18" fill="#66d9ef">Customer Data</text>
+    <circle cx="440" cy="50" r="10" fill="#34c759" />
+    
+    <!-- Connection Line -->
+    <line x1="200" y1="50" x2="250" y2="50" stroke="#66d9ef" stroke-width="2" />
+    
+    <!-- Data Quality Rule Card -->
+    <rect x="500" y="0" width="150" height="100" fill="#2f343a" rx="5" />
+    <text x="510" y="30" font-size="14" fill="#66d9ef">Data Quality Rules</text>
+    <text x="510" y="60" font-size="14" fill="#66d9ef">Validations: 5</text>
+    
+    <!-- Dataset 3 -->
+    <rect x="700" y="0" width="200" height="100" fill="#2f343a" rx="5" />
+    <text x="710" y="30" font-size="18" fill="#66d9ef">Product Data</text>
+    <circle cx="880" cy="50" r="10" fill="#ff3b3b" />
+    
+    <!-- Connection Line -->
+    <line x1="450" y1="50" x2="700" y2="50" stroke="#66d9ef" stroke-width="2" />
+    
+    <!-- Status Dot Legend -->
+    <g transform="translate(1000, 0)">
+      <circle cx="0" cy="25" r="10" fill="#34c759" />
+      <text x="20" y="30" font-size="14" fill="#66d9ef">Pass</text>
+      <circle cx="0" cy="60" r="10" fill="#ff3b3b" />
+      <text x="20" y="65" font-size="14" fill="#66d9ef">Fail</text>
+    </g>
+  </g>
+  
+  <!-- Glass Aesthetic Overlay -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#000000" opacity="0.2" rx="10" />
+</svg>
