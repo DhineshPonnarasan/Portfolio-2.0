@@ -114,9 +114,17 @@ const ArchitectureComparisonPanel = ({ project, isOpen, onClose }: ArchitectureC
   useEffect(() => {
     if (!isOpen) return;
     const previousOverflow = document.body.style.overflow;
+    const previousPaddingRight = document.body.style.paddingRight;
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    
     document.body.style.overflow = 'hidden';
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+    
     return () => {
       document.body.style.overflow = previousOverflow;
+      document.body.style.paddingRight = previousPaddingRight;
     };
   }, [isOpen]);
 
@@ -176,11 +184,14 @@ const ArchitectureComparisonPanel = ({ project, isOpen, onClose }: ArchitectureC
             onClick={onClose}
           />
           <motion.aside
-            className="fixed left-1/2 top-1/2 z-50 w-full max-w-3xl -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-white/10 bg-zinc-950/95 shadow-2xl"
+            className="fixed left-1/2 top-1/2 z-50 w-full max-w-3xl -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-white/10 bg-zinc-950/95 shadow-2xl max-h-[90vh] flex flex-col overflow-hidden"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ type: 'spring', stiffness: 180, damping: 22 }}
+            onWheel={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
+            style={{ overscrollBehavior: 'contain' }}
           >
             <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
               <div>
@@ -223,7 +234,7 @@ const ArchitectureComparisonPanel = ({ project, isOpen, onClose }: ArchitectureC
               </button>
             </div>
 
-            <div className="px-6 pb-6">
+            <div className="flex-1 overflow-y-auto px-6 pb-6 min-h-0" style={{ overscrollBehavior: 'contain' }}>
               {error && <p className="text-sm text-red-400 mb-3">{error}</p>}
               {comparison && (
                 <div className="prose prose-invert max-w-none border border-white/10 rounded-2xl bg-white/5 p-5 text-sm leading-relaxed">
@@ -231,7 +242,7 @@ const ArchitectureComparisonPanel = ({ project, isOpen, onClose }: ArchitectureC
                 </div>
               )}
               {isLoading && !comparison && (
-                <p className="text-sm text-white/70">Synthesizing comparison…</p>
+                <p className="text-sm text-white/70">Analyzing architectures…</p>
               )}
             </div>
           </motion.aside>

@@ -80,7 +80,7 @@ export default function ImportDhinesh() {
 
           <div className="relative flex items-center gap-3">
             <span className="h-2 w-2 rounded-full bg-primary shadow-[0_0_10px_var(--primary)] animate-pulse" />
-            <span className="text-2xl font-black text-white">
+            <span className="text-2xl font-anton leading-[1.1] text-white">
               ~/import_dhinesh
             </span>
           </div>

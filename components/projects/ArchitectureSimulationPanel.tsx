@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AlertTriangle, Loader2, Play, Sparkles, X } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
@@ -14,11 +14,11 @@ interface ArchitectureSimulationPanelProps {
 }
 
 const SCENARIOS = [
-  'Traffic spike across ingress channels',
-  'Data drift affecting upstream signals',
-  'Primary model failure mid-release',
-  'Cold start for a brand-new customer cohort',
-  'Latency bottleneck in the inference path',
+  'Traffic spike at ingress',
+  'Data drift in upstream signals',
+  'Model failure during deployment',
+  'Cold start scenario',
+  'Latency bottleneck',
 ];
 
 const ArchitectureSimulationPanel = ({ project, isOpen, onClose }: ArchitectureSimulationPanelProps) => {
@@ -28,6 +28,24 @@ const ArchitectureSimulationPanel = ({ project, isOpen, onClose }: ArchitectureS
   const [lastSimulatedScenario, setLastSimulatedScenario] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Scroll lock when modal opens
+  useEffect(() => {
+    if (!isOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    const previousPaddingRight = document.body.style.paddingRight;
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    
+    document.body.style.overflow = 'hidden';
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+    
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.body.style.paddingRight = previousPaddingRight;
+    };
+  }, [isOpen]);
 
   const activeScenario = useMemo(() => customScenario.trim() || scenario, [customScenario, scenario]);
 
@@ -75,6 +93,8 @@ const ArchitectureSimulationPanel = ({ project, isOpen, onClose }: ArchitectureS
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 24 }}
             transition={{ type: 'spring', stiffness: 210, damping: 24 }}
+            onWheel={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
           >
             <div className="w-full max-w-5xl rounded-[32px] border border-[hsla(var(--border)_/_0.55)] bg-[hsla(var(--background-light)_/_0.95)] shadow-[0_25px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl flex flex-col max-h-[92vh] overflow-hidden">
               <div className="flex items-start justify-between gap-6 px-8 py-6 border-b border-[hsla(var(--border)_/_0.5)] bg-[radial-gradient(circle_at_85%_20%,hsla(var(--primary)_/_0.18),transparent_45%)]">
@@ -92,7 +112,7 @@ const ArchitectureSimulationPanel = ({ project, isOpen, onClose }: ArchitectureS
                 </button>
               </div>
 
-              <div className="grid gap-6 px-8 py-6 lg:grid-cols-[1.15fr,0.85fr] overflow-y-auto custom-scrollbar">
+              <div className="flex-1 grid gap-6 px-8 py-6 lg:grid-cols-[1.15fr,0.85fr] overflow-y-auto custom-scrollbar min-h-0" style={{ overscrollBehavior: 'contain' }}>
                 <div className="space-y-6">
                   <div>
                     <p className="text-xs uppercase tracking-[0.3em] text-[hsla(var(--foreground)_/_0.55)]">Preset stressors</p>

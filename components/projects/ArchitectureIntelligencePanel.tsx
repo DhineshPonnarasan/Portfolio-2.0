@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useCallback, useEffect, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Loader2, MessageSquare, Sparkles, X } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
@@ -21,9 +21,9 @@ interface ConversationEntry {
 }
 
 const quickPrompts = [
-  'How does Box 2 shield Box 3 during ingest pressure?',
-  'Where are the biggest latency risks between Box 4 and Box 5?',
-  'Which step turns raw inputs from Box 1 into signals Ops can trust?',
+  'Walk me through the data flow from Box 1 to Box 6',
+  'What are the key reliability boundaries in this system?',
+  'How does this architecture handle failure scenarios?',
 ];
 
 const ArchitectureIntelligencePanel = ({ project, isOpen, onClose }: ArchitectureIntelligencePanelProps) => {
@@ -31,6 +31,25 @@ const ArchitectureIntelligencePanel = ({ project, isOpen, onClose }: Architectur
   const [question, setQuestion] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Scroll lock when modal opens
+  useEffect(() => {
+    if (!isOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    const previousPaddingRight = document.body.style.paddingRight;
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    
+    document.body.style.overflow = 'hidden';
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+    
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.body.style.paddingRight = previousPaddingRight;
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     setHistory([]);
@@ -89,7 +108,7 @@ const ArchitectureIntelligencePanel = ({ project, isOpen, onClose }: Architectur
       {isOpen && (
         <>
           <motion.div
-            className="fixed inset-0 bg-[hsla(var(--background)_/_0.65)] backdrop-blur-sm z-40"
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -101,53 +120,39 @@ const ArchitectureIntelligencePanel = ({ project, isOpen, onClose }: Architectur
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 24 }}
             transition={{ type: 'spring', stiffness: 200, damping: 26 }}
+            onWheel={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
           >
-            <div className="w-full max-w-4xl rounded-[32px] border border-[hsla(var(--border)_/_0.55)] bg-[hsla(var(--background-light)_/_0.95)] shadow-[0_25px_80px_rgba(0,0,0,0.38)] backdrop-blur-xl flex flex-col max-h-[90vh] overflow-hidden">
-
-            <div className="px-6 pt-6 pb-6 border-b border-[hsla(var(--border)_/_0.55)] bg-[radial-gradient(circle_at_top,hsla(var(--background-light)_/_0.85),hsla(var(--background)_/_0.95))] space-y-5">
-              <div className="flex items-start justify-between gap-4">
-                <div className="space-y-2">
-                  <p className="text-[0.65rem] uppercase tracking-[0.35em] text-[hsla(var(--foreground)_/_0.55)]">System Architecture Diagram</p>
-                  <h5 className="text-2xl font-semibold text-[hsl(var(--foreground))]">Boxes 1 → 6 operating contract</h5>
-                  <p className="text-sm text-[hsla(var(--foreground)_/_0.65)]">Grounded in {project.title}</p>
-                </div>
-                <button
-                  type="button"
-                  className="rounded-full p-2 text-[hsla(var(--foreground)_/_0.55)] hover:text-[hsl(var(--foreground))] hover:bg-[hsla(var(--foreground)_/_0.08)]"
-                  onClick={onClose}
-                >
-                  <X size={18} />
-                </button>
-              </div>
-              <div className="grid gap-3 sm:grid-cols-2">
-                <div className="rounded-2xl border border-[hsla(var(--border)_/_0.5)] bg-[hsla(var(--background)_/_0.5)] p-4">
-                  <p className="text-[0.65rem] uppercase tracking-[0.3em] text-[hsla(var(--foreground)_/_0.55)] mb-1">Architecture Artifact</p>
-                  <p className="text-sm text-[hsla(var(--foreground)_/_0.85)]">Immutable system diagram sets the contract—no redraw, no SVG, no alternate modes.</p>
-                </div>
-                <div className="rounded-2xl border border-[hsla(var(--border)_/_0.5)] bg-[hsla(var(--background)_/_0.5)] p-4">
-                  <p className="text-[0.65rem] uppercase tracking-[0.3em] text-[hsla(var(--foreground)_/_0.55)] mb-1">Flow Guardrails</p>
-                  <p className="text-sm text-[hsla(var(--foreground)_/_0.85)]">Reference Boxes 1 → 6 explicitly. The assistant only reasons within that sequencing.</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="px-6 py-5 border-b border-[hsla(var(--border)_/_0.55)] bg-[hsla(var(--background)_/_0.35)]">
-              <div className="grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
-                <div className="space-y-3 text-sm text-[hsla(var(--foreground)_/_0.75)]">
-                  <p>Reference the system flow directly and ask one precise scenario. The response arrives in a single voice—recruiter-friendly, engineer-respectful, confident.</p>
-                  <div className="flex flex-wrap gap-2 text-[0.65rem] uppercase tracking-[0.2em] text-[hsla(var(--foreground)_/_0.55)]">
-                    <span className="rounded-full border border-[hsla(var(--border)_/_0.55)] px-3 py-1">🧠 One clean explanation</span>
-                    <span className="rounded-full border border-[hsla(var(--border)_/_0.55)] px-3 py-1">👔 Recruiter-ready tone</span>
-                    <span className="rounded-full border border-[hsla(var(--border)_/_0.55)] px-3 py-1">💎 Confident POV</span>
+            <div 
+              className="w-full max-w-3xl rounded-2xl border border-white/10 bg-zinc-950/95 shadow-2xl backdrop-blur-xl flex flex-col max-h-[85vh] overflow-hidden"
+              style={{ overscrollBehavior: 'contain' }}
+            >
+              {/* Header */}
+              <div className="px-6 py-5 border-b border-white/10 bg-zinc-900/50 shrink-0">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="space-y-1">
+                    <p className="text-xs uppercase tracking-widest text-white/50">Architecture Explorer</p>
+                    <h5 className="text-xl font-semibold text-white">{project.title}</h5>
                   </div>
+                  <button
+                    type="button"
+                    className="rounded-full p-2 text-white/50 hover:text-white hover:bg-white/10 transition-colors"
+                    onClick={onClose}
+                  >
+                    <X size={18} />
+                  </button>
                 </div>
-                <div className="rounded-2xl border border-[hsla(var(--border)_/_0.5)] bg-[hsla(var(--background)_/_0.5)] p-4 space-y-2">
-                  <p className="text-xs uppercase tracking-[0.3em] text-[hsla(var(--foreground)_/_0.55)]">Suggested investigations</p>
+              </div>
+
+              {/* Quick prompts */}
+              <div className="px-6 py-4 border-b border-white/10 bg-zinc-900/30 shrink-0">
+                <p className="text-xs uppercase tracking-widest text-white/40 mb-3">Quick questions</p>
+                <div className="flex flex-wrap gap-2">
                   {quickPrompts.map((prompt) => (
                     <button
                       key={prompt}
                       type="button"
-                      className="w-full rounded-xl border border-[hsla(var(--border)_/_0.45)] bg-[hsla(var(--background-light)_/_0.45)] px-3 py-2 text-left text-[hsla(var(--foreground)_/_0.8)] text-xs hover:border-[hsla(var(--primary)_/_0.6)] hover:text-[hsl(var(--foreground))]"
+                      className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/70 hover:border-primary/50 hover:text-white transition-colors"
                       onClick={() => sendQuestion(prompt)}
                       disabled={isLoading}
                     >
@@ -156,58 +161,67 @@ const ArchitectureIntelligencePanel = ({ project, isOpen, onClose }: Architectur
                   ))}
                 </div>
               </div>
-            </div>
 
-            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4 custom-scrollbar">
-              {history.length === 0 && !isLoading && (
-                <div className="text-sm text-[hsla(var(--foreground)_/_0.65)] leading-relaxed">
-                  <p>Ask about failure modes, throughput bottlenecks, or why specific handoffs exist between Boxes 1 through 6. Answers stay anchored to the system diagram—no redrawing, no new modes.</p>
-                </div>
-              )}
-
-              {history.map((entry) => (
-                <div key={entry.id} className="rounded-xl border border-[hsla(var(--border)_/_0.6)] bg-[hsla(var(--background)_/_0.55)] p-4 space-y-3 shadow-[0_12px_30px_rgba(0,0,0,0.25)]">
-                  <div className="flex items-center gap-2 text-xs text-[hsla(var(--foreground)_/_0.55)]">
-                    <MessageSquare size={14} />
-                    <span>{new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+              {/* Conversation area */}
+              <div 
+                ref={scrollContainerRef}
+                className="flex-1 overflow-y-auto px-6 py-4 space-y-4 min-h-0 custom-scrollbar"
+                style={{ overscrollBehavior: 'contain' }}
+              >
+                {history.length === 0 && !isLoading && (
+                  <div className="text-sm text-white/50 leading-relaxed py-8 text-center">
+                    <p>Ask about data flow, failure modes, scaling considerations, or any architectural decisions in this system.</p>
                   </div>
-                  <p className="text-sm font-medium text-[hsl(var(--foreground))]">{entry.question}</p>
-                  <div className="prose prose-invert prose-sm max-w-none leading-relaxed text-[hsla(var(--foreground)_/_0.85)]">
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{entry.answer}</ReactMarkdown>
+                )}
+
+                {history.map((entry) => (
+                  <motion.div 
+                    key={entry.id} 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="rounded-xl border border-white/10 bg-white/5 p-4 space-y-3"
+                  >
+                    <div className="flex items-center gap-2 text-xs text-white/40">
+                      <MessageSquare size={14} />
+                      <span>{new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                    </div>
+                    <p className="text-sm font-medium text-white">{entry.question}</p>
+                    <div className="prose prose-invert prose-sm max-w-none leading-relaxed text-white/80">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{entry.answer}</ReactMarkdown>
+                    </div>
+                  </motion.div>
+                ))}
+
+                {isLoading && (
+                  <div className="flex items-center gap-3 text-sm text-white/60 py-4">
+                    <Loader2 className="animate-spin" size={16} />
+                    <span>Analyzing architecture...</span>
                   </div>
-                </div>
-              ))}
+                )}
 
-              {isLoading && (
-                <div className="flex items-center gap-3 text-sm text-[hsla(var(--foreground)_/_0.7)]">
-                  <Loader2 className="animate-spin" size={16} />
-                  <span>Generating architecture insight…</span>
-                </div>
-              )}
-
-              {error && <p className="text-sm text-red-400">{error}</p>}
-            </div>
-
-            <form onSubmit={handleSubmit} className="border-t border-[hsla(var(--border)_/_0.55)] p-4 bg-[hsla(var(--background)_/_0.45)]">
-              <label className="text-[0.65rem] uppercase tracking-[0.35em] text-[hsla(var(--foreground)_/_0.5)] mb-2 block">Ask AI about this architecture</label>
-              <div className="flex gap-2">
-                <textarea
-                  value={question}
-                  onChange={(e) => setQuestion(e.target.value)}
-                  className="flex-1 resize-none rounded-xl border border-[hsla(var(--border)_/_0.6)] bg-[hsla(var(--background)_/_0.5)] px-3 py-2 text-sm text-[hsl(var(--foreground))] focus:outline-none focus:ring-2 focus:ring-[hsla(var(--primary)_/_0.45)]"
-                  rows={2}
-                  placeholder="Ask about resilience, scaling, or bottlenecks..."
-                  disabled={isLoading}
-                />
-                <button
-                  type="submit"
-                  className="h-[46px] w-[46px] rounded-xl bg-primary/80 text-[hsl(var(--primary-foreground))] flex items-center justify-center hover:bg-primary"
-                  disabled={isLoading}
-                >
-                  {isLoading ? <Loader2 className="animate-spin" size={18} /> : <Sparkles size={18} />}
-                </button>
+                {error && <p className="text-sm text-red-400 py-2">{error}</p>}
               </div>
-            </form>
+
+              {/* Input */}
+              <form onSubmit={handleSubmit} className="border-t border-white/10 p-4 bg-zinc-900/50 shrink-0">
+                <div className="flex gap-3">
+                  <textarea
+                    value={question}
+                    onChange={(e) => setQuestion(e.target.value)}
+                    className="flex-1 resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-primary/50 transition-colors"
+                    rows={2}
+                    placeholder="Ask about resilience, scaling, data flow..."
+                    disabled={isLoading}
+                  />
+                  <button
+                    type="submit"
+                    className="h-[54px] w-[54px] rounded-xl bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 transition-colors disabled:opacity-50"
+                    disabled={isLoading || !question.trim()}
+                  >
+                    {isLoading ? <Loader2 className="animate-spin" size={18} /> : <Sparkles size={18} />}
+                  </button>
+                </div>
+              </form>
             </div>
           </motion.div>
         </>

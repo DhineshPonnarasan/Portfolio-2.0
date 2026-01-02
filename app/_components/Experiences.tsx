@@ -6,44 +6,47 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
 import parse from 'html-react-parser';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Briefcase, MapPin, Calendar, Building2, ArrowUpRight, Sparkles, ChevronDown } from 'lucide-react';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const Experiences = () => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const [activeIndex, setActiveIndex] = useState<number>(0);
-    const activeExperience = MY_EXPERIENCE[activeIndex];
-    const detailRef = useRef<HTMLDivElement>(null);
+    const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
     useGSAP(
         () => {
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: containerRef.current,
-                    start: 'top 80%',
-                    end: 'bottom bottom',
-                    scrub: 1,
-                },
-            });
+            const cards = containerRef.current?.querySelectorAll('.exp-card');
+            if (!cards) return;
 
-            tl.fromTo(
-                '.exp-item',
-                { x: -50, opacity: 0 },
-                { x: 0, opacity: 1, stagger: 0.1 },
-            );
+            cards.forEach((card, idx) => {
+                gsap.fromTo(
+                    card,
+                    { 
+                        opacity: 0, 
+                        y: 60,
+                        scale: 0.95
+                    },
+                    { 
+                        opacity: 1, 
+                        y: 0,
+                        scale: 1,
+                        duration: 0.7,
+                        delay: idx * 0.15,
+                        ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: card,
+                            start: 'top 85%',
+                            toggleActions: 'play none none none'
+                        }
+                    }
+                );
+            });
         },
         { scope: containerRef },
     );
-
-    useEffect(() => {
-        if (!detailRef.current) return;
-        gsap.fromTo(
-            detailRef.current,
-            { autoAlpha: 0, y: 20 },
-            { autoAlpha: 1, y: 0, duration: 0.45, ease: 'power2.out' },
-        );
-    }, [activeIndex]);
 
     const isContractRole = (company: string, title: string) => /freelance|contract|consultant/i.test(`${company} ${title}`);
 
@@ -52,81 +55,130 @@ const Experiences = () => {
             <div className="container">
                 <SectionTitle title="Experience" />
 
-                <div className="grid items-start gap-12 xl:grid-cols-[420px_minmax(0,1fr)]">
-                    <div className="relative">
-                        <div className="pointer-events-none absolute left-5 top-3 hidden h-[calc(100%-1.5rem)] w-px bg-white/10 lg:block" />
-                        <div className="space-y-4">
-                            {MY_EXPERIENCE.map((item, idx) => {
-                                const active = idx === activeIndex;
-                                const contract = isContractRole(item.company, item.title);
+                <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    {MY_EXPERIENCE.map((item, idx) => {
+                        const isExpanded = expandedIndex === idx;
+                        const contract = isContractRole(item.company, item.title);
 
-                                return (
-                                    <button
-                                        key={idx}
-                                        onClick={() => setActiveIndex(idx)}
-                                        className={cn(
-                                            'exp-item relative w-full rounded-[28px] border px-6 py-6 pl-12 text-left transition-all duration-300',
-                                            active
-                                                ? 'border-primary/70 bg-primary/10 text-white shadow-[0_25px_55px_rgba(34,211,238,0.22)]'
-                                                : 'border-white/10 bg-white/[0.02] text-white/70 hover:border-primary/40 hover:text-white'
-                                        )}
-                                    >
-                                        <span
-                                            className={cn(
-                                                'absolute left-5 top-8 hidden size-3 rounded-full border-2 lg:block',
-                                                active ? 'border-primary bg-primary/70' : 'border-white/30'
-                                            )}
-                                        />
-                                        <div className="flex flex-col gap-2">
-                                            <div className="flex items-center justify-between gap-3">
-                                                <p className="text-[0.6rem] uppercase tracking-[0.35em] text-white/50">Case {String(idx + 1).padStart(2, '0')}</p>
-                                                <span className="text-[0.65rem] font-mono text-white/60">{item.duration}</span>
-                                            </div>
-                                            <h3 className="text-2xl font-semibold text-white">{item.company}</h3>
-                                            <p className="text-sm text-white/60">{item.title}</p>
-                                            <div className="flex flex-wrap gap-2 text-xs font-mono text-white/60">
-                                                <span className="rounded-full border border-white/15 bg-black/20 px-3 py-1">{item.location}</span>
-                                                {contract && (
-                                                    <span className="rounded-full border border-white/15 bg-black/20 px-3 py-1 text-white">Contract</span>
-                                                )}
-                                            </div>
+                        return (
+                            <motion.div
+                                key={idx}
+                                className="exp-card group relative"
+                                whileHover={{ y: -4 }}
+                                transition={{ type: "spring", stiffness: 300 }}
+                            >
+                                <div className={cn(
+                                    "relative h-full rounded-3xl border transition-all duration-500 overflow-hidden",
+                                    "bg-gradient-to-br from-white/[0.04] via-white/[0.02] to-white/[0.01]",
+                                    "backdrop-blur-sm",
+                                    isExpanded 
+                                        ? "border-primary/60 shadow-[0_25px_55px_rgba(16,185,129,0.25)]" 
+                                        : "border-white/10 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/10"
+                                )}>
+                                    {/* Gradient overlay on hover */}
+                                    <div className={cn(
+                                        "absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-500",
+                                        isExpanded && "opacity-100"
+                                    )} />
+
+                                    {/* Top corner badge */}
+                                    <div className="absolute top-6 right-6 z-10">
+                                        <div className={cn(
+                                            "w-12 h-12 rounded-xl border-2 flex items-center justify-center text-lg font-anton transition-all duration-500",
+                                            isExpanded
+                                                ? "bg-primary/20 border-primary/50 text-primary shadow-lg shadow-primary/30"
+                                                : "bg-white/5 border-white/10 text-white/30 group-hover:border-primary/30"
+                                        )}>
+                                            {String(idx + 1).padStart(2, '0')}
                                         </div>
-                                    </button>
-                                );
-                            })}
-                        </div>
-                    </div>
+                                    </div>
 
-                    <div ref={detailRef} className="relative overflow-hidden rounded-[40px] border border-white/10 bg-white/[0.04] p-10">
-                        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at 92% 15%, rgba(34,211,238,0.2), transparent 45%)' }} />
-                        <div className="relative space-y-8">
-                            <div className="flex flex-wrap items-end justify-between gap-5">
-                                <div>
-                                    <p className="text-xs uppercase tracking-[0.35em] text-white/40">Role</p>
-                                    <h3 className="mt-3 text-4xl font-anton text-white leading-tight">
-                                        {activeExperience.title}
-                                    </h3>
-                                    <p className="text-base font-semibold text-primary">{activeExperience.company}</p>
+                                    <div className="relative p-6 md:p-8 space-y-6">
+                                        {/* Header */}
+                                        <div className="space-y-3 pt-8">
+                                            <div className="flex items-center gap-2">
+                                                <Building2 className="w-5 h-5 text-primary/70" />
+                                                <h3 className={cn(
+                                                    "text-2xl md:text-3xl font-anton transition-colors duration-300",
+                                                    isExpanded ? "text-primary" : "text-white group-hover:text-primary"
+                                                )}>
+                                                    {item.company}
+                                                </h3>
+                                            </div>
+                                            <p className="text-lg text-white/80 font-medium">
+                                                {item.title}
+                                            </p>
+                                        </div>
+
+                                        {/* Info badges */}
+                                        <div className="flex flex-wrap gap-2">
+                                            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-xs font-mono text-white/70">
+                                                <Calendar className="w-3 h-3" />
+                                                {item.duration}
+                                            </div>
+                                            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-xs font-mono text-white/70">
+                                                <MapPin className="w-3 h-3" />
+                                                {item.location}
+                                            </div>
+                                            {contract && (
+                                                <div className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary">
+                                                    <Sparkles className="w-3 h-3" />
+                                                    Contract
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Expandable Details */}
+                                        <AnimatePresence>
+                                            {isExpanded && (
+                                                <motion.div
+                                                    initial={{ height: 0, opacity: 0 }}
+                                                    animate={{ height: "auto", opacity: 1 }}
+                                                    exit={{ height: 0, opacity: 0 }}
+                                                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                                                    className="overflow-hidden"
+                                                >
+                                                    <div className="pt-6 border-t border-white/10 space-y-4">
+                                                        <div className="flex items-center gap-2">
+                                                            <Briefcase className="w-4 h-4 text-primary/70" />
+                                                            <p className="text-xs uppercase tracking-widest text-white/50 font-medium">Key Responsibilities</p>
+                                                        </div>
+                                                        {item.description && (
+                                                            <div className="custom-bullet-list text-white/80 leading-relaxed text-sm">
+                                                                {parse(item.description)}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+
+                                        {/* Toggle Button */}
+                                        <button
+                                            onClick={() => setExpandedIndex(isExpanded ? null : idx)}
+                                            className={cn(
+                                                "w-full flex items-center justify-center gap-2 py-3 rounded-xl border transition-all duration-300",
+                                                isExpanded
+                                                    ? "border-primary/30 bg-primary/10 text-primary hover:bg-primary/20"
+                                                    : "border-white/10 bg-white/5 text-white/70 hover:border-primary/30 hover:text-primary hover:bg-primary/5"
+                                            )}
+                                        >
+                                            <span className="text-sm font-semibold">
+                                                {isExpanded ? 'Hide details' : 'View details'}
+                                            </span>
+                                            <ChevronDown 
+                                                size={16} 
+                                                className={cn(
+                                                    "transition-transform duration-300",
+                                                    isExpanded && "rotate-180"
+                                                )} 
+                                            />
+                                        </button>
+                                    </div>
                                 </div>
-                                <div className="rounded-2xl border border-white/10 bg-black/30 p-4 text-left">
-                                    <p className="text-xs uppercase tracking-[0.35em] text-white/40">Duration</p>
-                                    <p className="mt-2 text-base font-semibold text-white">{activeExperience.duration}</p>
-                                    <p className="text-xs text-white/60">{activeExperience.location}</p>
-                                </div>
-                            </div>
-
-                            <div className="flex flex-wrap gap-3 text-xs font-mono text-white/70">
-                                <span className="rounded-full border border-white/15 bg-black/20 px-4 py-1">Impact-driven pods</span>
-                                {isContractRole(activeExperience.company, activeExperience.title) && (
-                                    <span className="rounded-full border border-white/15 bg-black/20 px-4 py-1">Freelance / Contract</span>
-                                )}
-                            </div>
-
-                            <div className="prose prose-invert prose-base max-w-none text-white/80 leading-relaxed">
-                                {activeExperience.description && parse(activeExperience.description)}
-                            </div>
-                        </div>
-                    </div>
+                            </motion.div>
+                        );
+                    })}
                 </div>
             </div>
         </section>

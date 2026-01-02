@@ -6,6 +6,7 @@ import TransitionLink from '@/components/TransitionLink';
 import ArchitectureIntelligencePanel from './ArchitectureIntelligencePanel';
 import ArchitectureComparisonPanel from './ArchitectureComparisonPanel';
 import ArchitectureSimulationPanel from './ArchitectureSimulationPanel';
+import VoiceArchitectureExplanation from './VoiceArchitectureExplanation';
 import { IProject } from '@/types';
 import { useState, useEffect, useRef } from 'react';
 import { useGSAP } from '@gsap/react';
@@ -15,6 +16,9 @@ import { ArrowLeft, ExternalLink, Github, Loader2, X } from 'lucide-react';
 import parse from 'html-react-parser';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import MermaidDiagram from '../MermaidDiagram';
+import { getArchitectureMetadata } from '@/lib/architecture';
+import { MERMAID_DIAGRAMS } from '@/lib/mermaid-templates';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -25,10 +29,11 @@ interface Props {
 const ProjectDetail = ({ project }: Props) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const architectureAnchorRef = useRef<HTMLDivElement>(null);
-    const pulseTimerRef = useRef<NodeJS.Timeout | null>(null);
+    const pulseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const [isIntelPanelOpen, setIsIntelPanelOpen] = useState(false);
     const [isComparePanelOpen, setIsComparePanelOpen] = useState(false);
     const [isSimulationOpen, setIsSimulationOpen] = useState(false);
+    const [isVoiceExplanationOpen, setIsVoiceExplanationOpen] = useState(false);
     const [isExplainLoading, setIsExplainLoading] = useState(false);
     const [explanation, setExplanation] = useState<string | null>(null);
     const [explainError, setExplainError] = useState<string | null>(null);
@@ -38,8 +43,13 @@ const ProjectDetail = ({ project }: Props) => {
     const [animationBadge, setAnimationBadge] = useState<string | null>(null);
     const architectureAnchorId = `system-architecture-${project.slug}`;
     const architectureDescribeId = `${architectureAnchorId}-diagram-desc`;
+    const { complexity, style } = getArchitectureMetadata(project.id);
+    const [activeMode, setActiveMode] = useState<'overview' | 'data' | 'deployment'>('overview');
+    const [viewMode, setViewMode] = useState<'ascii' | 'architecture' | 'workflow'>('ascii');
 
-    const badgeTimerRef = useRef<NodeJS.Timeout | null>(null);
+    const mermaidTemplates = MERMAID_DIAGRAMS[project.slug as keyof typeof MERMAID_DIAGRAMS];
+
+    const badgeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const stopChittiPulse = () => {
         if (pulseTimerRef.current) {
             clearTimeout(pulseTimerRef.current);
@@ -54,7 +64,7 @@ const ProjectDetail = ({ project }: Props) => {
             clearTimeout(badgeTimerRef.current);
         }
         setAnimationBadge(message);
-        badgeTimerRef.current = window.setTimeout(() => setAnimationBadge(null), 3200);
+        badgeTimerRef.current = setTimeout(() => setAnimationBadge(null), 3200);
     };
 
     useGSAP(
@@ -106,7 +116,7 @@ const ProjectDetail = ({ project }: Props) => {
             (entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
-                        pulseTimerRef.current = window.setTimeout(() => {
+                        pulseTimerRef.current = setTimeout(() => {
                             setShowChittiPulse(true);
                         }, 5000);
                         setPulseScheduled(true);
@@ -136,17 +146,33 @@ const ProjectDetail = ({ project }: Props) => {
         setIsExplanationVisible(true);
         setExplainError(null);
         setIsExplainLoading(true);
+        setExplanation(null);
         try {
-            const response = await fetch('/api/architecture-explain', {
+            const response = await fetch('/api/architecture', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ projectId: project.id }),
+                body: JSON.stringify({ slug: project.slug, mode: activeMode }),
             });
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error(data.error || 'Unable to explain this architecture right now.');
+
+            if (!response.ok || !response.body) {
+                const data = await response.json().catch(() => ({}));
+                throw new Error((data as any).error || 'Unable to explain this architecture right now.');
             }
-            setExplanation(data.explanation);
+
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let done = false;
+            let accumulated = '';
+
+            while (!done) {
+                const { value, done: doneReading } = await reader.read();
+                done = doneReading;
+                if (value) {
+                    const chunk = decoder.decode(value, { stream: true });
+                    accumulated += chunk;
+                    setExplanation(accumulated);
+                }
+            }
         } catch (error) {
             setExplainError(error instanceof Error ? error.message : 'Unexpected error.');
         } finally {
@@ -169,18 +195,18 @@ const ProjectDetail = ({ project }: Props) => {
     }, []);
 
     return (
-        <section className="pt-5 pb-14">
+        <section className="min-h-screen py-8">
             <div className="container" ref={containerRef}>
                 <TransitionLink
                     back
                     href="/"
-                    className="mb-16 inline-flex gap-2 items-center group h-12"
+                    className="mb-12 inline-flex gap-2 items-center group h-12"
                 >
                     <ArrowLeft className="group-hover:-translate-x-1 group-hover:text-primary transition-all duration-300" />
                     Back
                 </TransitionLink>
 
-                <div className="top-0 min-h-[calc(100svh-100px)] flex" id="info">
+                <div className="min-h-[calc(100vh-200px)] flex" id="info">
                     <div className="relative w-full">
                         <div className="flex items-start gap-6 mx-auto mb-10 max-w-[800px] flex-wrap md:flex-nowrap">
                             <h1 className="fade-in-later opacity-0 text-4xl md:text-[60px] leading-none font-anton overflow-hidden">
@@ -219,13 +245,17 @@ const ProjectDetail = ({ project }: Props) => {
                             <div className="fade-in-later">
                                 <p className="text-muted-foreground font-anton mb-3">Tech & Techniques</p>
                                 {project.techAndTechniques && project.techAndTechniques.length > 0 ? (
-                                    <ul className="list-disc pl-5 space-y-2 text-lg text-muted-foreground/90">
+                                    <div className="flex flex-wrap gap-2">
                                         {project.techAndTechniques.map((tech, i) => (
-                                            <li key={i}>{tech}</li>
+                                            <span key={i} className="tech-tag">{tech}</span>
                                         ))}
-                                    </ul>
+                                    </div>
                                 ) : project.techStack && project.techStack.length > 0 ? (
-                                    <div className="text-lg">{project.techStack.join(', ')}</div>
+                                    <div className="flex flex-wrap gap-2">
+                                        {project.techStack.map((tech, i) => (
+                                            <span key={i} className="tech-tag">{tech}</span>
+                                        ))}
+                                    </div>
                                 ) : null}
                             </div>
 
@@ -251,22 +281,28 @@ const ProjectDetail = ({ project }: Props) => {
                             </div>
 
                             {project.keyFeatures && project.keyFeatures.length > 0 && (
-                                <div>
-                                    <h4 className="text-xl font-bold mb-3 text-primary">Key Features</h4>
-                                    <ul className="list-disc pl-5 space-y-2 text-lg text-muted-foreground/90">
+                                <div className="fade-in-later">
+                                    <h4 className="text-xl font-bold mb-4 text-primary flex items-center gap-2">
+                                        <span className="w-1 h-6 bg-gradient-to-b from-primary to-secondary rounded-full"></span>
+                                        Key Features
+                                    </h4>
+                                    <ul className="custom-bullet-list space-y-3">
                                         {project.keyFeatures.map((point, i) => (
-                                            <li key={i}>{point}</li>
+                                            <li key={i} className="text-lg text-muted-foreground/90">{point}</li>
                                         ))}
                                     </ul>
                                 </div>
                             )}
 
                             {project.metrics && project.metrics.length > 0 && (
-                                <div>
-                                    <h4 className="text-xl font-bold mb-3 text-primary">Metrics</h4>
-                                    <ul className="list-disc pl-5 space-y-2 text-lg text-muted-foreground/90">
+                                <div className="fade-in-later">
+                                    <h4 className="text-xl font-bold mb-4 text-primary flex items-center gap-2">
+                                        <span className="w-1 h-6 bg-gradient-to-b from-primary to-secondary rounded-full"></span>
+                                        Metrics
+                                    </h4>
+                                    <ul className="custom-bullet-list space-y-3">
                                         {project.metrics.map((point, i) => (
-                                            <li key={i}>{point}</li>
+                                            <li key={i} className="text-lg text-muted-foreground/90">{point}</li>
                                         ))}
                                     </ul>
                                 </div>
@@ -275,90 +311,199 @@ const ProjectDetail = ({ project }: Props) => {
                             {project.skills && project.skills.length > 0 && (
                                 <div className="fade-in-later">
                                     <p className="text-muted-foreground font-anton mb-3">Tech Stack / Skills</p>
-                                    <ul className="list-disc pl-5 space-y-2 text-lg text-muted-foreground/90">
+                                    <div className="flex flex-wrap gap-2">
                                         {project.skills.map((skill, i) => (
-                                            <li key={i}>{skill}</li>
+                                            <span key={i} className="tech-tag">{skill}</span>
                                         ))}
-                                    </ul>
+                                    </div>
                                 </div>
                             )}
 
                             {project.interestingHighlights && project.interestingHighlights.length > 0 && (
                                 <div className="fade-in-later">
-                                    <h4 className="text-xl font-bold mb-3 text-primary">Interesting Highlights</h4>
-                                    <ul className="list-disc pl-5 space-y-2 text-lg text-muted-foreground/90">
+                                    <h4 className="text-xl font-bold mb-4 text-primary flex items-center gap-2">
+                                        <span className="w-1 h-6 bg-gradient-to-b from-primary to-secondary rounded-full"></span>
+                                        Interesting Highlights
+                                    </h4>
+                                    <ul className="custom-bullet-list space-y-3">
                                         {project.interestingHighlights.map((point, i) => (
-                                            <li key={i}>{point}</li>
+                                            <li key={i} className="text-lg text-muted-foreground/90">{point}</li>
                                         ))}
                                     </ul>
                                 </div>
                             )}
 
                             {project.interestingHighlights && project.interestingHighlights.length > 0 && (
-                                <div className="mt-14 fade-in-later" id={architectureAnchorId} ref={architectureAnchorRef}>
-                                    <div className="space-y-1">
-                                        <p className="text-[0.65rem] uppercase tracking-[0.4em] text-muted-foreground/70">Why this architecture matters</p>
-                                        <p className="text-sm text-muted-foreground/80">
-                                            It documents how this system keeps reliability, observability, and stakeholder communication aligned across every release.
-                                        </p>
+                                <div className="mt-10 fade-in-later" id={architectureAnchorId} ref={architectureAnchorRef}>
+                                    <div className="flex flex-wrap items-center gap-3">
+                                        <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-muted-foreground/80">
+                                            <span className="font-semibold capitalize">{complexity}</span> complexity
+                                        </span>
+                                        <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-muted-foreground/80">
+                                            {style}
+                                        </span>
                                     </div>
                                     <div className="architecture-shell mt-6">
-                                        <div className="architecture-shell__flow-highlight" aria-hidden="true" />
-                                        <div className="architecture-shell__header">
+                                        {/* Header */}
+                                        <div className="architecture-shell__header mb-4">
                                             <div>
                                                 <p className="architecture-shell__eyebrow">System Architecture</p>
-                                                <h4 className="architecture-shell__title">Architecture That Ships</h4>
+                                                <h4 className="architecture-shell__title">{project.title}</h4>
                                             </div>
-                                            <div className="flex flex-wrap gap-2 mt-2">
+                                        </div>
+
+                                        {/* View Controls */}
+                                        <div className="flex flex-wrap items-center gap-3 mt-4">
+                                            {/* Diagram Format */}
+                                            <div className="flex gap-2 text-[0.7rem] tracking-wider uppercase">
                                                 <button
                                                     type="button"
-                                                    className="text-[0.6rem] tracking-[0.4em] uppercase border border-white/20 rounded-full px-3 py-1 text-muted-foreground/70 transition hover:text-white hover:border-white"
-                                                    onClick={handleExplainArchitecture}
+                                                    className={`architecture-view-mode-btn px-4 py-2 rounded-md border transition-all duration-200 ${
+                                                        viewMode === 'ascii'
+                                                            ? 'border-white/30 bg-white/10 text-white shadow-sm'
+                                                            : 'border-white/10 bg-white/[0.03] text-white/60 hover:border-white/30 hover:bg-white/[0.06]'
+                                                    }`}
+                                                    onClick={() => setViewMode('ascii')}
+                                                    aria-pressed={viewMode === 'ascii'}
                                                 >
-                                                    Explain each box
+                                                    Detailed
+                                                </button>
+                                                {mermaidTemplates?.architecture && (
+                                                    <button
+                                                        type="button"
+                                                        className={`architecture-view-mode-btn px-4 py-2 rounded-md border transition-all duration-200 ${
+                                                            viewMode === 'architecture'
+                                                                ? 'border-white/30 bg-white/10 text-white shadow-sm'
+                                                                : 'border-white/10 bg-white/[0.03] text-white/60 hover:border-white/30 hover:bg-white/[0.06]'
+                                                        }`}
+                                                        onClick={() => setViewMode('architecture')}
+                                                        aria-pressed={viewMode === 'architecture'}
+                                                    >
+                                                        Flow
+                                                    </button>
+                                                )}
+                                                {mermaidTemplates?.workflow && (
+                                                    <button
+                                                        type="button"
+                                                        className={`architecture-view-mode-btn px-4 py-2 rounded-md border transition-all duration-200 ${
+                                                            viewMode === 'workflow'
+                                                                ? 'border-white/30 bg-white/10 text-white shadow-sm'
+                                                                : 'border-white/10 bg-white/[0.03] text-white/60 hover:border-white/30 hover:bg-white/[0.06]'
+                                                        }`}
+                                                        onClick={() => setViewMode('workflow')}
+                                                        aria-pressed={viewMode === 'workflow'}
+                                                    >
+                                                        Workflow
+                                                    </button>
+                                                )}
+                                            </div>
+
+                                            {/* Explanation Mode */}
+                                            <div className="flex gap-2 text-[0.7rem] tracking-wider uppercase ml-auto">
+                                                <button
+                                                    type="button"
+                                                    className={`architecture-mode-btn px-4 py-2 rounded-md border transition-all duration-200 ${
+                                                        activeMode === 'overview'
+                                                            ? 'border-white/30 bg-white/10 text-white shadow-sm'
+                                                            : 'border-white/10 bg-white/[0.03] text-white/60 hover:border-white/30 hover:bg-white/[0.06]'
+                                                    }`}
+                                                    onClick={() => setActiveMode('overview')}
+                                                    aria-pressed={activeMode === 'overview'}
+                                                    title="End-to-end system overview"
+                                                >
+                                                    Overview
                                                 </button>
                                                 <button
                                                     type="button"
-                                                    className={`text-[0.6rem] tracking-[0.4em] uppercase rounded-full px-3 py-1 border border-primary/30 text-primary transition hover:text-white hover:border-primary focus-visible:outline-none ${showChittiPulse ? 'architecture-action-badge--pulse' : ''}`}
-                                                    onClick={handleAskChitti}
+                                                    className={`architecture-mode-btn px-4 py-2 rounded-md border transition-all duration-200 ${
+                                                        activeMode === 'data'
+                                                            ? 'border-white/30 bg-white/10 text-white shadow-sm'
+                                                            : 'border-white/10 bg-white/[0.03] text-white/60 hover:border-white/30 hover:bg-white/[0.06]'
+                                                    }`}
+                                                    onClick={() => setActiveMode('data')}
+                                                    aria-pressed={activeMode === 'data'}
+                                                    title="Data flow and transformations"
                                                 >
-                                                    Ask Chitti about this architecture
+                                                    Data
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className={`architecture-mode-btn px-4 py-2 rounded-md border transition-all duration-200 ${
+                                                        activeMode === 'deployment'
+                                                            ? 'border-white/30 bg-white/10 text-white shadow-sm'
+                                                            : 'border-white/10 bg-white/[0.03] text-white/60 hover:border-white/30 hover:bg-white/[0.06]'
+                                                    }`}
+                                                    onClick={() => setActiveMode('deployment')}
+                                                    aria-pressed={activeMode === 'deployment'}
+                                                    title="Runtime and deployment topology"
+                                                >
+                                                    Deploy
                                                 </button>
                                             </div>
                                         </div>
-                                        {animationBadge && (
-                                            <div className="architecture-shell__badge" role="status">
-                                                {animationBadge}
-                                            </div>
-                                        )}
 
-                                        <p className="architecture-shell__subtitle">
-                                            Every stakeholder reads the same system contract—clarity without mockups, just the boxes and arrows that actually ship.
-                                        </p>
-
-                                        <div className="architecture-shell__actions">
+                                        {/* Action Buttons */}
+                                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6">
                                             <button
                                                 type="button"
                                                 className="architecture-button architecture-button--primary"
                                                 onClick={handleExplainArchitecture}
+                                                disabled={isExplainLoading}
                                             >
-                                                Explain this architecture
+                                                {isExplainLoading ? (
+                                                    <span className="flex items-center justify-center gap-2">
+                                                        <Loader2 className="w-4 h-4 animate-spin" />
+                                                        Explaining...
+                                                    </span>
+                                                ) : (
+                                                    'Explain Flow'
+                                                )}
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className={`architecture-button ${showChittiPulse ? 'architecture-action-badge--pulse' : ''}`}
+                                                onClick={handleAskChitti}
+                                            >
+                                                Ask Questions
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className={`architecture-button ${isVoiceExplanationOpen ? 'architecture-button--primary' : ''}`}
+                                                onClick={() => setIsVoiceExplanationOpen(!isVoiceExplanationOpen)}
+                                            >
+                                                🎤 Voice
                                             </button>
                                             <button
                                                 type="button"
                                                 className="architecture-button"
                                                 onClick={() => setIsComparePanelOpen(true)}
                                             >
-                                                Compare architectures
+                                                Compare
                                             </button>
                                             <button
                                                 type="button"
-                                                className="architecture-button"
+                                                className="architecture-button md:col-span-2"
                                                 onClick={() => setIsSimulationOpen(true)}
                                             >
-                                                Simulate this architecture
+                                                Simulate
                                             </button>
                                         </div>
+
+                                        {animationBadge && (
+                                            <div className="architecture-shell__badge" role="status">
+                                                {animationBadge}
+                                            </div>
+                                        )}
+
+                                        {/* Voice Explanation */}
+                                        {isVoiceExplanationOpen && (
+                                            <div className="mt-4">
+                                                <VoiceArchitectureExplanation
+                                                    projectId={project.id}
+                                                    onClose={() => setIsVoiceExplanationOpen(false)}
+                                                />
+                                            </div>
+                                        )}
 
                                         {isExplanationVisible && (
                                             <div className="architecture-explanation-card">
@@ -382,7 +527,58 @@ const ProjectDetail = ({ project }: Props) => {
                                                 {explainError && <p className="text-red-400">{explainError}</p>}
                                                 {!explainError && explanation && (
                                                     <div className="prose prose-invert prose-sm max-w-none">
-                                                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{explanation}</ReactMarkdown>
+                                                        <ReactMarkdown
+                                                            remarkPlugins={[remarkGfm]}
+                                                            components={{
+                                                                ul({ children, ...props }: any) {
+                                                                    return (
+                                                                        <ul className="custom-bullet-list space-y-2 mt-4" {...props}>
+                                                                            {children}
+                                                                        </ul>
+                                                                    );
+                                                                },
+                                                                li({ children, ...props }: any) {
+                                                                    return (
+                                                                        <li className="text-white/90 leading-relaxed" {...props}>
+                                                                            {children}
+                                                                        </li>
+                                                                    );
+                                                                },
+                                                                p({ children, ...props }: any) {
+                                                                    // Convert paragraphs that look like bullets to list items
+                                                                    const text = String(children);
+                                                                    if (text.match(/^[-•]\s*Box\s+\d+/i) || text.match(/^Box\s+\d+/i)) {
+                                                                        return (
+                                                                            <ul className="custom-bullet-list space-y-2 mt-2">
+                                                                                <li className="text-white/90 leading-relaxed">{children}</li>
+                                                                            </ul>
+                                                                        );
+                                                                    }
+                                                                    return <p className="text-white/90 leading-relaxed" {...props}>{children}</p>;
+                                                                },
+                                                                code({ node, inline, className, children, ...props }: any) {
+                                                                    const match = /language-(\w+)/.exec(className || '');
+                                                                    if (match && match[1] === 'mermaid') {
+                                                                        return (
+                                                                            <MermaidDiagram chart={String(children).replace(/\n$/, '')} />
+                                                                        );
+                                                                    }
+                                                                    return !inline && match ? (
+                                                                        <pre className="bg-zinc-950 p-3 rounded-lg overflow-x-auto my-2 border border-white/10">
+                                                                            <code className={className} {...props}>
+                                                                                {children}
+                                                                            </code>
+                                                                        </pre>
+                                                                    ) : (
+                                                                        <code className="bg-white/10 px-1.5 py-0.5 rounded text-xs font-mono" {...props}>
+                                                                            {children}
+                                                                        </code>
+                                                                    );
+                                                                },
+                                                            }}
+                                                        >
+                                                            {explanation}
+                                                        </ReactMarkdown>
                                                     </div>
                                                 )}
                                                 {!explainError && !explanation && !isExplainLoading && (
@@ -392,11 +588,22 @@ const ProjectDetail = ({ project }: Props) => {
                                         )}
 
                                         <div
-                                            className="architecture-shell__diagram system-architecture overflow-auto text-white"
+                                            className="architecture-shell__diagram system-architecture text-white"
                                             aria-describedby={architectureDescribeId}
                                         >
-                                            <span id={architectureDescribeId} className="sr-only">Boxes represent system components or services; arrows represent data flow and execution order.</span>
-                                            <SystemArchitectureDiagrams projectId={project.id} />
+                                            <span
+                                                id={architectureDescribeId}
+                                                className="sr-only"
+                                            >
+                                                Boxes represent system components or services; arrows represent data flow and execution order.
+                                            </span>
+                                            {viewMode === 'ascii' && <SystemArchitectureDiagrams projectId={project.id} />}
+                                            {viewMode === 'architecture' && mermaidTemplates?.architecture && (
+                                                <MermaidDiagram chart={mermaidTemplates.architecture} />
+                                            )}
+                                            {viewMode === 'workflow' && mermaidTemplates?.workflow && (
+                                                <MermaidDiagram chart={mermaidTemplates.workflow} />
+                                            )}
                                         </div>
                                     </div>
                                 </div>

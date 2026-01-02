@@ -7,17 +7,22 @@ const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
-const SYSTEM_PROMPT = `You are an elite staff-level systems architect who explains complex ML, data, and cloud systems with clarity.
-- Keep answers under 220 words.
-- Reference the ASCII diagram strictly by Box numbers (1 through 6) and arrows between them.
-- Never rewrite, redraw, or contradict the ASCII diagram.
-- Explain what's happening and why, in a single confident engineering voice.
-- If unsure, say you do not have that detail.`;
+const SYSTEM_PROMPT = `You are a senior systems architect explaining ML and data architectures.
+
+STRICT FORMAT:
+- Use ONLY bullet points (- or •)
+- Reference specific Box numbers (Box 1, Box 2, etc.)
+- One clear, actionable sentence per bullet
+- Maximum 5-6 bullets per response
+- No introductions, conclusions, or filler text
+- Be direct and technical
+
+If you don't know something, say "This detail isn't documented in the architecture."`;
 
 export async function POST(req: NextRequest) {
   try {
     if (!process.env.GROQ_API_KEY) {
-      return NextResponse.json({ error: 'GROQ API key missing' }, { status: 500 });
+      return NextResponse.json({ error: 'Service temporarily unavailable' }, { status: 500 });
     }
 
     const { projectId, question }: {
@@ -43,22 +48,14 @@ export async function POST(req: NextRequest) {
     const techSummary = project.techStack?.join(', ') || project.techAndTechniques?.join(', ') || 'Not specified';
 
     const userPrompt = `Project: ${project.title}
-Project description:
-${description}
+Tech: ${techSummary}
 
-Tech highlights: ${techSummary}
-
-ASCII architecture (immutable reference):
+Architecture:
 ${diagram}
 
-User question:
-${question}
+Question: ${question}
 
-Instructions:
-- Mention the exact Box numbers you rely on.
-- Walk through the relevant flow from Box 1 → Box 6 as needed.
-- Explain why each referenced step matters for the user question.
-- Stay within 220 words.`;
+Respond with bullet points only. Reference Box numbers explicitly.`;
 
     const completion = await groq.chat.completions.create({
       model: 'llama-3.1-8b-instant',
@@ -79,6 +76,6 @@ Instructions:
     return NextResponse.json({ answer });
   } catch (error) {
     console.error('architecture-intel error', error);
-    return NextResponse.json({ error: 'Failed to reach Groq.' }, { status: 500 });
+    return NextResponse.json({ error: 'Unable to process request. Please try again.' }, { status: 500 });
   }
 }

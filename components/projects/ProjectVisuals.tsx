@@ -93,7 +93,7 @@ const ProjectVisuals = ({ imagePrompts = [], projectTitle = '', className = '' }
           className="pt-4 border-t border-primary/10"
         >
           <p className="text-sm text-muted-foreground text-center">
-            {displayPrompts.length} AI-generated visualization prompts • Real images will be generated using Groq&apos;s image generation API
+            {displayPrompts.length} visualization concepts
           </p>
         </motion.div>
       )}
