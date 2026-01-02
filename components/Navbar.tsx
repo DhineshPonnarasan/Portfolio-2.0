@@ -47,6 +47,11 @@ const MENU_LINKS = [
         url: '/#publications',
         color: 'bg-orange-500 text-white',
     },
+    {
+        name: 'Architecture',
+        url: '/architecture',
+        color: 'bg-emerald-400 text-black',
+    },
 ];
 
 const Navbar = () => {

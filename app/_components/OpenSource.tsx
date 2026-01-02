@@ -15,18 +15,26 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const BRAND_SIGNATURES = [
     { matcher: /(wechaty)/i, label: 'Wechaty', accent: 'from-[#f472b6]/30 to-transparent', image: '/logo/wechaty.png' },
-    { matcher: /(swoc)/i, label: 'SWoC', accent: 'from-[#4ade80]/30 to-transparent' },
+    { matcher: /(swoc)/i, label: 'SWoC', accent: 'from-[#4ade80]/30 to-transparent', image: '/logo/swoc.svg' },
     { matcher: /(amazon|aws)/i, label: 'Amazon AI', accent: 'from-[#f59e0b]/30 to-transparent', image: '/logo/aws.svg' },
     { matcher: /(google|deepmind|tensorflow|keras)/i, label: 'Google DeepMind', accent: 'from-[#fb923c]/30 to-transparent', image: '/logo/tensorflow.svg' },
     { matcher: /(meta|pytorch)/i, label: 'Meta AI', accent: 'from-[#60a5fa]/30 to-transparent', image: '/logo/pytorch.svg' },
     { matcher: /(numpy)/i, label: 'NumPy', accent: 'from-[#22d3ee]/30 to-transparent', image: '/logo/numpy.svg' },
 ] as const;
 
-const getSignature = (org: string) =>
+type BrandSignature = {
+    matcher: RegExp;
+    label: string;
+    accent: string;
+    image?: string;
+};
+
+const getSignature = (org: string): BrandSignature =>
     BRAND_SIGNATURES.find((signature) => signature.matcher.test(org)) ?? {
         matcher: /(.*)/,
         label: org,
         accent: 'from-white/20 to-transparent',
+        image: undefined,
     };
 
 export default function OpenSource() {
@@ -78,8 +86,8 @@ export default function OpenSource() {
 
                                         <div
                                             className={cn(
-                                                'rounded-[32px] border border-white/10 bg-white/[0.03] p-8 pb-16 transition-all duration-500 hover:-translate-y-1 hover:border-primary/60 hover:bg-white/[0.08] hover:shadow-[0_0_45px_rgba(34,211,238,0.18)] focus-within:border-primary/60 focus-within:shadow-[0_0_45px_rgba(34,211,238,0.18)]',
-                                                isExpanded && 'border-primary/70 bg-white/[0.08] shadow-[0_25px_55px_rgba(34,211,238,0.22)]',
+                                                'rounded-[32px] border border-white/10 bg-white/[0.03] p-8 pb-16 transition-all duration-500 hover:-translate-y-2 hover:border-primary/60 hover:bg-white/[0.08] hover:shadow-[0_0_45px_rgba(16,185,129,0.25)] focus-within:border-primary/60 focus-within:shadow-[0_0_45px_rgba(16,185,129,0.25)]',
+                                                isExpanded && 'border-primary/70 bg-white/[0.08] shadow-[0_25px_55px_rgba(16,185,129,0.3)]',
                                             )}
                                         >
                                             <div className="grid gap-6 lg:grid-cols-[240px_minmax(0,1fr)]">
@@ -105,12 +113,12 @@ export default function OpenSource() {
 
                                                     <div className="flex flex-wrap gap-2">
                                                         {contribution.techStack?.slice(0, 5).map((tech) => (
-                                                            <span key={tech} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
+                                                            <span key={tech} className="tech-tag text-xs">
                                                                 {tech}
                                                             </span>
                                                         ))}
                                                         {contribution.techStack && contribution.techStack.length > 5 && (
-                                                            <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
+                                                            <span className="tech-tag text-xs">
                                                                 +{contribution.techStack.length - 5}
                                                             </span>
                                                         )}
@@ -149,7 +157,7 @@ export default function OpenSource() {
                                                     onClick={() => handleToggle(contribution.slug)}
                                                     aria-expanded={isExpanded}
                                                     aria-controls={deepDiveId}
-                                                    className="flex items-center gap-2 text-primary transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+                                                    className="flex items-center gap-2 text-primary transition-all duration-300 hover:text-white hover:translate-x-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
                                                 >
                                                     View deep dive
                                                     <ArrowUpRight size={16} className={cn('transition-transform duration-300', isExpanded && 'rotate-45')} />
@@ -212,7 +220,25 @@ const BrandSignature = ({ org }: { org: string }) => {
             >
                 <div className="rounded-xl border border-white/20 bg-black/30 p-1">
                     {signature.image ? (
-                        <Image src={signature.image} alt={signature.label} width={28} height={28} className="size-7 object-contain" />
+                        <Image 
+                            src={signature.image} 
+                            alt={signature.label} 
+                            width={28} 
+                            height={28} 
+                            className="size-7 object-contain"
+                            onError={(e) => {
+                                // Fallback to text if image fails to load
+                                const target = e.target as HTMLImageElement;
+                                target.style.display = 'none';
+                                const parent = target.parentElement;
+                                if (parent && !parent.querySelector('span')) {
+                                    const fallback = document.createElement('span');
+                                    fallback.className = 'text-sm font-semibold';
+                                    fallback.textContent = signature.label.slice(0, 2).toUpperCase();
+                                    parent.appendChild(fallback);
+                                }
+                            }}
+                        />
                     ) : (
                         <span className="text-sm font-semibold">{signature.label.slice(0, 2).toUpperCase()}</span>
                     )}

@@ -11,7 +11,8 @@ import WelcomePopup from './WelcomePopup';
 
 const INITIAL_MESSAGE: Message = {
     role: 'assistant',
-    content: "Hi, I am the Chitti — Dhinesh’s Virtual Assistant.\n\nAsk me anything about his projects, skills, or experience.",
+    content:
+        "Hi there! ☀️ How's your day going?\n\nI'm Chitti, Dhinesh's AI-powered personalized chatbot. Ask me anything about Dhinesh, his projects, skills, experience, or any other question you have.",
 };
 
 const MAX_CONTEXT_MESSAGES = 6;
@@ -21,6 +22,7 @@ const ChatWidget = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [showWelcome, setShowWelcome] = useState(false);
     const [iconShape, setIconShape] = useState<'circle' | 'square' | 'hexagon'>('circle');
+    // Single general chat mode (no interview/portfolio toggle)
     
     // Chat State
     const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
@@ -119,8 +121,27 @@ const ChatWidget = () => {
                 }),
             });
 
-            if (!response.ok) throw new Error('Failed to fetch response');
-            if (!response.body) throw new Error('No response body');
+            // Handle non-OK responses gracefully and surface a friendly error instead of throwing
+            if (!response.ok) {
+                let errorText = '';
+                try {
+                    errorText = await response.text();
+                } catch {
+                    // ignore body read errors
+                }
+
+                console.error('Chat API error:', response.status, errorText);
+                showAssistantError(
+                    "I'm having trouble answering right now due to a server error. Please try again in a moment.",
+                );
+                return;
+            }
+
+            if (!response.body) {
+                console.error('Chat API error: empty response body');
+                showAssistantError("I got an empty response from the server. Please try again.");
+                return;
+            }
 
             const reader = response.body.getReader();
             const decoder = new TextDecoder();
@@ -160,14 +181,20 @@ const ChatWidget = () => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
                         transition={{ duration: 0.2 }}
-                        className="fixed bottom-4 right-4 z-[50] w-[calc(100vw-32px)] md:w-[400px] h-[calc(100svh-100px)] md:h-[600px] flex flex-col"
+                        className="fixed bottom-4 right-4 z-[50] w-[calc(100vw-32px)] md:w-[400px] h-[calc(100svh-100px)] md:h-[600px] flex flex-col isolate"
+                        style={{ 
+                            touchAction: 'none',
+                            overscrollBehavior: 'contain',
+                        }}
+                        onWheel={(e) => e.stopPropagation()}
+                        onTouchMove={(e) => e.stopPropagation()}
                     >
                         {/* Chat UI */}
                         <div className="flex-1 overflow-hidden relative h-full min-h-0">
-                            <ChatUI 
-                                messages={messages} 
-                                isLoading={isLoading} 
-                                onSend={handleSend} 
+                            <ChatUI
+                                messages={messages}
+                                isLoading={isLoading}
+                                onSend={handleSend}
                                 onClear={() => setMessages([INITIAL_MESSAGE])}
                                 onClose={() => setIsOpen(false)}
                             />
@@ -180,7 +207,7 @@ const ChatWidget = () => {
                 {!isOpen && (
                     <div className="fixed bottom-6 right-6 z-[49] flex flex-col items-end gap-4">
                         <WelcomePopup 
-                            message="Hi, I'm Chitti the Chatbot. Speed 1 terahertz, memory 1 zigabyte. I'm here to help you."
+                            message="Hi, I'm Chitti the Chatbot. Speed 1 terahertz, memory 1 zigabyte. I'm here to help you learn about Dhinesh and answer any questions you have."
                             isVisible={showWelcome}
                             onClose={() => setShowWelcome(false)}
                             duration={8000}

@@ -27,7 +27,7 @@ export const MY_STACK = {
         },
         {
             name: 'C',
-            icon: '/logo/c.svg',
+            icon: '/logo/C.png',
         },
         {
             name: 'C++',
@@ -271,7 +271,7 @@ export const MY_STACK = {
         },
         {
             name: 'ETL',
-            icon: '/logo/etl.svg',
+            icon: '/logo/etl.png',
         },
         {
             name: 'MLOps',
@@ -890,7 +890,7 @@ export const PROJECTS: IProject[] = [
 
     export const MY_CONTRIBUTIONS: IContribution[] = [
         {
-            title: 'Google Season of Docs (GSoD 2022)',
+            title: 'Google Season of Docs (GSoD \'22)',
             slug: 'google-season-of-docs',
             org: 'Wechaty',
             role: 'Student Developer',
@@ -910,10 +910,10 @@ export const PROJECTS: IProject[] = [
             link: 'https://wechaty.js.org/',
         },
         {
-            title: 'Social Winter of Code (SWoC 2026)',
+            title: 'Social Winter of Code (SWoC \'26)',
             slug: 'social-winter-of-code',
             org: 'SWoC',
-            role: 'Student Developer',
+            role: 'Open Source Developer',
             period: 'Jan 2026 – Mar 2026',
             description: 'Built features, resolved issues, and contributed ML-based enhancements as part of the open-source program.',
             points: [
