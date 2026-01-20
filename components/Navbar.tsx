@@ -5,6 +5,22 @@ import { MoveUpRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { GENERAL_INFO, SOCIAL_LINKS } from '@/lib/data';
 import Link from 'next/link';
+import { useAudio } from './AudioProvider';
+import { Volume2, VolumeX } from 'lucide-react';
+
+const SoundToggle = () => {
+    const { isMuted, toggleMute } = useAudio();
+
+    return (
+        <button
+            onClick={toggleMute}
+            className="size-10 flex items-center justify-center rounded-full bg-black/10 backdrop-blur-sm border border-white/5 text-muted-foreground hover:text-white hover:bg-white/10 transition-all z-[2]"
+            aria-label={isMuted ? "Unmute audio" : "Mute audio"}
+        >
+            {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+        </button>
+    );
+};
 
 const MENU_LINKS = [
     {
@@ -69,11 +85,14 @@ const Navbar = () => {
 
     return (
         <>
-            <div className="sticky top-0 z-[4]">
+            <div className="sticky top-0 z-[4] flex items-center justify-end px-5 md:px-10 pt-5 gap-4">
+                {/* Sound Toggle */}
+                <SoundToggle />
 
+                {/* Menu Button */}
                 <button
                     className={cn(
-                        'group size-12 absolute top-5 right-5 md:right-10 z-[2]',
+                        'group size-12 relative z-[2]',
                     )}
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                 >

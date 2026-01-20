@@ -168,7 +168,7 @@ const Footer = () => {
                         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 p-8 rounded-2xl border border-white/10 bg-white/5">
                             <div className="flex-1">
                                 <p className="text-white/70 text-base leading-relaxed">
-                                    Feel free to reach out for collaborations, opportunities or just to say hello! I promise I'm more fun than my code comments 😄
+                                    Feel free to reach out for collaborations, opportunities or just to say hello! I promise I&apos;m more fun than my code comments 😄
                                 </p>
                             </div>
                             <motion.a

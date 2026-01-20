@@ -11,6 +11,8 @@ interface Props extends ComponentProps<typeof Link> {
 
 gsap.registerPlugin(useGSAP);
 
+import { useCyberSounds } from '@/hooks/useCyberSounds';
+
 const TransitionLink = ({
     href,
     onClick,
@@ -19,11 +21,12 @@ const TransitionLink = ({
     ...rest
 }: Props) => {
     const router = useRouter();
-
-    const { contextSafe } = useGSAP(() => {});
+    const { contextSafe } = useGSAP(() => { });
+    const { playHover, playClick } = useCyberSounds();
 
     const handleLinkClick = contextSafe(
         async (e: React.MouseEvent<HTMLAnchorElement>) => {
+            playClick(); // Play sound
             e.preventDefault();
 
             gsap.set('.page-transition', { yPercent: 100 });
@@ -49,7 +52,12 @@ const TransitionLink = ({
     );
 
     return (
-        <Link href={href} {...rest} onClick={handleLinkClick}>
+        <Link
+            href={href}
+            {...rest}
+            onClick={handleLinkClick}
+            onMouseEnter={playHover} // sound trigger
+        >
             {children}
         </Link>
     );
