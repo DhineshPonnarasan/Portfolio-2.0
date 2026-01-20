@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React, { ButtonHTMLAttributes, ComponentProps, ReactNode } from 'react';
 import { Variant } from '@/types';
 import { cn } from '@/lib/utils';
+import { useCyberSounds } from '@/hooks/useCyberSounds';
 
 const Child = ({ icon }: any) => (
     <span className="flex items-center justify-center gap-3">
@@ -74,6 +75,17 @@ const Button = ({
         className,
     );
 
+    const { playHover, playClick } = useCyberSounds();
+
+    const handleMouseEnter = () => {
+        if (!loading) playHover();
+    };
+
+    const handleClick = (e: React.MouseEvent<any>) => {
+        if (!loading) playClick();
+        if (rest.onClick) (rest as any).onClick(e);
+    };
+
     if (as === 'link') {
         const props = rest as ComponentProps<typeof Link>;
 
@@ -83,6 +95,8 @@ const Button = ({
                     className={buttonClasses}
                     {...props}
                     href={props.href.toString() || '#'}
+                    onMouseEnter={handleMouseEnter}
+                    onClick={handleClick}
                 >
                     {variant !== 'link' && (
                         <span className="absolute top-[200%] left-0 right-0 h-full bg-white rounded-[50%] group-hover:top-0 transition-all duration-500 scale-150"></span>
@@ -95,7 +109,13 @@ const Button = ({
         }
 
         return (
-            <Link className={buttonClasses} {...props} href={props.href || '#'}>
+            <Link
+                className={buttonClasses}
+                {...props}
+                href={props.href || '#'}
+                onMouseEnter={handleMouseEnter}
+                onClick={handleClick}
+            >
                 {variant !== 'link' && (
                     <span className="absolute top-[200%] left-0 right-0 h-full bg-white rounded-[50%] group-hover:top-0 transition-all duration-500 scale-150"></span>
                 )}
@@ -108,7 +128,12 @@ const Button = ({
         const props = rest as ButtonProps;
 
         return (
-            <button className={buttonClasses} {...props}>
+            <button
+                className={buttonClasses}
+                {...props}
+                onMouseEnter={handleMouseEnter}
+                onClick={handleClick}
+            >
                 {variant !== 'link' && (
                     <span className="absolute top-[200%] left-0 right-0 h-full bg-white rounded-[50%] group-hover:top-0 transition-all duration-500 scale-150"></span>
                 )}

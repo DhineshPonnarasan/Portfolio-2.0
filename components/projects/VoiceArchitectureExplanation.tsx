@@ -719,8 +719,8 @@ const VoiceArchitectureExplanation = ({ projectId, onClose }: VoiceArchitectureE
       {/* Instructions */}
       {voiceState === 'idle' && !explanation && !error && isSupported && (
         <div className="text-xs text-white/50 space-y-1">
-          <p>• Click "Ask by Voice" to ask a question about the architecture</p>
-          <p>• Click "Explain Flow" to hear a general explanation of Box 1 → Box 6</p>
+          <p>• Click &quot;Ask by Voice&quot; to ask a question about the architecture</p>
+          <p>• Click &quot;Explain Flow&quot; to hear a general explanation of Box 1 → Box 6</p>
           <p>• Make sure your microphone is enabled</p>
           {browserInfo && (
             <p className="text-white/40 mt-2">Detected: {browserInfo.name}</p>

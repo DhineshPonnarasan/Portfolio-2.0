@@ -44,7 +44,7 @@ const initMermaid = () => {
 // Sanitize mermaid chart to prevent parse errors
 const sanitizeChart = (chart: string): string => {
     if (!chart) return '';
-    
+
     try {
         let sanitized = chart
             // Normalize quotes
@@ -58,8 +58,10 @@ const sanitizeChart = (chart: string): string => {
             .replace(/(?<!\[[^\]]*)[ \t]+(?!.*\])/g, ' ')
             // Remove excessive empty lines (max 2 consecutive)
             .replace(/\n{3,}/g, '\n\n')
-            // Ensure proper graph declaration format
-            .replace(/^(graph\s+(TD|LR|TB|BT|RL))/i, (match) => match.toUpperCase())
+            // Ensure proper graph declaration format (keyword lowercase, direction uppercase)
+            .replace(/^(graph|flowchart)\s+(TD|LR|TB|BT|RL)/i, (match, keyword, direction) => {
+                return `${keyword.toLowerCase()} ${direction.toUpperCase()}`;
+            })
             // Fix common syntax issues
             .replace(/-->/g, '-->')
             .replace(/--/g, '--')
@@ -88,26 +90,28 @@ const sanitizeChart = (chart: string): string => {
 const MermaidDiagram = memo(({ chart }: MermaidDiagramProps) => {
     const [svg, setSvg] = useState<string>('');
     const [visible, setVisible] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const idRef = useRef(`m-${Math.random().toString(36).slice(2, 9)}`);
     const renderAttempts = useRef(0);
 
     useEffect(() => {
         initMermaid();
-        
+
         let cancelled = false;
         renderAttempts.current = 0;
-        
+        setError(null);
+
         const render = async () => {
             if (!chart) return;
-            
+
             const sanitized = sanitizeChart(chart);
-            
+
             try {
                 // Generate a unique ID for each render attempt
                 const uniqueId = `${idRef.current}-${renderAttempts.current++}`;
                 const { svg: result } = await mermaid.render(uniqueId, sanitized);
-                
+
                 if (!cancelled) {
                     setSvg(result);
                     // Staggered fade-in animation
@@ -115,12 +119,13 @@ const MermaidDiagram = memo(({ chart }: MermaidDiagramProps) => {
                         setTimeout(() => setVisible(true), 50);
                     });
                 }
-            } catch (e) {
-                // Silent fallback - log for debugging but don't show error to user
-                if (process.env.NODE_ENV === 'development') {
-                    console.warn('Mermaid parse error (silent fallback):', e);
-                }
+            } catch (e: any) {
+                console.error('Mermaid render error:', e);
+                // Try to extract a meaningful error message
+                const msg = e?.message || 'Failed to render diagram';
+
                 if (!cancelled) {
+                    setError(msg);
                     setSvg('');
                     setVisible(false);
                 }
@@ -130,21 +135,34 @@ const MermaidDiagram = memo(({ chart }: MermaidDiagramProps) => {
         setVisible(false);
         setSvg('');
         render();
-        
+
         return () => { cancelled = true; };
     }, [chart]);
+
+    // Show error state
+    if (error) {
+        return (
+            <div className="flex items-center justify-center h-64 text-red-400 border border-red-900/30 bg-red-950/10 rounded-lg p-4 text-center">
+                <div className="max-w-md">
+                    <p className="font-semibold mb-2">Diagram Error</p>
+                    <p className="text-xs opacity-70 font-mono break-all">{error}</p>
+                    <p className="text-xs opacity-50 mt-2">Check console for details</p>
+                </div>
+            </div>
+        );
+    }
 
     // Show loading state while rendering
     if (!svg) {
         return (
-            <div className="mermaid-loading">
-                <div className="mermaid-loading__spinner" />
+            <div className="mermaid-loading flex items-center justify-center h-64">
+                <div className="mermaid-loading__spinner w-10 h-10 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
             </div>
         );
     }
 
     return (
-        <div 
+        <div
             ref={containerRef}
             className={`mermaid-wrap ${visible ? 'mermaid-wrap--visible' : ''}`}
             dangerouslySetInnerHTML={{ __html: svg }}

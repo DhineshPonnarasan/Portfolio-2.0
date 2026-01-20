@@ -38,6 +38,12 @@ const MODES: { id: ArchitectureMode; label: string }[] = [
 
 const STORAGE_KEY_PREFIX = 'architecture:view:';
 
+const sanitizeMermaid = (chart: string) =>
+    chart
+        .replace(/\\/g, '\\')
+        .replace(/\r?\n$/, '')
+        .trim();
+
 const ArchitectureExplorer = ({ projects }: Props) => {
     const [stateBySlug, setStateBySlug] = useState<Record<string, ProjectState>>(() =>
         Object.fromEntries(
@@ -250,7 +256,7 @@ const ArchitectureExplorer = ({ projects }: Props) => {
                                                 const match = /language-(\w+)/.exec(className || '');
                                                 if (match && match[1] === 'mermaid') {
                                                     return (
-                                                        <MermaidDiagram chart={String(children).replace(/\n$/, '')} />
+                                                        <MermaidDiagram chart={sanitizeMermaid(String(children))} />
                                                     );
                                                 }
                                                 return !inline && match ? (

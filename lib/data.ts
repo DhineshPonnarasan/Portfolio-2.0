@@ -438,7 +438,7 @@ export const PROJECTS: IProject[] = [
     // 1. Customer Churn Decision Intelligence System
     {
         id: 1,
-        title: "Customer Churn Decision Intelligence System",
+            title: "Customer Churn Decision Intelligence System",
         slug: "customer-churn-intelligence",
         year: 2024,
         visuals: [],
@@ -890,44 +890,24 @@ export const PROJECTS: IProject[] = [
 
     export const MY_CONTRIBUTIONS: IContribution[] = [
         {
-            title: 'Google Season of Docs (GSoD \'22)',
-            slug: 'google-season-of-docs',
-            org: 'Wechaty',
-            role: 'Student Developer',
-            period: 'Feb 2022 – May 2022',
-            description: "Contributed to Wechaty's documentation and developer experience through a redesigned landing page and improved onboarding flows.",
-            points: [
-                'Designed and implemented the new Wechaty landing page improving clarity, navigation, and onboarding experience.',
-                'Streamlined documentation workflows, reorganizing components, examples, and API references for developer usability.',
-                'Improved React-based UI components for responsiveness and multilingual support.',
-                'Collaborated with maintainers to review PRs and fix documentation inconsistencies.',
-            ],
-            deepDivePoints: [
-                'Redesigned the landing page IA and React layout to reduce onboarding friction.',
-                'Refactored documentation structure and component templates for consistency.',
-                'Partnered with maintainers to triage PRs and eliminate doc regressions.',
-            ],
-            link: 'https://wechaty.js.org/',
-        },
-        {
-            title: 'Social Winter of Code (SWoC \'26)',
+            title: 'Social Winter of Code (SWoC \'26) – ETNA',
             slug: 'social-winter-of-code',
             org: 'SWoC',
             role: 'Open Source Developer',
             period: 'Jan 2026 – Mar 2026',
-            description: 'Built features, resolved issues, and contributed ML-based enhancements as part of the open-source program.',
+            description: 'Contributed to the ETNA time-series library with stability fixes, clearer docs, and broader tests during SWoC.',
             points: [
-                'Developed an open-source ML/CV module titled **“Crowd Density Estimation System”** using YOLO + CSRNet for safety analytics.',
-                'Added pipeline automation for dataset preprocessing and augmentation.',
-                'Improved project structure with modular training scripts and reproducible experiment logging.',
-                'Fixed reported issues, refactored code, and enhanced documentation for contributors.',
+                'Contributed code improvements and bug fixes that improved core ETNA pipeline stability.',
+                'Enhanced documentation to deepen clarity around time-series modeling practices and usage flows.',
+                'Expanded test coverage to ensure robust forecasting behavior across diverse time-series scenarios.',
+                'Partnered with maintainers to triage issues and keep releases stable for contributors.',
             ],
             deepDivePoints: [
-                'Delivered the Crowd Density Estimation System using YOLO + CSRNet.',
-                'Automated data prep and augmentation pipelines for reproducible runs.',
-                'Resolved contributor issues and tightened docs to speed onboarding.',
+                'Hardened ETNA pipelines by fixing edge-case failures in data loaders, transforms, and seasonal configurations.',
+                'Rewrote sections of the time-series modeling docs to clarify forecasting workflows, frequency handling, and best practices.',
+                'Added regression tests for multi-horizon forecasts, irregular intervals, and error handling to prevent future regressions.',
             ],
-            link: 'https://github.com/SWOC',
+            link: 'https://github.com/DhineshPonnarasan/etna',
         },
         {
             title: 'Amazon SageMaker – OSS Contribution',
@@ -1023,6 +1003,26 @@ export const PROJECTS: IProject[] = [
                 'Shipped defensive fixes in type hints + error handling.',
             ],
             link: 'https://github.com/DhineshPonnarasan/numpy',
+        },
+        {
+            title: "Google Season of Docs (GSoD '22)",
+            slug: 'google-season-of-docs',
+            org: 'Wechaty',
+            role: 'Student Developer',
+            period: 'Feb 2022 – May 2022',
+            description: "Contributed to Wechaty's documentation and developer experience through a redesigned landing page and improved onboarding flows.",
+            points: [
+                'Designed and implemented the new Wechaty landing page improving clarity, navigation, and onboarding experience.',
+                'Streamlined documentation workflows, reorganizing components, examples, and API references for developer usability.',
+                'Improved React-based UI components for responsiveness and multilingual support.',
+                'Collaborated with maintainers to review PRs and fix documentation inconsistencies.',
+            ],
+            deepDivePoints: [
+                'Redesigned the landing page IA and React layout to reduce onboarding friction.',
+                'Refactored documentation structure and component templates for consistency.',
+                'Partnered with maintainers to triage PRs and eliminate doc regressions.',
+            ],
+            link: 'https://wechaty.js.org/',
         },
     ];
 

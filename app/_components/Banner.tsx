@@ -166,7 +166,7 @@ const Banner = () => {
                     <h1 className="banner-title leading-[1.1] text-4xl sm:text-7xl font-anton min-h-[100px] sm:min-h-[140px] flex items-center justify-center">
                         <span className="text-primary">
                             {text}
-                            <span 
+                            <span
                                 className="animate-pulse font-sans font-thin ml-1"
                                 style={{ color: '#00FF66' }}
                             >
@@ -174,7 +174,7 @@ const Banner = () => {
                             </span>
                         </span>
                     </h1>
-                    
+
                     <p className="banner-description mt-4 text-lg text-muted-foreground max-w-[700px]">
                         I build intelligent systems, scalable applications, and
                         research-driven solutions across AI/ML, software
@@ -184,7 +184,7 @@ const Banner = () => {
                     <div className="banner-socials flex flex-wrap items-center justify-center gap-6 mt-8">
                         {SOCIAL_LINKS.map((link) => {
                             let className = "p-3 rounded-full transition-all duration-300 group ";
-                            switch(link.name.toLowerCase()) {
+                            switch (link.name.toLowerCase()) {
                                 case 'github':
                                     className += "bg-black text-white hover:bg-black/80";
                                     break;
@@ -200,7 +200,7 @@ const Banner = () => {
                                 default:
                                     className += "bg-secondary/50 hover:bg-primary hover:text-primary-foreground";
                             }
-                            
+
                             return (
                                 <a
                                     key={link.name}
@@ -215,16 +215,16 @@ const Banner = () => {
                             );
                         })}
                         <a
-                             href={`mailto:${GENERAL_INFO.email}`}
-                             className="p-3 rounded-full bg-[#ea4335] text-white hover:bg-[#ea4335]/80 transition-all duration-300 group"
-                             aria-label="Email"
+                            href={`mailto:${GENERAL_INFO.email}`}
+                            className="p-3 rounded-full bg-[#ea4335] text-white hover:bg-[#ea4335]/80 transition-all duration-300 group"
+                            aria-label="Email"
                         >
                             <Mail className="size-8 group-hover:scale-110 transition-transform" />
                         </a>
                         <a
-                             href={`tel:${GENERAL_INFO.phone}`}
-                             className="p-3 rounded-full bg-[#34a853] text-white hover:bg-[#34a853]/80 transition-all duration-300 group"
-                             aria-label="Contact"
+                            href={`tel:${GENERAL_INFO.phone}`}
+                            className="p-3 rounded-full bg-[#34a853] text-white hover:bg-[#34a853]/80 transition-all duration-300 group"
+                            aria-label="Contact"
                         >
                             <Phone className="size-8 group-hover:scale-110 transition-transform" />
                         </a>

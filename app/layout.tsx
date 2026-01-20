@@ -35,6 +35,8 @@ import HomeChatWidget from '@/components/HomeChatWidget';
 import { LoadingProvider } from './context/LoadingContext';
 import CyberGridBackground from '../components/CyberGridBackground';
 import ScrollAnimator from '@/components/ScrollAnimator';
+import { AudioProvider } from '@/components/AudioProvider';
+import KonamiEasterEgg from '@/components/KonamiEasterEgg';
 
 export default function RootLayout({
     children,
@@ -66,23 +68,26 @@ export default function RootLayout({
                     }}
                 >
                     <LoadingProvider>
-                        {/* <a
-                            href="https://forms.gle/t73XYJgWD5cJNr6e8"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="px-4 block bg-black text-center z-[1] text-sm py-2 hover:text-primary transition-all"
-                        >
-                            Frontend dev? I&apos;ll help you polish your resume —
-                            <span className="underline">join the waitlist</span>
-                        </a> */}
-                        <Preloader />
-                        <CustomCursor />
-                        <ParticleBackground />
-                        <ScrollAnimator />
-                        <Navbar />
-                        <ScrollProgressIndicator />
-                        <HomeChatWidget />
-                        {children}
+                        <AudioProvider>
+                            {/* <a
+                                href="https://forms.gle/t73XYJgWD5cJNr6e8"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="px-4 block bg-black text-center z-[1] text-sm py-2 hover:text-primary transition-all"
+                            >
+                                Frontend dev? I&apos;ll help you polish your resume —
+                                <span className="underline">join the waitlist</span>
+                            </a> */}
+                            <Preloader />
+                            <CustomCursor />
+                            <KonamiEasterEgg />
+                            <ParticleBackground />
+                            <ScrollAnimator />
+                            <Navbar />
+                            <ScrollProgressIndicator />
+                            <HomeChatWidget />
+                            {children}
+                        </AudioProvider>
                     </LoadingProvider>
                 </ReactLenis>
             </body>
