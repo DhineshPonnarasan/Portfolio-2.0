@@ -108,7 +108,7 @@ export const startAmbience = () => {
 
     // Create audio element if it doesn't exist
     if (!audioElement) {
-        audioElement = new Audio('/audio/background.mp3');
+        audioElement = new Audio('/Naan Un.mpeg');
         audioElement.loop = true; // Enable looping
         audioElement.volume = 0.3; // Set volume
 
