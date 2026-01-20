@@ -7,6 +7,7 @@ import { GENERAL_INFO, SOCIAL_LINKS } from '@/lib/data';
 import Link from 'next/link';
 import { useAudio } from './AudioProvider';
 import { Volume2, VolumeX } from 'lucide-react';
+import MusicPlayer from './MusicPlayer';
 
 const SoundToggle = () => {
     const { isMuted, toggleMute } = useAudio();
@@ -86,8 +87,8 @@ const Navbar = () => {
     return (
         <>
             <div className="sticky top-0 z-[4] flex items-center justify-end px-5 md:px-10 pt-5 gap-4">
-                {/* Sound Toggle */}
-                <SoundToggle />
+                {/* Music Player */}
+                <MusicPlayer />
 
                 {/* Menu Button */}
                 <button
