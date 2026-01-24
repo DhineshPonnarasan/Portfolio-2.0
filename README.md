@@ -53,7 +53,7 @@ This is a private repository intended for my personal use.
 
 ## 👤 Author
 
-**Dhinesh Sadhu Subramaniam Ponnarasan**
+**Dhinesh Ponnarasan**
 
 - **GitHub**: [@DhineshPonnarasan](https://github.com/DhineshPonnarasan)
 - **LinkedIn**: [Dhinesh Ponnarasan](https://www.linkedin.com/in/dhinesh-s-p)
