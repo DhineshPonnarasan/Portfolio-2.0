@@ -1316,4 +1316,19 @@
             0 0 20px hsla(var(--primary) / 0.3),
             0 0 30px hsla(var(--primary) / 0.2);
     }
+
+    @keyframes circuit-flow {
+        0%, 100% {
+            color: hsl(var(--foreground) / 0.3);
+            text-shadow: none;
+        }
+        50% {
+            color: hsl(var(--primary));
+            text-shadow: 0 0 8px hsl(var(--primary));
+        }
+    }
+    
+    .circuit-segment {
+        animation: circuit-flow 3s infinite linear;
+    }
 }
