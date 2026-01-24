@@ -153,7 +153,7 @@ const OpenSource = () => {
                                                 )}
                                             />
                                         </button>
-                                        <div className="text-xs uppercase tracking-[0.2em] text-white/40">Open Source Track</div>
+                                        <div className="text-xs uppercase tracking-[0.2em] text-white/40">Open Source Contribution</div>
                                     </div>
 
                                     <AnimatePresence>

@@ -86,7 +86,7 @@ const Footer = () => {
                             <div className="space-y-6">
                                 <div className="rounded-2xl border border-white/15 bg-white/5 p-6 text-sm text-white/80">
                                     <p className="text-xs uppercase tracking-[0.3em] text-white/50 font-semibold mb-3">Availability</p>
-                                    <p>Open for founders, engineering leads, and research teams who need a systems-focused partner to scope, de-risk, and ship production-grade work.</p>
+                                    <p>Open to collaborating with founders, engineers, researchers or just having a thoughtful technical conversation. Sometimes it’s about building systems. Sometimes it’s just about sharing ideas.</p>
                                 </div>
 
                                 <div className="space-y-4">
