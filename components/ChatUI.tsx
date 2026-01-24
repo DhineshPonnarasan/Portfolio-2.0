@@ -135,7 +135,7 @@ const ChatUI = ({ messages, isLoading, onSend, onClear, onClose }: ChatUIProps) 
                     </div>
                     <div>
                         <h3 className="font-semibold text-white text-base">Chitti</h3>
-                        <p className="text-xs text-zinc-400">My AI powered personalized chatbot.</p>
+                        <p className="text-xs text-zinc-400">AI irundhaalum… style Chitti dhaan.</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -182,7 +182,7 @@ const ChatUI = ({ messages, isLoading, onSend, onClear, onClose }: ChatUIProps) 
                             />
                         </div>
                         <h3 className="font-semibold text-white text-xl mb-1">Chitti</h3>
-                        <p className="text-sm text-zinc-400">My AI powered personalized chatbot.</p>
+                        <p className="text-sm text-zinc-400">Emotion illa. Confusion illa. Solution mattum.</p>
                     </motion.div>
 
                     {/* Date Separator */}
