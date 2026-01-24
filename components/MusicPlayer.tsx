@@ -94,76 +94,70 @@ const MusicPlayer = () => {
                         className="absolute right-0 top-full mt-2 z-50 w-64"
                     >
                         {/* Cyberpunk Container */}
-                        <div className="relative bg-black/95 border border-primary/50 rounded-lg p-4 backdrop-blur-md shadow-2xl shadow-primary/20">
+                        <div className="relative bg-black/95 border border-primary/50 rounded-lg p-5 backdrop-blur-md shadow-2xl shadow-primary/20">
                             {/* Glow Effect */}
                             <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary/10 to-transparent pointer-events-none" />
 
                             {/* Header */}
-                            <div className="flex items-center gap-2 mb-3 text-xs text-primary font-mono uppercase tracking-wider">
+                            <div className="flex items-center gap-2 mb-4 text-xs text-primary font-mono uppercase tracking-wider opacity-80">
                                 <Music className="size-3" />
                                 <span>Now Playing</span>
                             </div>
 
                             {/* Song Info */}
-                            <div className="mb-4">
-                                <h3 className="text-white font-semibold text-sm truncate">{SONG_NAME}</h3>
-                                <p className="text-muted-foreground text-xs">Instrumental</p>
+                            <div className="mb-6">
+                                <h3 className="text-white font-bold text-base truncate tracking-wide">{SONG_NAME}</h3>
+                                <p className="text-white/40 text-xs font-medium uppercase tracking-widest mt-0.5">Instrumental</p>
                             </div>
 
-                            {/* Progress Bar */}
-                            <div className="mb-4">
-                                <div className="h-1 bg-white/10 rounded-full overflow-hidden">
+                            {/* Progress Bar (Full Visual) */}
+                            <div className="mb-6 group">
+                                <div className="h-1.5 bg-white/5 rounded-full overflow-hidden ring-1 ring-white/10 group-hover:ring-primary/30 transition-all duration-300">
                                     <motion.div
-                                        className="h-full bg-primary rounded-full"
+                                        className="h-full bg-primary rounded-full shadow-[0_0_10px_rgba(34,197,94,0.5)]"
                                         style={{ width: `${progress}%` }}
                                         transition={{ duration: 0.1 }}
                                     />
                                 </div>
-                                <div className="flex justify-between text-xs text-muted-foreground mt-1 font-mono">
-                                    <span>{Math.floor(currentTime)}s</span>
-                                    <span>{MAX_DURATION}s</span>
-                                </div>
                             </div>
 
-                            {/* Controls */}
-                            <div className="flex items-center justify-center gap-4">
+                            {/* Controls - Clean & Centered */}
+                            <div className="flex items-center justify-center gap-6">
+                                {/* Previous (Restart) */}
                                 <button
                                     onClick={skipToStart}
-                                    className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-muted-foreground hover:text-white transition-all"
+                                    className="p-2 rounded-full text-muted-foreground hover:text-white hover:bg-white/5 transition-all duration-300"
                                     aria-label="Restart"
                                 >
-                                    <SkipForward className="size-4 rotate-180" />
+                                    <SkipForward className="size-5 rotate-180 opacity-70 hover:opacity-100" />
                                 </button>
 
+                                {/* Play/Pause (Hero Button) */}
                                 <button
                                     onClick={togglePlay}
-                                    className="p-3 rounded-full bg-primary text-black hover:bg-primary/80 transition-all"
+                                    className="p-3.5 rounded-full bg-primary text-black hover:bg-primary/90 hover:scale-105 hover:shadow-[0_0_20px_rgba(34,197,94,0.5)] transition-all duration-300"
                                     aria-label={isPlaying ? 'Pause' : 'Play'}
                                 >
                                     {isPlaying ? (
-                                        <Pause className="size-5" />
+                                        <Pause className="size-6 fill-current" />
                                     ) : (
-                                        <Play className="size-5 ml-0.5" />
+                                        <Play className="size-6 ml-1 fill-current" />
                                     )}
                                 </button>
 
+                                {/* Next (Skip) */}
                                 <button
                                     onClick={skipToStart}
-                                    className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-muted-foreground hover:text-white transition-all"
+                                    className="p-2 rounded-full text-muted-foreground hover:text-white hover:bg-white/5 transition-all duration-300"
                                     aria-label="Skip"
                                 >
-                                    <SkipForward className="size-4" />
+                                    <SkipForward className="size-5 opacity-70 hover:opacity-100" />
                                 </button>
                             </div>
 
-                            {/* 60s Loop Indicator */}
-                            <div className="mt-3 text-center">
-                                <span className="text-xs text-primary/60 font-mono">🔁 60s Loop</span>
-                            </div>
-
                             {/* Decorative Corners */}
-                            <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-primary rounded-tl-lg" />
-                            <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-primary rounded-br-lg" />
+                            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary/50 rounded-tl" />
+                            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary/50 rounded-br" />
                         </div>
                     </motion.div>
                 )}
