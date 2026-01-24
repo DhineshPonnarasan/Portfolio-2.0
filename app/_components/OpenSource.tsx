@@ -63,8 +63,6 @@ const OpenSource = () => {
             <div className="container">
                 <SectionTitle title="Open Source Contributions" />
                 <div className="mt-12 relative space-y-8 md:space-y-10">
-                    <div className="pointer-events-none absolute left-5 top-0 h-full w-px bg-gradient-to-b from-primary/40 via-white/10 to-transparent" />
-
                     {MY_CONTRIBUTIONS.map((contribution, idx) => {
                         const isExpanded = expandedSlug === contribution.slug;
                         const icon = getOrgIcon(contribution.org);
