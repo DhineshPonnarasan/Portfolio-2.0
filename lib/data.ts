@@ -1028,8 +1028,41 @@ export const PROJECTS: IProject[] = [
 
 export const MY_PUBLICATIONS: IPublication[] = [
     {
+        title: 'Real-Time Anomaly Detection Using Snort and Machine Learning: A Data Analytics Approach for Network Security',
+        venue: 'IEEE -  Second International Conference on Intelligent Technologies for Sustainable Electric and Communications Systems (iTech SECOM)',
+        year: 2025,
+        link: 'https://ieeexplore.ieee.org/document/11307610',
+        points: [
+            'Designed and implemented a real-time network anomaly detection system by integrating Snort IDS with multiple unsupervised ML models including Isolation Forest, LOF, One-Class SVM, K-Means, GMM, and Elliptic Envelope.',
+            'Conducted a comparative performance analysis across six anomaly detection techniques, demonstrating superior detection accuracy using ensemble decision-making, with Isolation Forest and LOF achieving the highest results.',
+            'Built a low-latency Streamlit-based dashboard to process live network traffic from Snort logs, achieving high accuracy and recall suitable for real-time intrusion detection deployments.',
+        ],
+    },
+    {
+        title: 'Reinforcement Learning for Autonomous Lunar Landing: A Comparative Analysis of Algorithm Performance',
+        venue: 'IEEE -  Second International Conference on Intelligent Technologies for Sustainable Electric and Communications Systems (iTech SECOM)',
+        year: 2025,
+        link: 'https://ieeexplore.ieee.org/document/11307361',
+        points: [
+            'Developed and evaluated reinforcement learning–based autonomous control policies for spacecraft landing under uncertain dynamics using OpenAI Gymnasium’s LunarLander-v2 environment.',
+            'Implemented a unified PyTorch framework to compare DQN, Double DQN, Dueling DQN, and PPO across multi-seed experiments, analyzing convergence speed, reward stability, and computational efficiency.',
+            'Demonstrated that PPO converges 4× faster than value-based methods while Dueling DQN achieves the highest peak reward, highlighting trade-offs for real-world high-risk autonomous control systems.',
+        ],
+    },
+    {
+        title: 'Design and Development of Wireless Power Transfer Based Charger for Eskate Scooter',
+        venue: 'IEEE -  Second International Conference on Intelligent Technologies for Sustainable Electric and Communications Systems (iTech SECOM)',
+        year: 2025,
+        link: 'https://ieeexplore.ieee.org/document/11307602',
+        points: [
+            'Designed a 100 W wireless power transfer system using inductive and resonant power transfer with a Series–Series compensated topology to achieve high efficiency and safe power delivery.',
+            'Implemented a complete transmitter–receiver architecture, including SMPS, DC–DC conversion, rectification, filtering, and a Battery Management System (BMS) for compliant and reliable battery charging.',
+            'Optimized State of Charge (SOC) control and battery lifecycle management, validating system performance through simulation and prototype testing to ensure durability and efficiency.',
+        ],
+    },
+    {
         title: 'Unsupervised Anomaly Detection for Network Intrusion Using Deep Autoencoders',
-        venue: '2025 International Conference on Next Generation Computing Systems (ICNGCS)',
+        venue: 'IEEE -  International Conference on Next Generation Computing Systems (ICNGCS)',
         year: 2025,
         link: 'https://ieeexplore.ieee.org/document/11182931',
         points: [
@@ -1041,7 +1074,7 @@ export const MY_PUBLICATIONS: IPublication[] = [
     },
     {
         title: 'Collaborative Search With Knowledge Sharing And Summarization',
-        venue: '2024 4th International Conference on Sustainable Expert Systems (ICSES)',
+        venue: 'IEEE -  2024 4th International Conference on Sustainable Expert Systems (ICSES)',
         year: 2024,
         link: 'https://ieeexplore.ieee.org/document/10763244',
         points: [
@@ -1053,7 +1086,7 @@ export const MY_PUBLICATIONS: IPublication[] = [
     },
     {
         title: 'Image to Audio Conversion to Aid Visually Impaired People using CNN',
-        venue: '2023 4th International Conference on Electronics and Sustainable Communication Systems (ICESC)',
+        venue: 'IEEE -  2023 4th International Conference on Electronics and Sustainable Communication Systems (ICESC)',
         year: 2023,
         link: 'https://ieeexplore.ieee.org/document/10193308',
         points: [
