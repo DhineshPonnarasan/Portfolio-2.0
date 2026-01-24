@@ -17,7 +17,7 @@ const ProjectList = () => {
     const imageContainer = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLImageElement>(null);
     const [selectedProject, setSelectedProject] = useState<string | null>(
-        PROJECTS[0].slug,
+        null,
     );
 
     // update imageRef.current href based on the cursor hover position
@@ -43,7 +43,6 @@ const ProjectList = () => {
                     containerRef.current?.getBoundingClientRect();
                 const imageRect =
                     imageContainer.current.getBoundingClientRect();
-                const offsetTop = e.clientY - containerRect.y;
 
                 // if cursor is outside the container, hide the image
                 if (
@@ -59,9 +58,11 @@ const ProjectList = () => {
                 }
 
                 gsap.to(imageContainer.current, {
-                    y: offsetTop - imageRect.height / 2,
-                    duration: 1,
+                    x: e.clientX + 20,
+                    y: e.clientY + 20,
+                    duration: 0.5,
                     opacity: 1,
+                    ease: "power2.out",
                 });
             }) as any;
 
@@ -103,12 +104,16 @@ const ProjectList = () => {
         setSelectedProject(slug);
     };
 
+    const handleMouseLeave = () => {
+        setSelectedProject(null);
+    };
+
     return (
-        <section className="pb-section" id="selected-projects">
-            <div className="container">
+        <section className="pb-section pt-20" id="selected-projects">
+            <div className="container" ref={containerRef}>
                 <SectionTitle title="PROJECTS" />
 
-                <div className="group/projects relative" ref={containerRef}>
+                <div className="group/projects relative">
                     <div
                         className="flex flex-col max-md:gap-10"
                         ref={projectListRef}
@@ -119,9 +124,29 @@ const ProjectList = () => {
                                 project={project}
                                 selectedProject={selectedProject}
                                 onMouseEnter={handleMouseEnter}
+                                onMouseLeave={handleMouseLeave}
                                 key={project.slug}
                             />
                         ))}
+                    </div>
+
+                    {/* Desktop Hover Image Preview */}
+                    <div
+                        ref={imageContainer}
+                        className="pointer-events-none fixed left-0 top-0 z-50 h-[300px] w-[450px] overflow-hidden rounded-xl opacity-0 max-md:hidden mix-blend-exclusion"
+                        style={{ x: 0, y: 0 }}
+                    >
+                        {selectedProject && (
+                            <div className="relative w-full h-full bg-zinc-950 border border-white/10 rounded-xl overflow-hidden shadow-2xl">
+                                <Image
+                                    ref={imageRef}
+                                    src={`/projects/${selectedProject}/ui.svg`}
+                                    alt="project preview"
+                                    fill
+                                    className="object-contain p-4"
+                                />
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

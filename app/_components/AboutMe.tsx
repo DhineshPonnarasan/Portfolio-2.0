@@ -64,7 +64,7 @@ const AboutMe = () => {
 
                 <div className="grid lg:grid-cols-12 gap-10">
                     <div className="lg:col-span-5 slide-up-and-fade">
-                        <div className="relative aspect-square w-full max-w-[400px] overflow-hidden rounded-2xl bg-zinc-900 flex items-center justify-center border border-white/10 group">
+                        <div className="relative aspect-square w-full max-w-[400px] overflow-hidden rounded-2xl bg-zinc-900 flex items-center justify-center border border-white/10 group mx-auto lg:mx-0">
                             <div className={`relative w-full h-full transition-opacity duration-300 ${imgError ? 'opacity-0 hidden' : 'opacity-100'}`}>
                                 <Image
                                     src="/projects/images/Dhinesh.jpg"

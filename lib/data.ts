@@ -1141,6 +1141,7 @@ export const MY_EXPERIENCE = [
     {
         title: 'AI/ML & Applications Development Intern',
         company: 'Uplifty AI',
+        type: 'Internship',
         duration: 'Aug 2025 – Present',
         location: 'Austin, Texas, United States',
         description: `
@@ -1156,6 +1157,7 @@ export const MY_EXPERIENCE = [
     {
         title: 'Data Analyst Intern',
         company: 'Afame Technologies',
+        type: 'Internship',
         duration: 'Jan 2024 – Mar 2024',
         location: 'Bangalore,Karnataka, India',
         description: `
@@ -1170,6 +1172,7 @@ export const MY_EXPERIENCE = [
     {
         title: 'Software Development Engineer',
         company: 'V3Techserv',
+        type: 'Professional Experience',
         duration: 'Jun 2022 – Jul 2023',
         location: 'Chennai,Tamilnadu, India',
         description: `
@@ -1184,6 +1187,7 @@ export const MY_EXPERIENCE = [
     {
         title: 'Software Developer',
         company: 'Freelance - Upwork',
+        type: 'Freelance',
         duration: 'Nov 2021 – May 2022',
         location: 'Coimbatore,Tamilnadu, India',
         description: `

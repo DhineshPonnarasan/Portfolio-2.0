@@ -71,7 +71,7 @@ const Experiences = () => {
                                     isExpanded && 'border-b-primary/40 bg-white/[0.02]'
                                 )}
                             >
-                                <div className="grid gap-4 md:grid-cols-[auto,1fr] items-start">
+                                <div className="grid gap-4 grid-cols-[auto,1fr] items-start">
                                     <div className="flex flex-col items-center gap-3 pt-1">
                                         <div className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-[11px] font-semibold text-primary">
                                             {(idx + 1).toString().padStart(2, '0')}
@@ -134,7 +134,7 @@ const Experiences = () => {
                                                     className={cn('transition-transform duration-300', isExpanded && 'rotate-180')}
                                                 />
                                             </button>
-                                            <div className="text-xs uppercase tracking-[0.2em] text-white/40">Experience</div>
+                                            <div className="text-xs uppercase tracking-[0.2em] text-white/40">{item.type}</div>
                                         </div>
 
                                         <AnimatePresence>
