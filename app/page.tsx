@@ -1,13 +1,16 @@
 import type { CSSProperties } from 'react';
-import AboutMe from './_components/AboutMe';
+import dynamic from 'next/dynamic';
 import Banner from './_components/Banner';
-import Education from './_components/Education';
-import Experiences from './_components/Experiences';
-import Skills from './_components/Skills';
-import ProjectList from './_components/ProjectList';
-import Publications from './_components/Publications';
-import OpenSource from './_components/OpenSource';
-import Footer from '@/components/Footer';
+import AboutMe from './_components/AboutMe';
+
+// Dynamic imports for below-the-fold content to improve initial load performance
+const Education = dynamic(() => import('./_components/Education'));
+const Experiences = dynamic(() => import('./_components/Experiences'));
+const Skills = dynamic(() => import('./_components/Skills'));
+const ProjectList = dynamic(() => import('./_components/ProjectList'));
+const Publications = dynamic(() => import('./_components/Publications'));
+const OpenSource = dynamic(() => import('./_components/OpenSource'));
+const Footer = dynamic(() => import('@/components/Footer'));
 
 export default function Home() {
     const sections = [

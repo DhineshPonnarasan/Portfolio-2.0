@@ -25,14 +25,6 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         setGlobalVolume(isMuted ? 0 : 0.3);
-
-        // Handle Ambience (Background Drone)
-        if (!isMuted && hasInteracted) {
-            startAmbience();
-        } else {
-            stopAmbience();
-        }
-
         localStorage.setItem('cyber-audio-muted', String(isMuted));
     }, [isMuted, hasInteracted]);
 

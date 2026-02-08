@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const SONG_NAME = 'Naan Un';
 const AUDIO_SRC = '/Naan Un.mpeg';
+// Use encodeURI to ensure spaces are handled correctly in all browsers
+const SAFE_AUDIO_SRC = encodeURI(AUDIO_SRC);
 const MAX_DURATION = 60; // 60 seconds limit
 
 const MusicPlayer = () => {
@@ -16,7 +18,7 @@ const MusicPlayer = () => {
 
     // Initialize audio element
     useEffect(() => {
-        audioRef.current = new Audio(AUDIO_SRC);
+        audioRef.current = new Audio(SAFE_AUDIO_SRC);
         audioRef.current.loop = true;
         audioRef.current.volume = 0.3;
 

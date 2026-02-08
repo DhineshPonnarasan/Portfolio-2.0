@@ -1,5 +1,5 @@
 export const ARCHITECTURE_DIAGRAMS: Record<number, string> = {
-  1: `----------------------------------
+  1: `------------------------------------
 | 1. DATA SOURCES                  |
 | Kaggle Telco Churn, IBM CRM      |
 | exports, application usage logs, |
@@ -88,7 +88,7 @@ export const ARCHITECTURE_DIAGRAMS: Record<number, string> = {
 | improved targeting strategies    |
 | over time.                       |
 ------------------------------------`,
-  2: `--------------------------------------
+  2: `----------------------------------------
 | 1. DATA SOURCES                      |
 | Twitter API (academic tier), Reddit  |
 | API, and HuggingFace multilingual    |
@@ -179,15 +179,15 @@ export const ARCHITECTURE_DIAGRAMS: Record<number, string> = {
 ------------------------------------------------------------     ------------------------------------------------------------
                                                                                               |
                                                                                               v
-------------------------------------------------------------     -------------------------------------------------------------
-| 4. MODEL TRAINING (YOLOv8 Optimization)                  |     | 3. ROI EXTRACTION & AUGMENTATION                          |
-| YOLOv8 is trained using multi-scale anchors and          | <-- | Regions of interest (ROIs) are identified and cropped     |
-| augmented datasets. Hyperparameter sweeps optimize       |     | for targeted augmentation. Techniques include brightness  |
-| performance across object sizes. mAP metrics guide       |     | shifts, blur simulation, occlusions, and motion artifacts |
-| improvements. Regularization and fine-tuning ensure      |     | to enhance model robustness across real-world scenes.     |
-| stability under extreme lighting or motion conditions.   |     -------------------------------------------------------------                                                     |
-------------------------------------------------------------     
-                       |
+------------------------------------------------------------     ------------------------------------------------------------
+| 4. MODEL TRAINING (YOLOv8 Optimization)                  |     | 3. ROI EXTRACTION & AUGMENTATION                         |
+| YOLOv8 is trained using multi-scale anchors and          | <-- | Regions of interest (ROIs) are identified and cropped    |
+| augmented datasets. Hyperparameter sweeps optimize       |     | for targeted augmentation. Techniques include brightness |
+| performance across object sizes. mAP metrics guide       |     | shifts, blur simulation, occlusions, and motion artifacts|
+| improvements. Regularization and fine-tuning ensure      |     | to enhance model robustness across real-world scenes.    |
+| stability under extreme lighting or motion conditions.   |     ------------------------------------------------------------
+------------------------------------------------------------                                                               |
+                       |                                                                                                   v
                        v
 ------------------------------------------------------------     ------------------------------------------------------------
 | 5. INFERENCE & TRACKING                                  |     | 6. VISUALIZATION & FEEDBACK LOOP                         |
@@ -195,9 +195,9 @@ export const ARCHITECTURE_DIAGRAMS: Record<number, string> = {
 | GPU/edge accelerators. Multi-object tracking assigns     |     | boxes and confidence scores. Security teams review       |
 | persistent identities across video frames. System        |     | false positives/negatives. Continuous learning adjusts   |
 | supports alert generation for restricted or unusual      |     | thresholds and retrains models using new video data.     |
-| activity zones.                                          |     |----------------------------------------------------------|                                                          |
-------------------------------------------------------------`,    
-  4: `----------------------------------
+| activity zones.                                          |     |                                                            |
+------------------------------------------------------------     ------------------------------------------------------------`,    
+  4: `------------------------------------
 | 1. DATA SOURCES                  |
 | Kaggle Credit Card Fraud,        |
 | open banking transaction logs,   |
@@ -260,66 +260,64 @@ export const ARCHITECTURE_DIAGRAMS: Record<number, string> = {
                             | Confirmed enrich training.    |
                             | Monitoring tracks drift.      |
                             ---------------------------------`,
-  5: `                                                              -----------------------------------
-                                                                    | 1. DATA SOURCES                 |
-                                                                    | COCO, OpenImages, and custom    |
-                                                                    | CCTV video feeds supply diverse |
-                                                                    | visual scenes. Data includes    |
-                                                                    | indoor, outdoor, and low-light  |
-                                                                    | frames. Annotation quality is   |
-                                                                    | manually validated.             |
-                                                                    -----------------------------------
-                                                                      |
-                                                                      v
-                                                    ----------------------------------
-                                                    | 2. INGESTION & FRAME           |
-                                                    | PROCESSING                     |
-                                                    | Video streams are decoded into |
-                                                    | frames at target FPS. Frames   |
-                                                    | are resized, normalized, and   |
-                                                    | deduped. Metadata is preserved.|
-                                                    ----------------------------------
-                                                      |
-                                                      v
-                                    ------------------------------------
-                                    | 3. ROI EXTRACTION &              |
-                                    | AUGMENTATION                     |
-                                    | Regions of interest (ROIs) are   |
-                                    | identified and cropped for       |
-                                    | targeted augmentation. Techniques|
-                                    | enhance model robustness.        |
-                                    ------------------------------------
-                                      |
-                                      v
-                    -----------------------------------
-                    | 4. MODEL TRAINING (YOLOv8       |
-                    | Optimization)                   |
-                    | YOLOv8 is trained using multi-  |
-                    | scale anchors and augmented     |
-                    | datasets. Regularization and    |
-                    | fine-tuning ensure stability.   |
-                    -----------------------------------
-                      |
-                      v
-    -----------------------------------
-    | 5. INFERENCE & TRACKING         |
-    | The deployed model performs     |
-    | real-time detection on GPU/edge |
-    | accelerators. Multi-object      |
-    | tracking assigns persistent     |
-    | identities across frames.       |
-    -----------------------------------
-      |
-      v
+  5: `-----------------------------------
+| 1. DATA SOURCES                 |
+| COCO, OpenImages, and custom    |
+| CCTV video feeds supply diverse |
+| visual scenes. Data includes    |
+| indoor, outdoor, and low-light  |
+| frames. Annotation quality is   |
+| manually validated.             |
 -----------------------------------
-| 6. VISUALIZATION & FEEDBACK     |
-| LOOP                            |
-| Detection outputs are streamed  |
-| to dashboards with bounding     |
-| boxes and confidence scores.    |
-| Security teams provide feedback.|
------------------------------------`,
-  6: `------------------------------------
+          |
+          v
+        -----------------------------------
+        | 2. INGESTION & FRAME PROCESSING |
+        | Video streams are decoded into  |
+        | frames at target FPS. Frames    |
+        | are resized, normalized, and    |
+        | deduped. Metadata is preserved. |
+        -----------------------------------
+                |
+                v
+              ------------------------------------
+              | 3. ROI EXTRACTION & AUGMENTATION |
+              | Regions of interest (ROIs) are   |
+              | identified and cropped for       |
+              | targeted augmentation. Techniques|
+              | enhance model robustness.        |
+              ------------------------------------
+                        |
+                        v
+              -----------------------------------
+              | 4. MODEL TRAINING (YOLOv8       |
+              | Optimization)                   |
+              | YOLOv8 is trained using multi-  |
+              | scale anchors and augmented     |
+              | datasets. Regularization and    |
+              | fine-tuning ensure stability.   |
+              -----------------------------------
+                        |
+                        v
+              -----------------------------------
+              | 5. INFERENCE & TRACKING         |
+              | The deployed model performs     |
+              | real-time detection on GPU/edge |
+              | accelerators. Multi-object      |
+              | tracking assigns persistent     |
+              | identities across frames.       |
+              -----------------------------------
+                        |
+                        v
+              -----------------------------------
+              | 6. VISUALIZATION & FEEDBACK     |
+              | LOOP                            |
+              | Detection outputs are streamed  |
+              | to dashboards with bounding     |
+              | boxes and confidence scores.    |
+              | Security teams provide feedback.|
+              -----------------------------------`,
+  6: `-------------------------------------
 | 1. DATA SOURCES                   |
 | User interaction logs, clickstream|
 | histories, and product catalog    |
@@ -382,7 +380,7 @@ export const ARCHITECTURE_DIAGRAMS: Record<number, string> = {
 | Continuous retraining ensures    |
 | evolution with trends.           |
 ------------------------------------`,
-  7: `----------------------------------
+  7: `------------------------------------
 | 1. DATA SOURCES                  |
 | POS sales records, inventory     |
 | logs, weather APIs, and promo    |
@@ -435,7 +433,7 @@ export const ARCHITECTURE_DIAGRAMS: Record<number, string> = {
                                 | and published to BI dashboards. |
                                 | APIs provide near real-time     |
                                 | updates.                        |
-                                ----------------------------------
+                                -----------------------------------
                                               |
                                               |
                                               v
@@ -479,11 +477,11 @@ export const ARCHITECTURE_DIAGRAMS: Record<number, string> = {
               |
               v
 
-------------------------------------------------------------------------------- 
+---------------------------------------------------------------------------
 | 6. MONITORING & FEEDBACK LOOP                                           |
 | Recruiter feedback refines matching. Hiring outcomes enrich retraining. |
 | Continuous improvements enhance ranking precision and fairness.         |
--------------------------------------------------------------------------------`,
+---------------------------------------------------------------------------`,
   9: `------------------------------------
 | 1. DATA SOURCES                  |
 | CSVs, APIs, OLTP database        |
@@ -555,17 +553,17 @@ export const ARCHITECTURE_DIAGRAMS: Record<number, string> = {
 | adjustments and schema updates   |
 | evolve with business needs.      |
 ------------------------------------`,
-  10: `------------------------------------                ------------------------------------
-| 1. DATA SOURCES                 - |               | 2. INGESTION & PREPROCESSING     |
-| NIH blood smear datasets, Kaggle  |               | Images undergo normalization,    |
-| hematology datasets, and PhysioNet|               | denoising, and resizing.         |
-| imaging archives form foundational|               | Classical DICOM pipelines extract|
-| inputs. Patient demographics      |      -->      | pixel metadata. Quantum-related  |
-| corpus. Synthetic generators      |               | preprocessing enriches features  |
-| create underrepresented variations|               | with encoded phase/amplitude.    |  
-| All data validated for quality    |               | Patient-wise splitting ensures   |
-| and checked for distortions.      |               | no identity leakage.             |
--------------------------------------               ------------------------------------
+  10: `--------------------------------------              ------------------------------------
+| 1. DATA SOURCES                    |              | 2. INGESTION & PREPROCESSING     |
+| NIH blood smear datasets, Kaggle   |              | Images undergo normalization,    |
+| hematology datasets, and PhysioNet |              | denoising, and resizing.         |
+| imaging archives form foundational |              | Classical DICOM pipelines extract|
+| inputs. Patient demographics       |      -->     | pixel metadata. Quantum-related  |
+| corpus. Synthetic generators       |              | preprocessing enriches features  |
+| create underrepresented variations |              | with encoded phase/amplitude.    |  
+| All data validated for quality     |              | Patient-wise splitting ensures   |
+| and checked for distortions.       |              | no identity leakage.             |
+--------------------------------------              ------------------------------------
 
                                                      /
                                                     /

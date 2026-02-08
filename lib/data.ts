@@ -1133,7 +1133,7 @@ export const MY_EDUCATION: IEducation[] = [
         gpa: 'Percentage - 84%',
         duration: 'June 2017 - March 2019',
         coursework:
-            'Literature, Mathemtics, Computer Science, Physics, Chemistry',
+            'Literature, Mathematics, Computer Science, Physics, Chemistry',
     },
 ];
 
