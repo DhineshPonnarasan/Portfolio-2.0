@@ -161,8 +161,8 @@ const ChatInput = ({ onSend, isLoading, placeholder = "Talk to Chitti" }: ChatIn
 // Extend Window interface for TypeScript
 declare global {
     interface Window {
-        SpeechRecognition: typeof SpeechRecognition;
-        webkitSpeechRecognition: typeof SpeechRecognition;
+        SpeechRecognition: any;
+        webkitSpeechRecognition: any;
     }
 }
 

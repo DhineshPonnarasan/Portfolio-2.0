@@ -5,13 +5,15 @@ interface Params {
     slug: string;
 }
 
-export default function CaseStudyPage({ params }: { params: Params }) {
-    const project = PROJECTS.find((p) => p.slug === params.slug);
+export default async function CaseStudyPage({ params }: { params: Promise<Params> }) {
+    const { slug } = await params;
+    const project = PROJECTS.find((p) => p.slug === slug);
 
     if (!project) {
         return notFound();
     }
 
+    // Ensure description is an array
     const description = Array.isArray(project.description) ? project.description : [project.description];
 
     return (

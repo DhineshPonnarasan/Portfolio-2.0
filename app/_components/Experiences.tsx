@@ -108,7 +108,7 @@ const Experiences = () => {
                                         </div>
 
                                         <p className="text-sm leading-relaxed text-white/75">
-                                            {item.summary || 'Built products, shipped features, and collaborated across teams.'}
+                                            {(item as any).summary || 'Built products, shipped features, and collaborated across teams.'}
                                         </p>
 
                                         <div className="flex flex-wrap gap-2 text-[11px] uppercase tracking-[0.12em] text-white/60">

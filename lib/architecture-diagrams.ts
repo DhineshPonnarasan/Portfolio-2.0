@@ -1,3 +1,5 @@
+export type ArchitectureMode = 'beginner' | 'advanced' | 'expert';
+
 export const ARCHITECTURE_DIAGRAMS: Record<number, string> = {
   1: `------------------------------------
 | 1. DATA SOURCES                  |

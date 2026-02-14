@@ -24,7 +24,7 @@ const VoiceArchitectureExplanation = ({ projectId, onClose }: VoiceArchitectureE
   const [error, setError] = useState<string | null>(null);
   const [isMuted, setIsMuted] = useState(false);
 
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const recognitionRef = useRef<any>(null);
   const synthesisRef = useRef<SpeechSynthesisUtterance | null>(null);
   const [browserInfo, setBrowserInfo] = useState<{ name: string; supportsSpeech: boolean; supportsSynthesis: boolean } | null>(null);
 
@@ -113,7 +113,7 @@ const VoiceArchitectureExplanation = ({ projectId, onClose }: VoiceArchitectureE
         setTranscript('');
       };
 
-      recognition.onresult = (event: SpeechRecognitionEvent) => {
+      recognition.onresult = (event: any) => {
         let interim = '';
         let newFinal = '';
 
@@ -145,7 +145,7 @@ const VoiceArchitectureExplanation = ({ projectId, onClose }: VoiceArchitectureE
         }
       };
 
-      recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+      recognition.onerror = (event: any) => {
         console.warn('Speech recognition error:', event.error);
         if (event.error === 'no-speech') {
           // Don't show error for no-speech, just stop
@@ -240,7 +240,7 @@ const VoiceArchitectureExplanation = ({ projectId, onClose }: VoiceArchitectureE
         voice.name.toLowerCase().includes('female') ||
         voice.name.toLowerCase().includes('susan') || // UK female voice
         voice.name.toLowerCase().includes('victoria') || // US female voice
-        (voice.localService === false && voice.lang.startsWith('en') && voice.gender === 'female')
+        (voice.localService === false && voice.lang.startsWith('en') && (voice as any).gender === 'female')
       );
       
       if (youngFemaleVoice) {
@@ -734,60 +734,8 @@ const VoiceArchitectureExplanation = ({ projectId, onClose }: VoiceArchitectureE
 // Extend Window interface for TypeScript
 declare global {
   interface Window {
-    SpeechRecognition: {
-      new (): SpeechRecognition;
-    };
-    webkitSpeechRecognition: {
-      new (): SpeechRecognition;
-    };
-  }
-  
-  interface SpeechRecognition extends EventTarget {
-    continuous: boolean;
-    interimResults: boolean;
-    lang: string;
-    start(): void;
-    stop(): void;
-    abort(): void;
-    onstart: ((this: SpeechRecognition, ev: Event) => any) | null;
-    onresult: ((this: SpeechRecognition, ev: SpeechRecognitionEvent) => any) | null;
-    onerror: ((this: SpeechRecognition, ev: SpeechRecognitionErrorEvent) => any) | null;
-    onend: ((this: SpeechRecognition, ev: Event) => any) | null;
-  }
-  
-  interface SpeechRecognitionEvent extends Event {
-    results: SpeechRecognitionResultList;
-    resultIndex: number;
-  }
-  
-  interface SpeechRecognitionErrorEvent extends Event {
-    error: string;
-    message: string;
-  }
-  
-  interface SpeechSynthesisErrorEvent extends Event {
-    error?: string;
-    charIndex?: number;
-    charLength?: number;
-    type?: string;
-  }
-  
-  interface SpeechRecognitionResultList {
-    length: number;
-    item(index: number): SpeechRecognitionResult;
-    [index: number]: SpeechRecognitionResult;
-  }
-  
-  interface SpeechRecognitionResult {
-    length: number;
-    item(index: number): SpeechRecognitionAlternative;
-    [index: number]: SpeechRecognitionAlternative;
-    isFinal: boolean;
-  }
-  
-  interface SpeechRecognitionAlternative {
-    transcript: string;
-    confidence: number;
+    SpeechRecognition: any;
+    webkitSpeechRecognition: any;
   }
 }
 

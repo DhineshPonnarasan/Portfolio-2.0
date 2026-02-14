@@ -10,8 +10,7 @@ let masterGain: GainNode | null = null;
 const initAudio = () => {
     if (typeof window === 'undefined') return null;
     if (!audioCtx) {
-        // @ts-ignore
-        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
         audioCtx = new AudioContextClass();
         masterGain = audioCtx.createGain();
         masterGain.gain.value = 0.3; // Default volume
