@@ -1,5 +1,4 @@
 import { IProject, IPublication, IEducation, IContribution } from '@/types';
-import { MERMAID_DIAGRAMS } from './mermaid-templates';
 
 export const GENERAL_INFO = {
     email: 'dhineshponnarasan@gmail.com',
@@ -890,24 +889,47 @@ export const PROJECTS: IProject[] = [
 
     export const MY_CONTRIBUTIONS: IContribution[] = [
         {
-            title: 'Social Winter of Code (SWoC \'26) – ETNA',
-            slug: 'social-winter-of-code',
-            org: 'SWoC',
-            role: 'Open Source Developer',
-            period: 'Jan 2026 – Mar 2026',
-            description: 'Contributed to the ETNA time-series library with stability fixes, clearer docs, and broader tests during SWoC.',
+            title: "Social Winter of Code (SWoC '26) – CodeGraphContext",
+            slug: 'social-winter-of-code-codegraphcontext',
+            org: 'CodeGraphContext',
+            role: 'Open Source Contributor',
+            period: 'Jan 2026 – Present',
+            description: 'Built and contributed to CodeGraphContext, a system that analyzes and maps relationships between code components to improve code understanding and maintainability.',
             points: [
-                'Contributed code improvements and bug fixes that improved core ETNA pipeline stability.',
-                'Enhanced documentation to deepen clarity around time-series modeling practices and usage flows.',
-                'Expanded test coverage to ensure robust forecasting behavior across diverse time-series scenarios.',
-                'Partnered with maintainers to triage issues and keep releases stable for contributors.',
+                'Implemented and debugged end-to-end testing workflows using PyTest and CI pipelines, ensuring reliable validation of user journeys and system functionality.',
+                'Diagnosed and resolved CI/CD pipeline failures and environment configuration issues, improving automated test execution in cloud environments.',
+                'Worked with Python-based backend services and testing frameworks to validate code graph generation, API behavior, and repository analysis workflows.',
+                'Collaborated using Git-based workflows (branching, commits, CI integration) to maintain stable builds and streamline development processes.',
             ],
             deepDivePoints: [
-                'Hardened ETNA pipelines by fixing edge-case failures in data loaders, transforms, and seasonal configurations.',
-                'Rewrote sections of the time-series modeling docs to clarify forecasting workflows, frequency handling, and best practices.',
-                'Added regression tests for multi-horizon forecasts, irregular intervals, and error handling to prevent future regressions.',
+                'Engineered PyTest-based end-to-end test suites covering user journeys and core code graph analysis workflows.',
+                'Diagnosed and resolved CI/CD failures across cloud environments, improving pipeline reliability and test automation.',
+                'Validated code graph generation, API endpoints, and repository analysis logic through systematic Python backend testing.',
             ],
-            link: 'https://github.com/DhineshPonnarasan/etna',
+            link: 'https://github.com/CodeGraphContext/CodeGraphContext',
+            techStack: ['Python', 'PyTest', 'CI/CD', 'Git', 'GitHub Actions', 'REST API'],
+        },
+        {
+            title: 'OLake™ by Datazip – OSS Contribution',
+            slug: 'olake-datazip',
+            org: 'OLake / Datazip',
+            role: 'Open Source Contributor',
+            period: 'Jan 2026 – Mar 2026',
+            description: 'Worked on OLake, a data ingestion and Change Data Capture (CDC) platform by Datazip, improving reliability, cross-platform compatibility, and end-to-end pipeline stability.',
+            points: [
+                'Resolved critical panics and type assertion issues in CDC and state handling logic.',
+                'Standardized Parquet S3 key normalization (forward-slash format) to ensure seamless Spark and MinIO interoperability across operating systems.',
+                'Validated and stabilized full CDC pipeline: PostgreSQL (UUID, JSONB, JSON, Timestamp) → OLake → Parquet → Object Storage.',
+                'Strengthened error handling and data consistency in distributed ingestion workflows.',
+                'Collaborated through structured GitHub PR reviews to deliver production-grade improvements.',
+            ],
+            deepDivePoints: [
+                'Fixed critical panics and type assertion bugs in CDC and state management, hardening the core pipeline.',
+                'Standardized S3 Parquet key format to forward-slash to ensure cross-OS Spark and MinIO compatibility.',
+                'Validated end-to-end CDC flow from PostgreSQL (complex types) through OLake to Parquet object storage.',
+            ],
+            link: 'https://github.com/datazip-inc/olake',
+            techStack: ['Go (Golang)', 'Python', 'CDC', 'Docker', 'Apache Parquet', 'Apache Iceberg', 'Apache Spark', 'PostgreSQL', 'MinIO', 'S3', 'Data Engineering'],
         },
         {
             title: 'Amazon SageMaker – OSS Contribution',

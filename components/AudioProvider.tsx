@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { setGlobalVolume, startAmbience, stopAmbience } from '@/lib/audio/synth';
+import { setGlobalVolume } from '@/lib/audio/synth';
 
 interface AudioContextType {
     isMuted: boolean;
@@ -32,10 +32,10 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
 
     // One-time listener to unlock AudioContext
     useEffect(() => {
+        if (hasInteracted) return;
+
         const unlock = () => {
-            if (!hasInteracted) {
-                setHasInteracted(true);
-            }
+            setHasInteracted(true);
         };
         window.addEventListener('click', unlock, { once: true });
         window.addEventListener('keydown', unlock, { once: true });

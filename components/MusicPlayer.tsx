@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Volume2, VolumeX, Music, Play, Pause, SkipForward } from 'lucide-react';
+import { VolumeX, Music, Play, Pause, SkipForward } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const SONG_NAME = 'Naan Un';

@@ -1,4 +1,3 @@
-
 import re
 
 def fix_box_block(lines):

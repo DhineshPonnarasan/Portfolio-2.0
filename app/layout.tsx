@@ -27,13 +27,12 @@ const robotoFlex = Roboto_Flex({
 });
 
 export const metadata: Metadata = {
-    title: 'Portfolio - Dhinesh Sadhu Subramaniam Ponnarasan',
+    title: 'Dhinesh Portfolio',
     description: 'Personal portfolio of Dhinesh Sadhu Subramaniam Ponnarasan',
 };
 
 import HomeChatWidget from '@/components/HomeChatWidget';
 import { LoadingProvider } from './context/LoadingContext';
-import CyberGridBackground from '../components/CyberGridBackground';
 import ScrollAnimator from '@/components/ScrollAnimator';
 import { AudioProvider } from '@/components/AudioProvider';
 import KonamiEasterEgg from '@/components/KonamiEasterEgg';

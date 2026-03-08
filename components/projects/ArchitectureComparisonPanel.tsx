@@ -13,7 +13,7 @@ type SelectOption = { id: number; title: string };
 interface ArchitectureSelectProps {
   label: string;
   value: number;
-  onChange: (id: number) => void;
+  onChange: (_id: number) => void;
   options: SelectOption[];
 }
 

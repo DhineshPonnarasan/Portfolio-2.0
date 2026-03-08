@@ -41,10 +41,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Project or diagram not found.' }, { status: 404 });
     }
 
-    const description = Array.isArray(project.description)
-      ? project.description.join(' ')
-      : project.description;
-
     const techSummary = project.techStack?.join(', ') || project.techAndTechniques?.join(', ') || 'Not specified';
 
     const userPrompt = `Project: ${project.title}

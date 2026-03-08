@@ -1,8 +1,8 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Mic, MicOff, Volume2, VolumeX, Loader2, X, Send, Edit2, Waves } from 'lucide-react';
-import { motion, AnimatePresence, useAnimation } from 'framer-motion';
+import { Mic, Volume2, VolumeX, Loader2, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import VoiceWaveform from './VoiceWaveform';
 import AnimatedMicIcon from './AnimatedMicIcon';
 import SpeakingAnimation from './SpeakingAnimation';
@@ -179,8 +179,7 @@ const VoiceArchitectureExplanation = ({ projectId, onClose }: VoiceArchitectureE
       if (recognitionRef.current) {
         try {
           recognitionRef.current.stop();
-        } catch (e) {
-          // Ignore errors when stopping
+        } catch {
         }
       }
       stopSpeaking();
@@ -352,7 +351,7 @@ const VoiceArchitectureExplanation = ({ projectId, onClose }: VoiceArchitectureE
     if (recognitionRef.current) {
       try {
         recognitionRef.current.stop();
-      } catch (err) {
+      } catch {
         // Ignore errors when stopping
       }
     }

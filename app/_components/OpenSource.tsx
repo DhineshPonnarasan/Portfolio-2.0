@@ -15,6 +15,8 @@ import { MY_CONTRIBUTIONS } from '@/lib/data';
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const ORG_ICONS: { matcher: RegExp; src: string; alt: string }[] = [
+    { matcher: /(codegraphcontext)/i, src: '/logo/codegraphcontext.svg', alt: 'CodeGraphContext' },
+    { matcher: /(olake|datazip)/i, src: '/logo/olake.png', alt: 'OLake / Datazip' },
     { matcher: /(swoc)/i, src: '/logo/swoc.svg', alt: 'SWoC' },
     { matcher: /(amazon|aws)/i, src: '/logo/aws.svg', alt: 'Amazon AI' },
     { matcher: /(google|deepmind|tensorflow|keras)/i, src: '/logo/tensorflow.svg', alt: 'Google DeepMind' },

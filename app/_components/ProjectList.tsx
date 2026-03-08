@@ -1,7 +1,6 @@
 'use client';
 import SectionTitle from '@/components/SectionTitle';
 import { PROJECTS } from '@/lib/data';
-import { cn } from '@/lib/utils';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
@@ -41,8 +40,6 @@ const ProjectList = () => {
 
                 const containerRect =
                     containerRef.current?.getBoundingClientRect();
-                const imageRect =
-                    imageContainer.current.getBoundingClientRect();
 
                 // if cursor is outside the container, hide the image
                 if (
@@ -134,7 +131,6 @@ const ProjectList = () => {
                     <div
                         ref={imageContainer}
                         className="pointer-events-none fixed left-0 top-0 z-50 h-[300px] w-[450px] overflow-hidden rounded-xl opacity-0 max-md:hidden mix-blend-exclusion"
-                        style={{ x: 0, y: 0 }}
                     >
                         {selectedProject && (
                             <div className="relative w-full h-full bg-zinc-950 border border-white/10 rounded-xl overflow-hidden shadow-2xl">

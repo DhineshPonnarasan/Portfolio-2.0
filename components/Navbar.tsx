@@ -1,6 +1,6 @@
 'use client';
 import { cn } from '@/lib/utils';
-import { useEffect, useState, type CSSProperties } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { GENERAL_INFO, SOCIAL_LINKS } from '@/lib/data';
 import Link from 'next/link';

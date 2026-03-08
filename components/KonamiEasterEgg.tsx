@@ -15,9 +15,11 @@ const KONAMI_CODE = [
     'a',
 ];
 
+const arraysEqual = (a: string[], b: string[]) =>
+    a.length === b.length && a.every((val, idx) => val === b[idx]);
+
 const KonamiEasterEgg = () => {
     const [input, setInput] = useState<string[]>([]);
-    const [isGodMode, setIsGodMode] = useState(false);
     const { playConfirm } = useCyberSounds();
 
     useEffect(() => {
@@ -28,7 +30,7 @@ const KonamiEasterEgg = () => {
             }
             setInput(nextInput);
 
-            if (JSON.stringify(nextInput) === JSON.stringify(KONAMI_CODE)) {
+            if (arraysEqual(nextInput, KONAMI_CODE)) {
                 activateGodMode();
             }
         };
@@ -38,16 +40,14 @@ const KonamiEasterEgg = () => {
     }, [input]);
 
     const activateGodMode = () => {
-        setIsGodMode((prev) => !prev);
         document.documentElement.classList.toggle('god-mode');
         playConfirm();
 
         // Visual flair
         if (!document.documentElement.classList.contains('god-mode')) {
-            alert("GOD MODE DEACTIVATED");
+            console.log('GOD MODE DEACTIVATED');
         } else {
-            // Create a glitches overlay or something fun (optional)
-            console.log("GOD MODE ACTIVATED");
+            console.log('GOD MODE ACTIVATED');
         }
         setInput([]);
     };

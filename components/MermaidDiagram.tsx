@@ -81,7 +81,7 @@ const sanitizeChart = (chart: string): string => {
         }
 
         return sanitized;
-    } catch (e) {
+    } catch {
         // If sanitization fails, return original - error handling will catch parse issues
         return chart;
     }

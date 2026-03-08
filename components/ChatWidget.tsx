@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { MessageCircle, X, Bot } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import ChatUI, { Message } from './ChatUI';
@@ -108,9 +108,6 @@ const ChatWidget = () => {
         setIsLoading(true);
 
         try {
-            // Create placeholder for assistant response
-            setMessages((prev) => [...prev, { role: 'assistant', content: '' }]);
-
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

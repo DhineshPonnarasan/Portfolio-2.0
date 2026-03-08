@@ -5,7 +5,7 @@ import { ArchitectureMode } from '@/lib/architecture-diagrams';
 
 interface ArchitectureModeToggleProps {
   value: ArchitectureMode;
-  onChange: (mode: ArchitectureMode) => void;
+  onChange: (_mode: ArchitectureMode) => void;
 }
 
 const MODES: { id: ArchitectureMode; label: string; hint: string }[] = [

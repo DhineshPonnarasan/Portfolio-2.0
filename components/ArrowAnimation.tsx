@@ -11,15 +11,22 @@ const ArrowAnimation = () => {
     const arrow2Ref = useRef<SVGPathElement>(null);
 
     useGSAP(() => {
+        const length1 = arrow1Ref.current?.getTotalLength() ?? 0;
+        const length2 = arrow2Ref.current?.getTotalLength() ?? 0;
+
         gsap.set('#banner-arrow-svg', { fill: 'transparent', autoAlpha: 0 });
-        gsap.set('.svg-arrow-1', {
-            strokeDasharray: arrow1Ref.current?.getTotalLength(),
-            strokeDashoffset: arrow1Ref.current?.getTotalLength(),
-        });
-        gsap.set('.svg-arrow-2', {
-            strokeDasharray: arrow2Ref.current?.getTotalLength(),
-            strokeDashoffset: arrow2Ref.current?.getTotalLength(),
-        });
+        if (length1) {
+            gsap.set('.svg-arrow-1', {
+                strokeDasharray: length1,
+                strokeDashoffset: length1,
+            });
+        }
+        if (length2) {
+            gsap.set('.svg-arrow-2', {
+                strokeDasharray: length2,
+                strokeDashoffset: length2,
+            });
+        }
 
         const tl = gsap.timeline({ repeat: -1 });
 

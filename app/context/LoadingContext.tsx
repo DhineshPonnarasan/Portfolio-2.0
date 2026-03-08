@@ -4,9 +4,9 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface LoadingContextType {
     isLoading: boolean;
-    setIsLoading: (loading: boolean) => void;
+    setIsLoading: (_loading: boolean) => void;
     hasLoaded: boolean;
-    setHasLoaded: (loaded: boolean) => void;
+    setHasLoaded: (_loaded: boolean) => void;
 }
 
 const LoadingContext = createContext<LoadingContextType | undefined>(undefined);

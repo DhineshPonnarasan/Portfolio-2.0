@@ -50,9 +50,6 @@ export const generateArchitecturePrompt = (
     diagram: string,
     mode: ArchitectureMode = 'overview',
 ) => {
-    const description = Array.isArray(project.description)
-        ? project.description.join(' ')
-        : project.description;
     const techStackText = project.techStack?.length
         ? project.techStack.join(', ')
         : project.techAndTechniques?.slice(0, 5).join(', ') ?? 'N/A';
@@ -91,7 +88,12 @@ export async function generateArchitectureExplanation(
 
     const client = getGroqClient();
 
-    if (!diagram || !client) {
+    if (!client) {
+        console.warn('Groq API unavailable, using fallback architecture explanation');
+        return buildConceptualArchitectureExplanation(project);
+    }
+
+    if (!diagram) {
         return buildConceptualArchitectureExplanation(project);
     }
 
@@ -115,8 +117,7 @@ export async function generateArchitectureExplanation(
     }
 }
 
-export function buildConceptualArchitectureExplanation(project?: IProject, requestedName?: string) {
-    const title = project?.title || requestedName || 'this system';
+export function buildConceptualArchitectureExplanation(project?: IProject, _requestedName?: string) {
     const techList = project?.techAndTechniques || project?.techStack || project?.skills || [];
     const highlightTech = techList.slice(0, 4).join(', ');
 

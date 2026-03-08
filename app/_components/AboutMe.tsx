@@ -76,7 +76,11 @@ const AboutMe = () => {
                                 />
                             </div>
                             {imgError && (
-                                <div className="text-9xl font-anton text-white/5 select-none absolute inset-0 flex items-center justify-center">
+                                <div
+                                    role="img"
+                                    aria-label="Profile initials: DP"
+                                    className="text-9xl font-anton text-white/5 select-none absolute inset-0 flex items-center justify-center"
+                                >
                                     DP
                                 </div>
                             )}

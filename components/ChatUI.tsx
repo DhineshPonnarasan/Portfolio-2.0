@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import MermaidDiagram from './MermaidDiagram';
+import Image from 'next/image';
 
 export interface Message {
     role: 'user' | 'assistant' | 'system';
@@ -17,7 +18,7 @@ export interface Message {
 interface ChatUIProps {
     messages: Message[];
     isLoading: boolean;
-    onSend: (message: string) => void;
+    onSend: (_message: string) => void;
     onClear: () => void;
     onClose: () => void;
 }
@@ -127,9 +128,11 @@ const ChatUI = ({ messages, isLoading, onSend, onClear, onClose }: ChatUIProps) 
                 <div className="flex items-center gap-3">
                     {/* Avatar */}
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/80 to-primary/60 flex items-center justify-center border-2 border-primary/30 overflow-hidden ring-2 ring-primary/20">
-                        <img 
+                        <Image 
                             src="/logo/chatbot-avatar.png" 
                             alt="Chatbot Avatar"
+                            width={40}
+                            height={40}
                             className="w-full h-full object-cover"
                         />
                     </div>
@@ -175,9 +178,11 @@ const ChatUI = ({ messages, isLoading, onSend, onClear, onClose }: ChatUIProps) 
                         className="flex flex-col items-center justify-center py-6"
                     >
                         <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary/80 to-primary/60 flex items-center justify-center border-2 border-primary/30 mb-4 overflow-hidden ring-4 ring-primary/20 shadow-lg shadow-primary/20">
-                            <img 
+                            <Image 
                                 src="/logo/chatbot-avatar.png" 
                                 alt="Chatbot Avatar"
+                                width={80}
+                                height={80}
                                 className="w-full h-full object-cover"
                             />
                         </div>
@@ -209,9 +214,11 @@ const ChatUI = ({ messages, isLoading, onSend, onClear, onClose }: ChatUIProps) 
                                 >
                                     {msg.role === 'assistant' && (
                                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/80 to-primary/60 flex items-center justify-center border border-primary/30 shrink-0 mt-1 overflow-hidden ring-1 ring-primary/20">
-                                            <img 
+                                            <Image 
                                                 src="/logo/chatbot-avatar.png" 
                                                 alt="Chatbot Avatar"
+                                                width={32}
+                                                height={32}
                                                 className="w-full h-full object-cover"
                                             />
                                         </div>
@@ -230,7 +237,7 @@ const ChatUI = ({ messages, isLoading, onSend, onClear, onClose }: ChatUIProps) 
                                                 <ReactMarkdown 
                                                     remarkPlugins={[remarkGfm]}
                                                     components={{
-                                                        code({node, inline, className, children, ...props}: any) {
+                                                        code({node: _node, inline, className, children, ...props}: any) {
                                                             const match = /language-(\w+)/.exec(className || '')
                                                             if (match && match[1] === 'mermaid') {
                                                                 return <MermaidDiagram chart={String(children).replace(/\n$/, '')} />
@@ -275,9 +282,11 @@ const ChatUI = ({ messages, isLoading, onSend, onClear, onClose }: ChatUIProps) 
                             className="flex justify-start gap-3"
                         >
                             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/80 to-primary/60 flex items-center justify-center border border-primary/30 shrink-0 overflow-hidden ring-1 ring-primary/20">
-                                <img 
+                                <Image 
                                     src="/logo/chatbot-avatar.png" 
                                     alt="Chatbot Avatar"
+                                    width={32}
+                                    height={32}
                                     className="w-full h-full object-cover"
                                 />
                             </div>

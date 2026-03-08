@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Volume2, VolumeX, Music } from 'lucide-react';
+import { VolumeX, Music } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const PLAYLIST_ID = '3nSQLdYPSLwejsWj4WMbeg';
@@ -53,7 +53,7 @@ const SpotifyPlayer = () => {
                             {/* Spotify Embed */}
                             <iframe
                                 src={`https://open.spotify.com/embed/playlist/${PLAYLIST_ID}?utm_source=generator&theme=0`}
-                                width="300"
+                                width="100%"
                                 height="152"
                                 frameBorder="0"
                                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"

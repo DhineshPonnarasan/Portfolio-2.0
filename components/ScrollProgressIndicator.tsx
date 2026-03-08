@@ -5,23 +5,30 @@ const ScrollProgressIndicator = () => {
     const scrollBarRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const handleScroll = () => {
-            if (scrollBarRef.current) {
-                const { scrollHeight, clientHeight } = document.documentElement;
-                const scrollableHeight = scrollHeight - clientHeight;
-                const scrollY = window.scrollY;
-                const scrollProgress = (scrollY / scrollableHeight) * 100;
+        let rafId: number | null = null;
 
-                scrollBarRef.current.style.transform = `translateY(-${
-                    100 - scrollProgress
-                }%)`;
-            }
+        const handleScroll = () => {
+            if (rafId !== null) return;
+            rafId = requestAnimationFrame(() => {
+                if (scrollBarRef.current) {
+                    const { scrollHeight, clientHeight } = document.documentElement;
+                    const scrollableHeight = scrollHeight - clientHeight;
+                    const scrollProgress = (window.scrollY / scrollableHeight) * 100;
+                    scrollBarRef.current.style.transform = `translateY(-${
+                        100 - scrollProgress
+                    }%)`;
+                }
+                rafId = null;
+            });
         };
 
         handleScroll();
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            if (rafId !== null) cancelAnimationFrame(rafId);
+        };
     }, []);
 
     return (

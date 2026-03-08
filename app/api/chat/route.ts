@@ -85,12 +85,6 @@ ${diagram}`;
     return { projectForContext: project, contextMessage } as const;
 }
 
-function extractCandidateMermaid(message: string) {
-    const mermaidBlockMatch = message.match(/```mermaid([\s\S]*?)```/i);
-    if (!mermaidBlockMatch) return null;
-    return mermaidBlockMatch[1].trim();
-}
-
 function shouldAttachPortfolioContext(message: string) {
     const lowered = normalize(message);
 
@@ -227,18 +221,54 @@ async function handleCompareCommand(raw: string) {
         );
     }
 
+    const firstDiagram = ARCHITECTURE_DIAGRAMS[firstProject.id];
+    const secondDiagram = ARCHITECTURE_DIAGRAMS[secondProject.id];
+
+    if (!firstDiagram || !secondDiagram) {
+        return streamTextResponse(
+            'I could not locate architecture diagrams for one of those projects.',
+        );
+    }
+
+    const groq = getGroqClient();
+    if (!groq) return streamTextResponse(OFFLINE_FALLBACK_MESSAGE);
+
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL ?? ''}/api/architecture-compare`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ firstProjectId: firstProject.id, secondProjectId: secondProject.id }),
+        const firstSummary = Array.isArray(firstProject.description)
+            ? firstProject.description.join(' ')
+            : firstProject.description;
+        const secondSummary = Array.isArray(secondProject.description)
+            ? secondProject.description.join(' ')
+            : secondProject.description;
+
+        const prompt = `Compare these two architectures along: data flow, model/intelligence stack, scalability, latency, and engineering trade-offs.
+
+---
+${firstProject.title}:
+Description: ${firstSummary}
+Tech: ${(firstProject as any).techStack?.join(', ') || (firstProject as any).techAndTechniques?.join(', ') || 'Not specified'}
+Diagram:
+${firstDiagram}
+
+---
+${secondProject.title}:
+Description: ${secondSummary}
+Tech: ${(secondProject as any).techStack?.join(', ') || (secondProject as any).techAndTechniques?.join(', ') || 'Not specified'}
+Diagram:
+${secondDiagram}`;
+
+        const completion = await groq.chat.completions.create({
+            model: 'llama-3.1-8b-instant',
+            temperature: 0.35,
+            max_tokens: 700,
+            messages: [
+                { role: 'system', content: 'You are a principal engineer. Compare systems concisely in crisp engineering language. Use H3 headings and bullet points.' },
+                { role: 'user', content: prompt },
+            ],
         });
 
-        const data = await response.json();
-        if (!response.ok) {
-            throw new Error((data as any).error || 'Comparison failed.');
-        }
-        return streamTextResponse(data.comparison);
+        const comparison = completion.choices?.[0]?.message?.content?.trim();
+        return streamTextResponse(comparison || 'No comparison was generated.');
     } catch (error) {
         console.error('compare command error', error);
         return streamTextResponse(

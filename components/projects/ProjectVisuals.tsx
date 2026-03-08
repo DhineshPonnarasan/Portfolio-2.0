@@ -14,7 +14,7 @@ interface ProjectVisualsProps {
   className?: string;
 }
 
-const ProjectVisuals = ({ imagePrompts = [], projectTitle = '', className = '' }: ProjectVisualsProps) => {
+const ProjectVisuals = ({ imagePrompts = [], projectTitle: _projectTitle = '', className = '' }: ProjectVisualsProps) => {
   const [displayPrompts, setDisplayPrompts] = useState<ImagePrompt[]>([]);
 
   useEffect(() => {

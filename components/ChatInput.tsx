@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
 interface ChatInputProps {
-    onSend: (message: string) => void;
+    onSend: (_message: string) => void;
     isLoading: boolean;
     placeholder?: string;
 }
@@ -172,10 +172,10 @@ interface SpeechRecognition extends EventTarget {
     lang: string;
     start(): void;
     stop(): void;
-    onstart: ((this: SpeechRecognition, ev: Event) => any) | null;
-    onresult: ((this: SpeechRecognition, ev: SpeechRecognitionEvent) => any) | null;
-    onerror: ((this: SpeechRecognition, ev: SpeechRecognitionErrorEvent) => any) | null;
-    onend: ((this: SpeechRecognition, ev: Event) => any) | null;
+    onstart: ((_ev: Event) => any) | null;
+    onresult: ((_ev: SpeechRecognitionEvent) => any) | null;
+    onerror: ((_ev: SpeechRecognitionErrorEvent) => any) | null;
+    onend: ((_ev: Event) => any) | null;
 }
 
 interface SpeechRecognitionEvent extends Event {
@@ -188,13 +188,13 @@ interface SpeechRecognitionErrorEvent extends Event {
 
 interface SpeechRecognitionResultList {
     length: number;
-    item(index: number): SpeechRecognitionResult;
+    item(_index: number): SpeechRecognitionResult;
     [index: number]: SpeechRecognitionResult;
 }
 
 interface SpeechRecognitionResult {
     length: number;
-    item(index: number): SpeechRecognitionAlternative;
+    item(_index: number): SpeechRecognitionAlternative;
     [index: number]: SpeechRecognitionAlternative;
     isFinal: boolean;
 }

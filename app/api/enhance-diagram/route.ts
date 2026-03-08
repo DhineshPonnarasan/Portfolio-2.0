@@ -1,12 +1,7 @@
-import { Groq } from 'groq-sdk';
 import { PROJECTS } from '@/lib/data';
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
-
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
 
 // Extract diagram SVG from HTML file
 function extractDiagramFromHTML(projectSlug: string): string | null {

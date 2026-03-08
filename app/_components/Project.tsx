@@ -1,6 +1,5 @@
 import TransitionLink from '@/components/TransitionLink';
 import Image from 'next/image';
-import { cn } from '@/lib/utils';
 import { IProject } from '@/types';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
@@ -16,7 +15,7 @@ interface Props {
 
 gsap.registerPlugin(useGSAP);
 
-const Project = ({ index, project, selectedProject, onMouseEnter, onMouseLeave }: Props) => {
+const Project = ({ index, project, selectedProject: _selectedProject, onMouseEnter, onMouseLeave }: Props) => {
     const externalLinkSVGRef = useRef<SVGSVGElement>(null);
 
     const { context, contextSafe } = useGSAP(() => {}, {
@@ -27,30 +26,32 @@ const Project = ({ index, project, selectedProject, onMouseEnter, onMouseLeave }
     const handleMouseEnter = contextSafe?.(() => {
         onMouseEnter(project.slug);
 
-        const arrowLine = externalLinkSVGRef.current?.querySelector(
-            '#arrow-line',
-        ) as SVGPathElement;
-        const arrowCurb = externalLinkSVGRef.current?.querySelector(
-            '#arrow-curb',
-        ) as SVGPathElement;
-        const box = externalLinkSVGRef.current?.querySelector(
-            '#box',
-        ) as SVGPathElement;
+        const arrowLineEl = externalLinkSVGRef.current?.querySelector('#arrow-line');
+        const arrowCurbEl = externalLinkSVGRef.current?.querySelector('#arrow-curb');
+        const boxEl = externalLinkSVGRef.current?.querySelector('#box');
+
+        if (!(arrowLineEl instanceof SVGPathElement) || !(arrowCurbEl instanceof SVGPathElement) || !(boxEl instanceof SVGPathElement)) {
+            return;
+        }
+
+        const arrowLine = arrowLineEl;
+        const arrowCurb = arrowCurbEl;
+        const box = boxEl;
 
         gsap.set(box, {
             opacity: 0,
-            strokeDasharray: box?.getTotalLength(),
-            strokeDashoffset: box?.getTotalLength(),
+            strokeDasharray: box.getTotalLength(),
+            strokeDashoffset: box.getTotalLength(),
         });
         gsap.set(arrowLine, {
             opacity: 0,
-            strokeDasharray: arrowLine?.getTotalLength(),
-            strokeDashoffset: arrowLine?.getTotalLength(),
+            strokeDasharray: arrowLine.getTotalLength(),
+            strokeDashoffset: arrowLine.getTotalLength(),
         });
         gsap.set(arrowCurb, {
             opacity: 0,
-            strokeDasharray: arrowCurb?.getTotalLength(),
-            strokeDashoffset: arrowCurb?.getTotalLength(),
+            strokeDasharray: arrowCurb.getTotalLength(),
+            strokeDashoffset: arrowCurb.getTotalLength(),
         });
 
         const tl = gsap.timeline({ repeat: -1, repeatDelay: 1 });

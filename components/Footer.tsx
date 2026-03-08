@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
-import { ArrowUpRight, Mail, Phone, MessageCircle, Send, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Mail, Phone, MessageCircle, Send } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 import SectionTitle from '@/components/SectionTitle';

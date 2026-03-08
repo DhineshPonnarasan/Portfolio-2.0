@@ -1,13 +1,12 @@
 import React, { useMemo } from "react";
 import { getArchitectureDiagram } from '@/lib/architecture-diagrams';
-import { cn } from "@/lib/utils";
 
 interface Props {
 	projectId: number;
 	showVoiceButton?: boolean;
 }
 
-const SystemArchitectureDiagrams: React.FC<Props> = ({ projectId, showVoiceButton }) => {
+const SystemArchitectureDiagrams: React.FC<Props> = ({ projectId, showVoiceButton: _showVoiceButton }) => {
 	const diagram = getArchitectureDiagram(projectId);
 
 	const processedLines = useMemo(() => {
@@ -40,7 +39,7 @@ const SystemArchitectureDiagrams: React.FC<Props> = ({ projectId, showVoiceButto
 			// Matches: optional indent + pipe + content + pipe + optional trailing
 			const boxMatch = line.match(/^(\s*)(\|)(.+)(\|)(\s*)$/);
 			if (boxMatch) {
-				const [_, indent, leftPipe, content, rightPipe, trailing] = boxMatch;
+				const [, indent, leftPipe, content, rightPipe, trailing] = boxMatch;
 
 				// Highlight inner pipes in the content (for side-by-side boxes like | A |   | B |)
 				// We split by '|' and rejoin with highlighted spans
