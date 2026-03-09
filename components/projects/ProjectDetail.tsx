@@ -1,5 +1,4 @@
 "use client";
-
 import SystemArchitectureDiagrams from '../diagrams/SystemArchitectureDiagrams';
 import ArrowAnimation from '@/components/ArrowAnimation';
 import TransitionLink from '@/components/TransitionLink';
@@ -21,11 +20,9 @@ import { getArchitectureMetadata } from '@/lib/architecture';
 import { MERMAID_DIAGRAMS } from '@/lib/mermaid-templates';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
-
 interface Props {
     project: IProject;
 }
-
 const ProjectDetail = ({ project }: Props) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const architectureAnchorRef = useRef<HTMLDivElement>(null);
@@ -208,8 +205,8 @@ const ProjectDetail = ({ project }: Props) => {
 
                 <div className="min-h-[calc(100vh-200px)] flex" id="info">
                     <div className="relative w-full">
-                        <div className="flex items-start gap-6 mx-auto mb-10 max-w-[800px] flex-wrap md:flex-nowrap">
-                            <h1 className="fade-in-later opacity-0 text-4xl md:text-[60px] leading-none font-anton overflow-hidden">
+                        <div className="flex items-start gap-4 sm:gap-6 mx-auto mb-10 max-w-[800px] flex-wrap md:flex-nowrap">
+                            <h1 className="fade-in-later opacity-0 text-3xl sm:text-4xl md:text-[60px] leading-none font-anton overflow-hidden break-words min-w-0">
                                 <span className="inline-block">{project.title}</span>
                             </h1>
                             <div className="fade-in-later opacity-0 flex gap-3">
@@ -353,12 +350,12 @@ const ProjectDetail = ({ project }: Props) => {
                                         </div>
 
                                         {/* View Controls */}
-                                        <div className="flex flex-wrap items-center gap-3 mt-4">
+                                        <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 mt-4">
                                             {/* Diagram Format */}
-                                            <div className="flex gap-2 text-[0.7rem] tracking-wider uppercase">
+                                            <div className="flex flex-wrap gap-2 text-[0.7rem] tracking-wider uppercase">
                                                 <button
                                                     type="button"
-                                                    className={`architecture-view-mode-btn px-4 py-2 rounded-md border transition-all duration-200 ${
+                                                    className={`architecture-view-mode-btn px-3 py-1.5 rounded-md border transition-all duration-200 ${
                                                         viewMode === 'ascii'
                                                             ? 'border-white/30 bg-white/10 text-white shadow-sm'
                                                             : 'border-white/10 bg-white/[0.03] text-white/60 hover:border-white/30 hover:bg-white/[0.06]'
@@ -371,7 +368,7 @@ const ProjectDetail = ({ project }: Props) => {
                                                 {mermaidTemplates?.architecture && (
                                                     <button
                                                         type="button"
-                                                        className={`architecture-view-mode-btn px-4 py-2 rounded-md border transition-all duration-200 ${
+                                                        className={`architecture-view-mode-btn px-3 py-1.5 rounded-md border transition-all duration-200 ${
                                                             viewMode === 'architecture'
                                                                 ? 'border-white/30 bg-white/10 text-white shadow-sm'
                                                                 : 'border-white/10 bg-white/[0.03] text-white/60 hover:border-white/30 hover:bg-white/[0.06]'
@@ -385,7 +382,7 @@ const ProjectDetail = ({ project }: Props) => {
                                                 {mermaidTemplates?.workflow && (
                                                     <button
                                                         type="button"
-                                                        className={`architecture-view-mode-btn px-4 py-2 rounded-md border transition-all duration-200 ${
+                                                        className={`architecture-view-mode-btn px-3 py-1.5 rounded-md border transition-all duration-200 ${
                                                             viewMode === 'workflow'
                                                                 ? 'border-white/30 bg-white/10 text-white shadow-sm'
                                                                 : 'border-white/10 bg-white/[0.03] text-white/60 hover:border-white/30 hover:bg-white/[0.06]'
@@ -399,10 +396,10 @@ const ProjectDetail = ({ project }: Props) => {
                                             </div>
 
                                             {/* Explanation Mode */}
-                                            <div className="flex gap-2 text-[0.7rem] tracking-wider uppercase ml-auto">
+                                            <div className="flex flex-wrap gap-2 text-[0.7rem] tracking-wider uppercase sm:ml-auto">
                                                 <button
                                                     type="button"
-                                                    className={`architecture-mode-btn px-4 py-2 rounded-md border transition-all duration-200 ${
+                                                    className={`architecture-mode-btn px-3 py-1.5 rounded-md border transition-all duration-200 ${
                                                         activeMode === 'overview'
                                                             ? 'border-white/30 bg-white/10 text-white shadow-sm'
                                                             : 'border-white/10 bg-white/[0.03] text-white/60 hover:border-white/30 hover:bg-white/[0.06]'
@@ -415,7 +412,7 @@ const ProjectDetail = ({ project }: Props) => {
                                                 </button>
                                                 <button
                                                     type="button"
-                                                    className={`architecture-mode-btn px-4 py-2 rounded-md border transition-all duration-200 ${
+                                                    className={`architecture-mode-btn px-3 py-1.5 rounded-md border transition-all duration-200 ${
                                                         activeMode === 'data'
                                                             ? 'border-white/30 bg-white/10 text-white shadow-sm'
                                                             : 'border-white/10 bg-white/[0.03] text-white/60 hover:border-white/30 hover:bg-white/[0.06]'
@@ -428,7 +425,7 @@ const ProjectDetail = ({ project }: Props) => {
                                                 </button>
                                                 <button
                                                     type="button"
-                                                    className={`architecture-mode-btn px-4 py-2 rounded-md border transition-all duration-200 ${
+                                                    className={`architecture-mode-btn px-3 py-1.5 rounded-md border transition-all duration-200 ${
                                                         activeMode === 'deployment'
                                                             ? 'border-white/30 bg-white/10 text-white shadow-sm'
                                                             : 'border-white/10 bg-white/[0.03] text-white/60 hover:border-white/30 hover:bg-white/[0.06]'

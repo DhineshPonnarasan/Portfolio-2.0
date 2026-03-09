@@ -409,8 +409,9 @@
 }
 
 .mermaid-wrap svg {
-    max-width: none !important;
+    max-width: 100%;
     height: auto !important;
+    display: block;
 }
 
 /* Nodes with Enhanced Hover Effects */
@@ -1332,3 +1333,118 @@
         animation: circuit-flow 3s infinite linear;
     }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   Mobile Responsive Overrides (320px – 767px)
+   ═══════════════════════════════════════════════════════════ */
+
+/* Prevent any element from causing horizontal overflow */
+html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+}
+
+* {
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+/* ASCII architecture - scroll horizontally inside its container, not the page */
+.system-architecture,
+.diagram {
+    max-width: 100% !important;
+}
+
+/* Architecture shell actions grid - responsive min size */
+.architecture-shell__actions {
+    grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr)) !important;
+}
+
+/* Reduce font size on mobile for architecture diagrams */
+@media (max-width: 480px) {
+    .system-architecture,
+    .diagram {
+        font-size: 11px !important;
+    }
+
+    /* ASCII pre blocks - scroll inside */
+    pre.font-mono {
+        font-size: 9px !important;
+        line-height: 1.2 !important;
+    }
+}
+
+/* Layout controls row on small screens */
+@media (max-width: 639px) {
+    /* Architecture view controls - stack on mobile */
+    .architecture-shell .flex.flex-wrap.items-center.gap-3 {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    /* Architecture mode/view buttons - wrap properly */
+    .architecture-view-mode-btn,
+    .architecture-mode-btn {
+        font-size: 0.65rem;
+        padding: 0.35rem 0.7rem;
+    }
+
+    /* Architecture action buttons grid - 2 on mobile */
+    .grid.grid-cols-2 .architecture-button {
+        font-size: 0.75rem;
+        padding: 0.6rem 0.5rem;
+    }
+}
+
+/* Mermaid diagram container - constrain on mobile */
+.mermaid-wrap {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+@media (max-width: 480px) {
+    .mermaid-wrap svg {
+        min-width: unset;
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+/* Footer heading - scale down on mobile */
+@media (max-width: 480px) {
+    footer h2.text-4xl,
+    footer .text-4xl {
+        font-size: 1.875rem;
+        line-height: 1.2;
+    }
+}
+
+/* Project title spacing on mobile */
+@media (max-width: 767px) {
+    .project-item {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+}
+
+/* Chat widget on mobile — ensure no overflow */
+@media (max-width: 767px) {
+    .chat-widget-root > div {
+        max-width: calc(100vw - 32px);
+    }
+}
+
+/* Ensure containers don't overflow on mobile */
+@media (max-width: 640px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    /* Large section titles — prevent wrapping issues */
+    h1, h2, h3 {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+}
+

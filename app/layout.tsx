@@ -56,7 +56,7 @@ export default function RootLayout({
             })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`}
             </Script>
             <body
-                className={`${antonFont.variable} ${robotoFlex.variable} antialiased min-h-screen overflow-y-auto relative`}
+                className={`${antonFont.variable} ${robotoFlex.variable} antialiased min-h-screen overflow-y-auto overflow-x-hidden relative`}
                 suppressHydrationWarning
             >
                 <ReactLenis

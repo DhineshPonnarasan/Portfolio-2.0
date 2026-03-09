@@ -66,21 +66,21 @@ export default function ImportDhinesh() {
   }, [isOpen, scheduleDismiss, clearTimer]);
 
   return (
-    <div className="absolute left-4 top-6 sm:left-8 sm:top-8 z-30">
+    <div className="absolute left-3 top-5 sm:left-8 sm:top-8 z-30 max-w-[calc(100vw-4rem)]">
       <div className="relative flex flex-col items-start gap-2">
         <motion.button
           onClick={handleTrigger}
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
-          className="group/button relative w-full overflow-hidden rounded-2xl bg-black/50 px-6 py-4 text-left font-mono tracking-wide shadow-[0_15px_45px_rgba(0,0,0,0.45)] backdrop-blur-lg transition"
+          className="group/button relative w-full overflow-hidden rounded-xl sm:rounded-2xl bg-black/50 px-4 py-3 sm:px-6 sm:py-4 text-left font-mono tracking-wide shadow-[0_15px_45px_rgba(0,0,0,0.45)] backdrop-blur-lg transition"
         >
           <div className="absolute -inset-2 rounded-[26px] bg-primary/20 blur-2xl opacity-0 transition duration-500 group-hover/button:opacity-80" />
           <div className="absolute inset-0 rounded-[22px] border border-primary/20 opacity-0 transition duration-500 group-hover/button:opacity-100" />
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-0 transition duration-[1200ms] group-hover/button:opacity-100" />
 
-          <div className="relative flex items-center gap-3">
+            <div className="relative flex items-center gap-3">
             <span className="h-2 w-2 rounded-full bg-primary shadow-[0_0_10px_var(--primary)] animate-pulse" />
-            <span className="text-2xl font-anton leading-[1.1] text-white">
+            <span className="text-lg sm:text-2xl font-anton leading-[1.1] text-white">
               ~/import_dhinesh
             </span>
           </div>

@@ -43,7 +43,7 @@ const Footer = () => {
                 <div className="mt-12 space-y-12">
                     {/* Main Content Section */}
                     <div className="flex flex-col border-t border-white/10 pt-12 contact-item">
-                        <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-12">
+                        <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-8 lg:gap-12">
                             {/* Left: Introduction */}
                             <div className="space-y-8">
                                 <div className="space-y-6">
@@ -52,7 +52,7 @@ const Footer = () => {
                                         <p className="text-xs uppercase tracking-[0.45em] text-muted-foreground">Professional Contact</p>
                                     </div>
                                     
-                                    <h2 className="text-4xl md:text-6xl font-anton leading-tight text-white">
+                                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-anton leading-tight text-white">
                                         Crafting <span className="text-primary">production-grade systems</span> that scale, 
                                         <span className="text-primary"> shipping ML solutions</span> from research to deployment, 
                                         and <span className="text-primary">building products</span> that solve real problems.
@@ -165,7 +165,7 @@ const Footer = () => {
 
                     {/* CTA Section */}
                     <div className="flex flex-col border-t border-white/10 pt-12 contact-item">
-                        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 p-8 rounded-2xl border border-white/10 bg-white/5">
+                        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 p-5 sm:p-8 rounded-2xl border border-white/10 bg-white/5">
                             <div className="flex-1">
                                 <p className="text-white/70 text-base leading-relaxed">
                                     Feel free to reach out for collaborations, opportunities or just to say hello! I promise I&apos;m more fun than my code comments 😄

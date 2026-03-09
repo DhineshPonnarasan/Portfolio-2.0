@@ -80,7 +80,7 @@ const useTypewriter = (
 };
 
 const SocialIcon = ({ name }: { name: string }) => {
-    const iconProps = { className: "size-8 group-hover:scale-110 transition-transform" };
+    const iconProps = { className: "size-6 sm:size-8 group-hover:scale-110 transition-transform" };
     switch (name.toLowerCase()) {
         case 'github': return <Github {...iconProps} />;
         case 'linkedin': return <Linkedin {...iconProps} />;
@@ -155,15 +155,15 @@ const Banner = () => {
                 className="container h-[100svh] min-h-[600px] max-md:pb-10 flex justify-center items-center"
                 ref={containerRef}
             >
-                <div className="flex flex-col justify-center items-center text-center max-w-[900px]">
-                    <p className="banner-description mb-4 text-xl sm:text-2xl text-muted-foreground font-medium">
+                <div className="flex flex-col justify-center items-center text-center w-full max-w-[900px] px-2 sm:px-0">
+                    <p className="banner-description mb-4 text-base sm:text-xl md:text-2xl text-muted-foreground font-medium">
                         Hi, I&apos;m{' '}
                         <span className="text-foreground font-bold">
                             Dhinesh Sadhu Subramaniam Ponnarasan
                         </span>
                     </p>
 
-                    <h1 className="banner-title leading-[1.1] text-4xl sm:text-7xl font-anton min-h-[100px] sm:min-h-[140px] flex items-center justify-center">
+                    <h1 className="banner-title leading-[1.1] text-3xl xs:text-4xl sm:text-5xl md:text-7xl font-anton min-h-[80px] sm:min-h-[120px] md:min-h-[140px] flex items-center justify-center">
                         <span className="text-primary">
                             {text}
                             <span
@@ -175,15 +175,15 @@ const Banner = () => {
                         </span>
                     </h1>
 
-                    <p className="banner-description mt-4 text-lg text-muted-foreground max-w-[700px]">
+                    <p className="banner-description mt-4 text-sm sm:text-base md:text-lg text-muted-foreground max-w-[700px]">
                         I build intelligent systems, scalable applications, and
                         research-driven solutions across AI/ML, software
                         engineering, and open-source ecosystems.
                     </p>
 
-                    <div className="banner-socials flex flex-wrap items-center justify-center gap-6 mt-8">
+                    <div className="banner-socials flex flex-wrap items-center justify-center gap-3 sm:gap-5 mt-6 sm:mt-8">
                         {SOCIAL_LINKS.map((link) => {
-                            let className = "p-3 rounded-full transition-all duration-300 group ";
+                            let className = "p-2.5 sm:p-3 rounded-full transition-all duration-300 group ";
                             switch (link.name.toLowerCase()) {
                                 case 'github':
                                     className += "bg-black text-white hover:bg-black/80";
@@ -216,17 +216,17 @@ const Banner = () => {
                         })}
                         <a
                             href={`mailto:${GENERAL_INFO.email}`}
-                            className="p-3 rounded-full bg-[#ea4335] text-white hover:bg-[#ea4335]/80 transition-all duration-300 group"
+                            className="p-2.5 sm:p-3 rounded-full bg-[#ea4335] text-white hover:bg-[#ea4335]/80 transition-all duration-300 group"
                             aria-label="Email"
                         >
-                            <Mail className="size-8 group-hover:scale-110 transition-transform" />
+                            <Mail className="size-6 sm:size-8 group-hover:scale-110 transition-transform" />
                         </a>
                         <a
                             href={`tel:${GENERAL_INFO.phone}`}
-                            className="p-3 rounded-full bg-[#34a853] text-white hover:bg-[#34a853]/80 transition-all duration-300 group"
+                            className="p-2.5 sm:p-3 rounded-full bg-[#34a853] text-white hover:bg-[#34a853]/80 transition-all duration-300 group"
                             aria-label="Contact"
                         >
-                            <Phone className="size-8 group-hover:scale-110 transition-transform" />
+                            <Phone className="size-6 sm:size-8 group-hover:scale-110 transition-transform" />
                         </a>
                     </div>
                 </div>

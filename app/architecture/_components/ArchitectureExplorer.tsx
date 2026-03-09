@@ -199,7 +199,7 @@ const ArchitectureExplorer = ({ projects }: Props) => {
                         </div>
 
                         {/* Premium Pill Buttons Row */}
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-2">
+                        <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-2 mt-2">
                             <button
                                 type="button"
                                 className="architecture-button architecture-button--primary"
