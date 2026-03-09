@@ -178,7 +178,7 @@ const ChatWidget = () => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
                         transition={{ duration: 0.2 }}
-                        className="fixed bottom-4 right-4 z-[50] w-[calc(100vw-32px)] md:w-[400px] h-[calc(100svh-100px)] md:h-[600px] flex flex-col isolate"
+                        className="fixed bottom-3 right-3 sm:bottom-4 sm:right-4 z-[50] w-[calc(100vw-32px)] md:w-[400px] h-[calc(100svh-100px)] md:h-[600px] flex flex-col isolate"
                         style={{ 
                             touchAction: 'none',
                             overscrollBehavior: 'contain',
@@ -202,7 +202,7 @@ const ChatWidget = () => {
 
             <AnimatePresence>
                 {!isOpen && (
-                    <div className="fixed bottom-6 right-6 z-[49] flex flex-col items-end gap-4">
+                    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[49] flex flex-col items-end gap-4">
                         <WelcomePopup 
                             message="Hi, I'm Chitti the Chatbot. Speed 1 terahertz, memory 1 zigabyte. I'm here to help you learn about Dhinesh and answer any questions you have."
                             isVisible={showWelcome}
@@ -217,7 +217,7 @@ const ChatWidget = () => {
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
                             className={cn(
-                                "w-14 h-14 bg-primary text-black shadow-lg shadow-primary/20 flex items-center justify-center transition-all duration-300 group relative overflow-hidden",
+                                "w-12 h-12 sm:w-14 sm:h-14 bg-primary text-black shadow-lg shadow-primary/20 flex items-center justify-center transition-all duration-300 group relative overflow-hidden",
                                 iconShape === 'circle' && "rounded-full",
                                 iconShape === 'square' && "rounded-2xl",
                                 iconShape === 'hexagon' && "clip-path-hexagon" // You might need a custom class for hexagon clip-path

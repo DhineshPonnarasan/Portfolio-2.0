@@ -71,3 +71,18 @@
     box-shadow: none !important;
   }
 }
+
+/* Mobile-friendly overrides: allow wrapping and smaller monospace font for ASCII diagrams */
+@media (max-width: 480px) {
+  .system-architecture,
+  .system-architecture .diagram,
+  .system-architecture > div,
+  .system-architecture .arch-box,
+  .system-architecture .arch-arrow {
+    white-space: pre-wrap !important;
+    overflow-x: auto !important;
+    word-break: break-word !important;
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+  }
+}
