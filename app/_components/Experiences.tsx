@@ -55,7 +55,7 @@ const Experiences = () => {
 
     const COMPANY_TAGS: Record<string, string[]> = {
         'Uplifty AI': ['Machine Learning', 'Product', 'Deployment'],
-        'Afame Technologies': ['Data Analysis', 'Dashboards', 'Visulization'],
+        'Afame Technologies': ['Data Analysis', 'Dashboards', 'Visualization'],
         'V3Techserv': ['Backend', 'API', 'Scalability'],
         'Freelance - Upwork': ['Full-Stack', 'Client Delivery', 'User Experience'],
     };
