@@ -46,6 +46,20 @@ const Experiences = () => {
 
     const isContractRole = (company: string, title: string) => /freelance|contract|consultant/i.test(`${company} ${title}`);
 
+    const COMPANY_LOGOS: Record<string, string> = {
+        'Uplifty AI': '/logo/Uplifty-AI.jpg',
+        'Afame Technologies': '/logo/Afame.jfif',
+        'V3Techserv': '/logo/V3techserv.webp',
+        'Freelance - Upwork': '/logo/upwork_logo.jfif',
+    };
+
+    const COMPANY_TAGS: Record<string, string[]> = {
+        'Uplifty AI': ['Machine Learning', 'Product', 'Deployment'],
+        'Afame Technologies': ['Data Analysis', 'Dashboards', 'Visulization'],
+        'V3Techserv': ['Backend', 'API', 'Scalability'],
+        'Freelance - Upwork': ['Full-Stack', 'Client Delivery', 'User Experience'],
+    };
+
     const handleToggle = (idx: number) => {
         setExpandedIndex((prev) => (prev === idx ? null : idx));
     };
@@ -82,9 +96,19 @@ const Experiences = () => {
                                     <div className="space-y-4">
                                         <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                                             <div className="space-y-1">
-                                                <h3 className="text-2xl md:text-3xl font-anton text-white leading-tight">
-                                                    {item.company}
-                                                </h3>
+                                                <div className="flex items-center gap-4">
+                                                    <div className="flex-shrink-0 h-10 w-10 md:h-10 md:w-10 rounded-full overflow-hidden bg-white/5 flex items-center justify-center">
+                                                        <img
+                                                            src={COMPANY_LOGOS[item.company] ?? '/logo/chatbot-avatar.png'}
+                                                            alt={item.company}
+                                                            className="h-8 w-8 md:h-9 md:w-9 object-cover"
+                                                        />
+                                                    </div>
+                                                    <h3 className="text-2xl md:text-3xl font-anton text-white leading-tight">
+                                                        {item.company}
+                                                    </h3>
+                                                </div>
+
                                                 <p className="text-sm font-semibold text-white/75">{item.title}</p>
                                             </div>
 
@@ -112,9 +136,9 @@ const Experiences = () => {
                                         </p>
 
                                         <div className="flex flex-wrap gap-2 text-[11px] uppercase tracking-[0.12em] text-white/60">
-                                            <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1">Delivery</span>
-                                            <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1">Collaboration</span>
-                                            <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1">Execution</span>
+                                            {(COMPANY_TAGS[item.company] ?? ['Delivery', 'Collaboration', 'Execution']).map((tag) => (
+                                                <span key={tag} className="rounded-full border border-white/10 bg-white/5 px-3 py-1">{tag}</span>
+                                            ))}
                                         </div>
 
                                         <div className="flex items-center justify-between pt-1">
