@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { RefreshCw, X, ChevronUp, ChevronDown } from 'lucide-react';
+import { RefreshCw, X, ChevronUp, ChevronDown, Copy, Check, Wifi } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import ChatInput from './ChatInput';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -23,11 +23,22 @@ interface ChatUIProps {
     onClose: () => void;
 }
 
+const SUGGESTED_QUESTIONS = [
+    "Where is Dhinesh?",
+    "Current company?",
+    "Top 5 skills?",
+    "Education background?",
+    "Work experience?",
+    "Show his projects",
+    "Contact info?",
+];
+
 const ChatUI = ({ messages, isLoading, onSend, onClear, onClose }: ChatUIProps) => {
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showScrollDown, setShowScrollDown] = useState(false);
     const [showScrollUp, setShowScrollUp] = useState(false);
+    const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
     const scrollToBottom = useCallback(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -37,6 +48,13 @@ const ChatUI = ({ messages, isLoading, onSend, onClear, onClose }: ChatUIProps) 
         if (scrollContainerRef.current) {
             scrollContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
         }
+    }, []);
+
+    const copyMessage = useCallback((content: string, index: number) => {
+        navigator.clipboard.writeText(content).then(() => {
+            setCopiedIndex(index);
+            setTimeout(() => setCopiedIndex(null), 2000);
+        }).catch(() => {/* ignore */});
     }, []);
 
     // Check scroll position for indicators
@@ -137,7 +155,10 @@ const ChatUI = ({ messages, isLoading, onSend, onClear, onClose }: ChatUIProps) 
                         />
                     </div>
                     <div>
-                        <h3 className="font-semibold text-white text-base">Chitti</h3>
+                        <div className="flex items-center gap-1.5">
+                            <h3 className="font-semibold text-white text-base">Chitti</h3>
+                            <Wifi size={11} className="text-emerald-400" />
+                        </div>
                         <p className="text-xs text-zinc-400">AI irundhaalum… style Chitti dhaan.</p>
                     </div>
                 </div>
@@ -189,6 +210,30 @@ const ChatUI = ({ messages, isLoading, onSend, onClear, onClose }: ChatUIProps) 
                         <h3 className="font-semibold text-white text-xl mb-1">Chitti</h3>
                         <p className="text-sm text-zinc-400">Emotion illa. Confusion illa. Solution mattum.</p>
                     </motion.div>
+
+                    {/* Suggested Questions */}
+                    {!hasConversation && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                            className="flex flex-col gap-2"
+                        >
+                            <p className="text-xs text-zinc-500 text-center mb-1">Try asking:</p>
+                            <div className="flex flex-wrap gap-2 justify-center">
+                                {SUGGESTED_QUESTIONS.map((q) => (
+                                    <button
+                                        key={q}
+                                        onClick={() => onSend(q)}
+                                        disabled={isLoading}
+                                        className="text-xs px-3 py-1.5 rounded-full border border-primary/30 text-primary/80 hover:bg-primary/10 hover:border-primary/60 hover:text-primary transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed"
+                                    >
+                                        {q}
+                                    </button>
+                                ))}
+                            </div>
+                        </motion.div>
+                    )}
 
                     {/* Date Separator */}
                     {hasConversation && (
@@ -264,9 +309,21 @@ const ChatUI = ({ messages, isLoading, onSend, onClear, onClose }: ChatUIProps) 
                                             </div>
                                         </div>
                                         
-                                        {/* Delivered status for user messages */}
-                                        {msg.role === 'user' && (
+                                        {/* Copy button for assistant messages / Delivered for user */}
+                                        {msg.role === 'user' ? (
                                             <span className="text-xs text-zinc-500 text-right px-1">Delivered</span>
+                                        ) : (
+                                            <button
+                                                onClick={() => copyMessage(msg.content, index)}
+                                                className="self-start flex items-center gap-1 text-xs text-zinc-600 hover:text-zinc-400 transition-colors px-1 mt-0.5"
+                                                title="Copy message"
+                                            >
+                                                {copiedIndex === index ? (
+                                                    <><Check size={11} className="text-emerald-400" /><span className="text-emerald-400">Copied</span></>
+                                                ) : (
+                                                    <><Copy size={11} /><span>Copy</span></>
+                                                )}
+                                            </button>
                                         )}
                                     </div>
                                 </motion.div>

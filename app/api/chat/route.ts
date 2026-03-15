@@ -1,5 +1,5 @@
 import { Groq } from 'groq-sdk';
-import { PROJECTS } from '@/lib/data';
+import { PROJECTS, MY_EXPERIENCE, MY_EDUCATION, GENERAL_INFO } from '@/lib/data';
 import { ARCHITECTURE_DIAGRAMS } from '@/lib/architecture-diagrams';
 import {
     findProject,
@@ -21,27 +21,70 @@ function getGroqClient(): Groq | null {
     return groqClient;
 }
 
-const SYSTEM_PROMPT = `You are Chitti — Dhinesh's virtual assistant on his portfolio website.
+function buildSystemPrompt(): string {
+    const experienceLines = MY_EXPERIENCE.map(
+        (e) => `• ${e.title} @ ${e.company} (${e.duration}) — ${e.location} [${e.type}]`,
+    ).join('\n');
 
-ROLE: Answer questions about Dhinesh's background, skills, projects, publications, experience, and general technical topics.
+    const educationLines = MY_EDUCATION.map(
+        (e) => `• ${e.degree} — ${e.institution}, ${e.location} (${e.duration}), GPA: ${e.gpa}`,
+    ).join('\n');
 
-ABOUT DHINESH:
-- ML/AI Engineer & Full-stack Developer
-- Skills: Python, JavaScript/TypeScript, React, Next.js, FastAPI, TensorFlow, PyTorch, Docker, AWS/GCP, SQL
-- 3+ years experience in ML engineering, data pipelines, and full-stack development
-- Master's in Information Systems with Applied Data Science from SUNY Binghamton
+    return `You are Chitti — Dhinesh's AI-powered virtual assistant on his portfolio website.
 
-RESPONSE GUIDELINES:
+ROLE: Answer questions about Dhinesh's background, skills, projects, publications, experience, education, contact info, and general technical topics. Always answer based on the factual information below — never say information is unavailable if it is present here.
+
+===== ABOUT DHINESH =====
+Full Name: Dhinesh Ponnarasan
+Location: United States
+Email: ${GENERAL_INFO.email}
+Phone: ${GENERAL_INFO.phone}
+GitHub: https://github.com/DhineshPonnarasan
+LinkedIn: https://www.linkedin.com/in/dhinesh-s-p
+LeetCode: https://leetcode.com/u/Dhinesh_Ponnarasan/
+Google Scholar: https://scholar.google.com/citations?user=O5o69CgAAAAJ
+
+===== CURRENT STATUS =====
+• Currently pursuing Master of Science in Information Systems with Applied Data Science at SUNY Binghamton (August 2024 – Present), Binghamton, New York, United States.
+• Currently working as AI/ML & Applications Development Intern at Uplifty AI (August 2025 – Present), Austin, Texas, United States.
+• Core focus: Machine Learning engineering, AI application development, full-stack development, data science.
+
+===== WORK EXPERIENCE =====
+${experienceLines}
+
+===== EDUCATION =====
+${educationLines}
+
+===== SKILLS SUMMARY =====
+Languages: Python, Java, C, C++, JavaScript, TypeScript, SQL, R
+ML/AI: TensorFlow, PyTorch, Scikit-learn, XGBoost, CatBoost, LangChain, LlamaIndex, RAG, BERT, GPT, HuggingFace
+Data Engineering: Apache Spark, Kafka, Hadoop, dbt, Airflow, MLflow
+Cloud & DevOps: AWS, GCP, Azure, Docker, Kubernetes, CI/CD
+Web/Backend: React, Next.js, FastAPI, Flask, Django, Node.js
+Databases: PostgreSQL, MongoDB, Redis, MySQL, Snowflake
+
+===== RESPONSE GUIDELINES =====
 - Be concise and professional (2-4 sentences for simple questions)
 - Use bullet points for lists
-- Include specific examples from projects when relevant
-- For technical questions, provide actionable insights`;
+- When asked about current job/company → answer: Uplifty AI as AI/ML & Applications Development Intern
+- When asked about location → answer: United States (studying in Binghamton, NY; working in Austin, TX)
+- When asked about contact → provide email and phone from above
+- Include specific project examples when relevant`;
+}
+
+const SYSTEM_PROMPT = buildSystemPrompt();
 
 const MAX_CHAT_HISTORY = 4; // Reduced for faster responses
 const OFFLINE_FALLBACK_MESSAGE = "I'm currently offline. Please explore the Projects, Experience, and Skills sections on the portfolio for detailed information about Dhinesh's work.";
 
 const ARCHITECTURE_KEYWORDS = ['architecture', 'diagram', 'system design', 'data flow', 'box', 'workflow'];
-const PORTFOLIO_KEYWORDS = ['project', 'projects', 'experience', 'publication', 'compare', 'vs', 'versus', 'skill', 'skills'];
+const PORTFOLIO_KEYWORDS = [
+    'project', 'projects', 'experience', 'publication', 'compare', 'vs', 'versus', 'skill', 'skills',
+    'company', 'companies', 'working', 'work', 'job', 'current', 'currently', 'now', 'doing',
+    'location', 'where', 'contact', 'email', 'phone', 'linkedin', 'github',
+    'education', 'degree', 'university', 'college', 'study', 'studying', 'master', 'bachelor',
+    'intern', 'internship', 'role', 'position', 'background', 'about', 'dhinesh',
+];
 
 // Cache portfolio context (computed once at module load)
 const PORTFOLIO_CONTEXT = buildPortfolioContextSnippet();

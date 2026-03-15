@@ -1,6 +1,6 @@
 
 import { Groq } from 'groq-sdk';
-import { PROJECTS, MY_EXPERIENCE, MY_PUBLICATIONS } from '@/lib/data';
+import { PROJECTS, MY_EXPERIENCE, MY_PUBLICATIONS, MY_EDUCATION, GENERAL_INFO } from '@/lib/data';
 import { ARCHITECTURE_DIAGRAMS } from '@/lib/architecture-diagrams';
 import { IProject } from '@/types';
 
@@ -176,16 +176,32 @@ export function getArchitectureMetadata(projectId: number) {
 }
 
 export function buildPortfolioContextSnippet() {
-    const projectLines = PROJECTS.map((p) => `- ${p.title} (${p.slug}) — ${Array.isArray(p.description) ? p.description[0] : p.description}`);
-    const experienceLines = MY_EXPERIENCE.map((e) => `- ${e.title} @ ${e.company}`);
+    const projectLines = PROJECTS.map(
+        (p) => `- ${p.title} (slug: ${p.slug}) — ${Array.isArray(p.description) ? p.description[0] : p.description}`,
+    );
+
+    const experienceLines = MY_EXPERIENCE.map(
+        (e) => `- ${e.title} @ ${e.company} | ${e.type} | ${e.duration} | ${e.location}`,
+    );
+
+    const educationLines = MY_EDUCATION.map(
+        (e) => `- ${e.degree} — ${e.institution}, ${e.location} (${e.duration}), GPA: ${e.gpa}`,
+    );
+
     const publicationLines = MY_PUBLICATIONS.map((p) => `- ${p.title} (${p.venue}, ${p.year})`);
 
     return [
+        `Contact: email=${GENERAL_INFO.email} | phone=${GENERAL_INFO.phone}`,
+        `Location: United States (studying at SUNY Binghamton, NY; working at Uplifty AI, Austin TX)`,
+        '',
+        'Experience (most recent first):',
+        ...experienceLines,
+        '',
+        'Education:',
+        ...educationLines,
+        '',
         'Projects:',
         ...projectLines,
-        '',
-        'Experience:',
-        ...experienceLines,
         '',
         'Publications:',
         ...publicationLines,
