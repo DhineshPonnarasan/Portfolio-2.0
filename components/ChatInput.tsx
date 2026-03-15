@@ -99,18 +99,16 @@ const ChatInput = ({ onSend, isLoading, placeholder = "Talk to Chitti" }: ChatIn
             // indefinitely until they click the mic button themselves.
             if (!manualStopRef.current) {
                 try {
-                    recognitionRef.current = new SR();
-                    Object.assign(recognitionRef.current, {
-                        continuous: true,
-                        interimResults: true,
-                        lang: 'en-US',
-                        maxAlternatives: 1,
-                        onstart: recognition.onstart,
-                        onresult: recognition.onresult,
-                        onerror: recognition.onerror,
-                        onend: recognition.onend,
-                    });
-                    recognitionRef.current.start();
+                    const next: SpeechRecognition = new SR();
+                    next.continuous = true;
+                    next.interimResults = true;
+                    next.lang = 'en-US';
+                    next.onstart = recognition.onstart;
+                    next.onresult = recognition.onresult;
+                    next.onerror = recognition.onerror;
+                    next.onend = recognition.onend;
+                    recognitionRef.current = next;
+                    next.start();
                     return;
                 } catch {
                     // couldn't restart — fall through to clean up
