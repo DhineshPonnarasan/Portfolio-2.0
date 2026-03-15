@@ -54,7 +54,6 @@ const ChatInput = ({ onSend, isLoading, placeholder = "Talk to Chitti" }: ChatIn
         recognition.continuous = true;      // keep listening through natural pauses
         recognition.interimResults = true;  // show live transcription
         recognition.lang = 'en-US';
-        recognition.maxAlternatives = 1;
 
         recognition.onstart = () => {
             setIsListening(true);
