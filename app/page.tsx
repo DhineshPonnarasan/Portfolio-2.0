@@ -16,6 +16,7 @@ const Skills = dynamic(() => import('./_components/Skills'));
 const ProjectList = dynamic(() => import('./_components/ProjectList'));
 const Publications = dynamic(() => import('./_components/Publications'));
 const OpenSource = dynamic(() => import('./_components/OpenSource'));
+const SocialProof = dynamic(() => import('./_components/SocialProof'));
 const Footer = dynamic(() => import('@/components/Footer'));
 
 // Pick a divider variant per gap so each transition feels unique.
@@ -31,6 +32,7 @@ export default function Home() {
         { key: 'skills', node: <Skills /> },
         { key: 'oss', node: <OpenSource /> },
         { key: 'publications', node: <Publications /> },
+        { key: 'social-proof', node: <SocialProof /> },
         { key: 'footer', node: <Footer /> },
     ];
 

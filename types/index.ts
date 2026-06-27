@@ -76,6 +76,9 @@ export interface IContribution {
     deepDivePoints?: string[];
     link?: string;
     techStack?: string[];
+    /** `owner/name` for ungh.cc live stats. Optional — entries without
+        a verifiable GitHub repo simply skip the live-stats badge. */
+    repo?: string;
     stats?: {
         pullRequests?: number;
         commits?: number;
