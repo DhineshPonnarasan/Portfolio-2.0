@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
-import { ArrowUpRight, Calendar, ChevronDown } from 'lucide-react';
+import { ArrowUpRight, Calendar, ChevronDown, GitPullRequest } from 'lucide-react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
@@ -11,18 +11,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SectionTitle from '@/components/SectionTitle';
 import { cn } from '@/lib/utils';
 import { MY_CONTRIBUTIONS } from '@/lib/data';
+import { formatPeriod } from '@/lib/time-period';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const ORG_ICONS: { matcher: RegExp; src: string; alt: string }[] = [
     { matcher: /(codegraphcontext)/i, src: '/logo/codegraphcontext.svg', alt: 'CodeGraphContext' },
-    { matcher: /(olake|datazip)/i, src: '/logo/olake.png', alt: 'OLake / Datazip' },
-    { matcher: /(swoc)/i, src: '/logo/swoc.svg', alt: 'SWoC' },
-    { matcher: /(amazon|aws)/i, src: '/logo/aws.svg', alt: 'Amazon AI' },
-    { matcher: /(google|deepmind|tensorflow|keras)/i, src: '/logo/tensorflow.svg', alt: 'Google DeepMind' },
-    { matcher: /(meta|pytorch)/i, src: '/logo/pytorch.svg', alt: 'Meta AI' },
-    { matcher: /(wechaty)/i, src: '/logo/wechaty.png', alt: 'Wechaty' },
-    { matcher: /(numpy)/i, src: '/logo/numpy.svg', alt: 'NumPy' },
+    { matcher: /(olake|datazip)/i, src: '/logo/olake.svg', alt: 'OLake / Datazip' },
+    { matcher: /(microsoft|agent[\s-]?governance)/i, src: '/logo/microsoft.svg', alt: 'Microsoft' },
+    { matcher: /(nvidia|megatron|tensorrt)/i, src: '/logo/nvidia.png', alt: 'NVIDIA' },
+    { matcher: /(scanapi)/i, src: '/logo/scanapi.svg', alt: 'Scanapi' },
 ];
 
 const getOrgIcon = (org: string) => ORG_ICONS.find((item) => item.matcher.test(org));
@@ -36,9 +34,41 @@ const getInitials = (text: string) =>
         .join('')
         .toUpperCase();
 
+interface PRCountMap {
+    [repo: string]: number | null;
+}
+
 const OpenSource = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [expandedSlug, setExpandedSlug] = useState<string | null>(null);
+    const [prCounts, setPrCounts] = useState<PRCountMap>({});
+
+    // Lazy fetch closed-PR counts for every repo that has one. The server
+    // caches per-repo for 6 hours, so refreshing the page is cheap.
+    useEffect(() => {
+        const repos = Array.from(
+            new Set(
+                MY_CONTRIBUTIONS.map((c) => c.repo).filter(
+                    (r): r is string => typeof r === 'string' && r.length > 0,
+                ),
+            ),
+        );
+        if (repos.length === 0) return;
+        const ctrl = new AbortController();
+        (async () => {
+            try {
+                const res = await fetch(`/api/merged-prs?repos=${repos.join(',')}`, {
+                    signal: ctrl.signal,
+                });
+                if (!res.ok) return;
+                const json = (await res.json()) as { counts: PRCountMap };
+                setPrCounts(json.counts ?? {});
+            } catch {
+                /* ignore */
+            }
+        })();
+        return () => ctrl.abort();
+    }, []);
 
     useGSAP(
         () => {
@@ -69,13 +99,17 @@ const OpenSource = () => {
                         const isExpanded = expandedSlug === contribution.slug;
                         const icon = getOrgIcon(contribution.org);
                         const initials = getInitials(contribution.org);
+                        const prCount =
+                            contribution.repo && prCounts[contribution.repo] !== undefined
+                                ? prCounts[contribution.repo]
+                                : null;
 
                         return (
                             <article
                                 key={contribution.slug}
                                 className={cn(
                                     'os-item relative overflow-hidden border-b border-white/10 pb-8 last:border-0 transition-colors duration-300',
-                                    isExpanded && 'border-b-primary/40 bg-white/[0.02]'
+                                    isExpanded && 'border-b-primary/40 bg-white/[0.02]',
                                 )}
                             >
                                 <div className="flex flex-col gap-4 md:gap-5">
@@ -84,7 +118,7 @@ const OpenSource = () => {
                                             <div className="flex items-center gap-3">
                                                 <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl border border-white/15 bg-white/5">
                                                     {icon ? (
-                                                        <Image src={icon.src} alt={icon.alt} width={44} height={44} className="object-contain" />
+                                                        <Image src={icon.src} alt={icon.alt} width={44} height={44} sizes="44px" loading="lazy" className="object-contain" />
                                                     ) : (
                                                         <span className="text-sm font-semibold text-white/80">{initials}</span>
                                                     )}
@@ -100,14 +134,18 @@ const OpenSource = () => {
                                             <div className="flex flex-wrap gap-2 text-xs font-mono text-white/60">
                                                 <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1">
                                                     <Calendar size={12} className="text-primary" />
-                                                    {contribution.period}
+                                                    {formatPeriod(contribution.period)}
                                                 </span>
                                                 <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1">
                                                     {contribution.role}
                                                 </span>
-                                                {contribution.stats && (
-                                                    <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1">
-                                                        PRs {contribution.stats.pullRequests ?? 0} • Commits {contribution.stats.commits ?? 0}
+                                                {prCount !== null && prCount > 0 && (
+                                                    <span
+                                                        className="inline-flex animate-fade-in items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-primary"
+                                                        title={`${prCount} merged pull requests on ${contribution.repo}`}
+                                                    >
+                                                        <GitPullRequest size={12} aria-hidden="true" />
+                                                        {prCount} merged PR{prCount === 1 ? '' : 's'}
                                                     </span>
                                                 )}
                                             </div>
@@ -143,7 +181,7 @@ const OpenSource = () => {
                                                 'inline-flex items-center gap-2 text-sm font-semibold transition-all border-b border-transparent',
                                                 isExpanded
                                                     ? 'text-primary border-primary/50'
-                                                    : 'text-white/70 hover:text-primary hover:border-primary/30'
+                                                    : 'text-white/70 hover:text-primary hover:border-primary/30',
                                             )}
                                         >
                                             {isExpanded ? 'Hide details' : 'View details'}
@@ -151,7 +189,7 @@ const OpenSource = () => {
                                                 size={16}
                                                 className={cn(
                                                     'transition-transform duration-300',
-                                                    isExpanded && 'rotate-180'
+                                                    isExpanded && 'rotate-180',
                                                 )}
                                             />
                                         </button>

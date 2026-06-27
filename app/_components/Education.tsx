@@ -7,6 +7,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
 import { Calendar, MapPin, Award, BookOpen } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { formatPeriod } from '@/lib/time-period';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -66,7 +67,7 @@ const Education = () => {
                                             <div className="flex flex-wrap gap-3 text-xs font-mono text-white/60">
                                                 <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10">
                                                     <Calendar size={14} className="text-primary" />
-                                                    {item.duration}
+                                                    {formatPeriod(item.duration)}
                                                 </span>
                                                 <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10">
                                                     <MapPin size={14} className="text-primary" />
