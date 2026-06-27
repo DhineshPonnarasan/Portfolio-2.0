@@ -1,5 +1,22 @@
+import type { Metadata } from 'next';
 import { PROJECTS } from '@/lib/data';
 import ArchitectureExplorer from './_components/ArchitectureExplorer';
+import ArchitectureLiveExplorer from './_components/ArchitectureLiveExplorer';
+import { SITE_URL } from '@/lib/site';
+
+export const metadata: Metadata = {
+    title: 'Architecture Playground',
+    description:
+        'Explore how each project behaves as a system. Generate multi-view architecture narratives, compare flows, and see how the same engineer designs data, modeling, and deployment paths.',
+    alternates: { canonical: `${SITE_URL}/architecture` },
+    openGraph: {
+        type: 'website',
+        url: `${SITE_URL}/architecture`,
+        title: 'Architecture Playground',
+        description:
+            'Multi-view architecture narratives, flow comparisons, and deployment deep-dives for every project on the portfolio.',
+    },
+};
 
 export default function ArchitecturePage() {
     const projects = PROJECTS.map((project) => ({
@@ -27,7 +44,7 @@ export default function ArchitecturePage() {
                     </p>
                 </section>
 
-                <ArchitectureExplorer projects={projects} />
+                <ArchitectureLiveExplorer projectSlug="sandbox" />
             </div>
         </main>
     );
