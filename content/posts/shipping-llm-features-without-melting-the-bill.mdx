@@ -1,0 +1,21 @@
+---
+title: "Shipping LLM features without melting the bill"
+description: "Practical patterns for keeping Groq / OpenAI / Anthropic calls cheap, fast, and observable in a portfolio-sized project."
+date: "2026-05-12"
+tags: "llm, cost, observability"
+author: "Dhinesh Ponnarasan"
+---
+
+A short field note on shipping LLM-backed features without surprising the finance team.
+
+## The core idea
+
+Cache aggressively, stream early, and never trust an upstream's status page. Every request that costs money should also generate a structured log line.
+
+## Three cheap wins
+
+1. **Bounded body size** — a 32 KB cap catches accidental pastes of full PDFs.
+2. **Layered rate limits** — per-IP per-minute *and* per-hour, both kept in memory.
+3. **Streaming with heartbeats** — clients see the first token in under 800 ms even on a cold cache.
+
+That's the surface area. Everything else is monitoring.

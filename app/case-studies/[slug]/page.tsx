@@ -1,81 +1,106 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import ProjectDetails from '@/app/projects/[slug]/_components/ProjectDetails';
 import { PROJECTS } from '@/lib/data';
+import { SITE_URL, SITE_NAME } from '@/lib/site';
+import { getCaseStudy } from '@/lib/case-studies';
+import { buildProjectJsonLd } from '@/lib/jsonld';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 
-interface Params {
-    slug: string;
-}
+export const generateStaticParams = async () => {
+    const { CASE_STUDIES } = await import('@/lib/case-studies');
+    return CASE_STUDIES.map((c) => ({ slug: c.projectSlug }));
+};
 
-export default async function CaseStudyPage({ params }: { params: Promise<Params> }) {
+export const generateMetadata = async ({
+    params,
+}: {
+    params: Promise<{ slug: string }>;
+}): Promise<Metadata> => {
     const { slug } = await params;
     const project = PROJECTS.find((p) => p.slug === slug);
+    const caseStudy = getCaseStudy(slug);
+    if (!project || !caseStudy) return { title: 'Case study not found' };
 
-    if (!project) {
-        return notFound();
-    }
+    const pageUrl = `${SITE_URL}/case-studies/${slug}`;
+    return {
+        title: `Case study: ${project.title}`,
+        description: caseStudy.summary,
+        alternates: { canonical: pageUrl },
+        openGraph: {
+            type: 'article',
+            url: pageUrl,
+            title: `Case study · ${project.title} · ${SITE_NAME}`,
+            description: caseStudy.summary,
+            images: [{ url: `${SITE_URL}/projects/${slug}/ui.svg`, alt: project.title }],
+        },
+    };
+};
 
-    // Ensure description is an array
-    const description = Array.isArray(project.description) ? project.description : [project.description];
+const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
+    const { slug } = await params;
+    const project = PROJECTS.find((p) => p.slug === slug);
+    const caseStudy = getCaseStudy(slug);
+
+    if (!project || !caseStudy) return notFound();
+
+    const jsonLd = buildProjectJsonLd(project.slug);
 
     return (
-        <main className="pt-24 pb-16">
-            <div className="container mx-auto px-4 max-w-4xl space-y-8">
-                <header className="space-y-2">
-                    <p className="text-[0.7rem] tracking-[0.4em] uppercase text-muted-foreground/70">
-                        Architecture case study
-                    </p>
-                    <h1 className="text-3xl md:text-4xl font-anton">{project.title}</h1>
-                    <p className="text-xs text-muted-foreground/80">Year: {project.year}</p>
-                </header>
-
-                <section className="space-y-3">
-                    <h2 className="text-lg font-semibold">Problem & context</h2>
-                    <p className="text-sm text-muted-foreground/90">
-                        This case study restructures the existing project details into a narrative that surfaces the
-                        problem, constraints, and architecture decisions. The underlying content is the same as in the
-                        main Projects section.
-                    </p>
-                    <ul className="list-disc pl-5 text-sm text-muted-foreground/90 space-y-1">
-                        {description.map((item, index) => (
-                            <li key={index}>{item}</li>
-                        ))}
-                    </ul>
-                </section>
-
-                {project.metrics && project.metrics.length > 0 && (
-                    <section className="space-y-3">
-                        <h2 className="text-lg font-semibold">Outcomes & impact</h2>
-                        <ul className="list-disc pl-5 text-sm text-muted-foreground/90 space-y-1">
-                            {project.metrics.map((m, index) => (
-                                <li key={index}>{m}</li>
-                            ))}
-                        </ul>
-                    </section>
-                )}
-
-                {project.techAndTechniques && project.techAndTechniques.length > 0 && (
-                    <section className="space-y-3">
-                        <h2 className="text-lg font-semibold">Tech & techniques in play</h2>
-                        <ul className="list-disc pl-5 text-sm text-muted-foreground/90 space-y-1">
-                            {project.techAndTechniques.map((tech, index) => (
-                                <li key={index}>{tech}</li>
-                            ))}
-                        </ul>
-                    </section>
-                )}
-
-                {project.keyFeatures && project.keyFeatures.length > 0 && (
-                    <section className="space-y-3">
-                        <h2 className="text-lg font-semibold">Key architectural features</h2>
-                        <ul className="list-disc pl-5 text-sm text-muted-foreground/90 space-y-1">
-                            {project.keyFeatures.map((item, index) => (
-                                <li key={index}>{item}</li>
-                            ))}
-                        </ul>
-                    </section>
+        <section className="min-h-screen pt-12 pb-20">
+            <div className="container mx-auto px-4 max-w-3xl mb-10">
+                <Link
+                    href="/"
+                    className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-white/50 hover:text-primary transition-colors"
+                >
+                    <ArrowLeft size={14} /> Home
+                </Link>
+                <p className="mt-6 text-[10px] font-mono uppercase tracking-[0.4em] text-primary">
+                    Case study
+                </p>
+                <h1 className="mt-2 text-3xl md:text-5xl font-anton leading-tight text-white">
+                    {project.title}
+                </h1>
+                <p className="mt-4 max-w-2xl text-base md:text-lg leading-relaxed text-white/80">
+                    {caseStudy.summary}
+                </p>
+                {caseStudy.heroMetric && (
+                    <div className="mt-6 inline-flex items-center gap-3 rounded-2xl border border-primary/30 bg-primary/10 px-5 py-3">
+                        <span className="text-2xl font-anton text-primary">
+                            {caseStudy.heroMetric.value}
+                        </span>
+                        <span className="text-xs uppercase tracking-widest text-white/60">
+                            {caseStudy.heroMetric.label}
+                        </span>
+                    </div>
                 )}
             </div>
-        </main>
+
+            {jsonLd && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: jsonLd }}
+                />
+            )}
+
+            <ProjectDetails project={project} />
+
+            {caseStudy.callouts && caseStudy.callouts.length > 0 && (
+                <div className="container mx-auto px-4 max-w-3xl mt-12 space-y-6">
+                    {caseStudy.callouts.map((c) => (
+                        <article
+                            key={c.title}
+                            className="rounded-2xl border border-white/10 bg-white/[0.03] p-6"
+                        >
+                            <h2 className="text-xl font-anton text-primary">{c.title}</h2>
+                            <p className="mt-2 text-sm leading-relaxed text-white/80">{c.body}</p>
+                        </article>
+                    ))}
+                </div>
+            )}
+        </section>
     );
-}
+};
 
-
+export default Page;

@@ -70,6 +70,12 @@ const MENU_LINKS = [
         color: 'bg-sky-500 text-white',
         sectionId: null,
     },
+    {
+        name: 'Blog',
+        url: '/blog',
+        color: 'bg-violet-500 text-white',
+        sectionId: null,
+    },
 ];
 
 const SECTION_IDS = MENU_LINKS.map((l) => l.sectionId).filter(

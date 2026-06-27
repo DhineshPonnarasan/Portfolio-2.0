@@ -1,0 +1,19 @@
+---
+title: "Grad-CAM++ in production"
+description: "Why we replaced vanilla Grad-CAM with Grad-CAM++ for a clinical-assist MRI pipeline, and what we measured."
+date: "2026-04-02"
+tags: "computer-vision, medical-imaging, explainability"
+author: "Dhinesh Ponnarasan"
+---
+
+A short note on swapping Grad-CAM for Grad-CAM++ in a clinically-assisted brain-tumour MRI classifier.
+
+## What changed
+
+- Vanilla Grad-CAM highlighted large regions of healthy tissue.
+- Grad-CAM++ localised the tumour mask more cleanly on ResNet-50 features.
+- Radiologist trust in the saliency map went up noticeably in the second review cycle.
+
+## What we'd still improve
+
+The saliency map is still a 2D heatmap. Clinicians asked for a 3D voxel view, which is on the roadmap.

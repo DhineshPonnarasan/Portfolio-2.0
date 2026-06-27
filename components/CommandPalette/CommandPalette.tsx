@@ -53,6 +53,14 @@ const paletteActions: Action[] = [
         section: 'Navigation',
     },
     {
+        id: 'blog',
+        name: 'Blog',
+        shortcut: ['g', 'b'],
+        keywords: 'blog posts field notes writing',
+        perform: () => (window.location.href = '/blog'),
+        section: 'Navigation',
+    },
+    {
         id: 'opensource',
         name: 'Open Source',
         shortcut: ['g', 'o'],
