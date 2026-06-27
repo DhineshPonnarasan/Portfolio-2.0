@@ -1,19 +1,60 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
-import { ArrowUpRight, Mail, Phone, MessageCircle, Send } from 'lucide-react';
+import {
+    ArrowUpRight,
+    Mail,
+    Phone,
+    MessageCircle,
+    Send,
+    Calendar,
+    Download,
+} from 'lucide-react';
 import { motion } from 'framer-motion';
 
 import SectionTitle from '@/components/SectionTitle';
 import { GENERAL_INFO } from '@/lib/data';
+import ContactForm from '@/app/_components/ContactForm';
+import { toast } from '@/lib/toast';
+import MagneticButton from '@/components/hero/MagneticButton';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
+const RESUME_COUNTER_KEY = 'resume:download-count';
+
 const Footer = () => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL;
+    const [downloadCount, setDownloadCount] = useState<number | null>(null);
+
+    // Privacy-respecting, client-side counter — never makes a network call.
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        try {
+            const raw = window.localStorage.getItem(RESUME_COUNTER_KEY);
+            const parsed = raw ? Number.parseInt(raw, 10) : 0;
+            setDownloadCount(Number.isFinite(parsed) ? parsed : 0);
+        } catch {
+            setDownloadCount(0);
+        }
+    }, []);
+
+    const handleResumeDownload = () => {
+        // Bump the counter first so even a download that fails to start is
+        // counted as user intent (best-effort, privacy-respecting).
+        try {
+            const next = (downloadCount ?? 0) + 1;
+            window.localStorage.setItem(RESUME_COUNTER_KEY, String(next));
+            setDownloadCount(next);
+        } catch {
+            /* ignore */
+        }
+        window.open('/api/resume-download', '_blank', 'noopener,noreferrer');
+        toast({ title: 'Resume download started', variant: 'success' });
+    };
 
     useGSAP(
         () => {
@@ -49,22 +90,24 @@ const Footer = () => {
                                 <div className="space-y-6">
                                     <div className="flex items-center gap-3">
                                         <MessageCircle className="w-6 h-6 text-primary" />
-                                        <p className="text-xs uppercase tracking-[0.45em] text-muted-foreground">Professional Contact</p>
+                                        <p className="text-xs uppercase tracking-[0.45em] text-muted-foreground">
+                                            Professional Contact
+                                        </p>
                                     </div>
-                                    
+
                                     <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-anton leading-tight text-white">
-                                        Crafting <span className="text-primary">production-grade systems</span> that scale, 
-                                        <span className="text-primary"> shipping ML solutions</span> from research to deployment, 
+                                        Crafting <span className="text-primary">production-grade systems</span> that scale,
+                                        <span className="text-primary"> shipping ML solutions</span> from research to deployment,
                                         and <span className="text-primary">building products</span> that solve real problems.
                                     </h2>
-                                    
+
                                     <p className="text-white/70 text-lg md:text-xl max-w-2xl leading-relaxed">
-                                        I specialize in <span className="text-primary font-semibold">end-to-end engineering</span>—from data pipelines to production APIs. 
+                                        I specialize in <span className="text-primary font-semibold">end-to-end engineering</span>—from data pipelines to production APIs.
                                         As a <span className="text-primary font-semibold">Research Publisher</span>, I blend code, visual storytelling, and architecture to turn complex problems into elegant solutions.
                                     </p>
-                                    
+
                                     <p className="text-white/60 text-base max-w-2xl">
-                                        Seeking <span className="text-primary font-semibold">meaningful collaborations</span> where technical excellence, 
+                                        Seeking <span className="text-primary font-semibold">meaningful collaborations</span> where technical excellence,
                                         <span className="text-primary font-semibold"> delivery speed</span>, and <span className="text-primary font-semibold">architectural clarity</span> drive impact.
                                     </p>
                                 </div>
@@ -79,6 +122,32 @@ const Footer = () => {
                                             {capability}
                                         </span>
                                     ))}
+                                </div>
+
+                                {/* Resume + Calendly CTAs (env-gated) */}
+                                <div className="flex flex-wrap gap-3">
+                                    <button
+                                        type="button"
+                                        onClick={handleResumeDownload}
+                                        className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-white hover:border-primary/50 hover:text-primary transition-colors"
+                                    >
+                                        <Download size={14} aria-hidden="true" />
+                                        Resume
+                                        {downloadCount !== null && downloadCount > 0 && (
+                                            <span className="ml-1 text-[10px] font-mono uppercase tracking-widest text-white/40">
+                                                ({downloadCount})
+                                            </span>
+                                        )}
+                                    </button>
+                                    {calendlyUrl ? (
+                                        <MagneticButton
+                                            href={calendlyUrl}
+                                            className="border border-primary/50 bg-primary/10 text-primary hover:border-primary hover:bg-primary/20"
+                                        >
+                                            <Calendar size={14} aria-hidden="true" />
+                                            Schedule a call
+                                        </MagneticButton>
+                                    ) : null}
                                 </div>
                             </div>
 
@@ -122,6 +191,15 @@ const Footer = () => {
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    {/* Contact Form */}
+                    <div className="flex flex-col border-t border-white/10 pt-12 contact-item">
+                        <div className="mb-6">
+                            <p className="text-xs uppercase tracking-[0.45em] text-white/40">Send a Message</p>
+                            <h3 className="mt-2 text-2xl md:text-3xl font-anton">Drop a line — get a response in 24 hours.</h3>
+                        </div>
+                        <ContactForm />
                     </div>
 
                     {/* Engagement Process */}

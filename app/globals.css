@@ -1199,9 +1199,19 @@
         }
     }
 
-    /* Section divider base */
-    [data-section-divider] {
-        width: 100%;
+    /* Smooth wave typing-indicator dots for the chatbot */
+    .animate-typing-dot {
+        animation: typingDot 1.05s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        transform-origin: center;
+    }
+    @keyframes typingDot {
+        0%, 60%, 100% { transform: translateY(0); opacity: 0.45; }
+        30%           { transform: translateY(-4px); opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .animate-typing-dot {
+            animation: none !important;
+        }
     }
 
     /* Chatbot specific scrollbar override */

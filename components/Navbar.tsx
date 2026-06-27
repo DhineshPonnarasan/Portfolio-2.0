@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import MusicPlayer from './MusicPlayer';
 import { useActiveSection } from '@/hooks/useActiveSection';
+import { scrollToAnchor } from '@/lib/smooth-scroll';
 
 const MENU_LINKS = [
     {
@@ -215,7 +216,17 @@ const Navbar = () => {
                                     <li key={link.name} className="group/item">
                                         <Link
                                             href={link.url}
-                                            onClick={() => setIsMenuOpen(false)}
+                                            onClick={(e) => {
+                                                setIsMenuOpen(false);
+                                                if (
+                                                    link.url.startsWith('#') ||
+                                                    (pathname === '/' && link.url.startsWith('/#'))
+                                                ) {
+                                                    e.preventDefault();
+                                                    const id = link.url.split('#')[1];
+                                                    if (id) scrollToAnchor(`#${id}`);
+                                                }
+                                            }}
                                             onMouseEnter={() => smartPrefetch(link.url)}
                                             onFocus={() => smartPrefetch(link.url)}
                                             className={cn(
