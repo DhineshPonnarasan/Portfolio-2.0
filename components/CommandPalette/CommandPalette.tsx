@@ -45,6 +45,14 @@ const paletteActions: Action[] = [
         section: 'Navigation',
     },
     {
+        id: 'uses',
+        name: 'Uses',
+        shortcut: ['g', 'u'],
+        keywords: 'uses tools hardware editor setup',
+        perform: () => (window.location.href = '/uses'),
+        section: 'Navigation',
+    },
+    {
         id: 'opensource',
         name: 'Open Source',
         shortcut: ['g', 'o'],

@@ -64,6 +64,12 @@ const MENU_LINKS = [
         color: 'bg-emerald-400 text-black',
         sectionId: null,
     },
+    {
+        name: 'Uses',
+        url: '/uses',
+        color: 'bg-sky-500 text-white',
+        sectionId: null,
+    },
 ];
 
 const SECTION_IDS = MENU_LINKS.map((l) => l.sectionId).filter(
