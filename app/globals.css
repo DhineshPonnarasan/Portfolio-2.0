@@ -906,21 +906,6 @@
     font-size: 14px !important;
     white-space: pre !important;
 }
-
-.system-architecture .group-rect {
-    display: none !important;
-    visibility: hidden !important;
-}
-
-@keyframes borderFlow {
-    from { stroke-dashoffset: 20; }
-    to { stroke-dashoffset: 0; }
-}
-
-.system-architecture .box rect {
-    display: none !important;
-    visibility: hidden !important;
-}
 @media (prefers-color-scheme: dark) {
     .diagram svg text,
     .diagram svg .box text,
@@ -981,10 +966,18 @@
         display: none;
     }
     * {
-        @apply border-border !cursor-none;
+        @apply border-border;
     }
     body {
         @apply bg-background text-foreground font-roboto-flex;
+    }
+
+    /* Universal focus-visible ring so every interactive element is keyboard-
+       discoverable without per-component opt-in. */
+    :where(button, a, [role='button'], [role='link'], input, select, textarea, summary):focus-visible {
+        outline: 2px solid hsl(var(--primary));
+        outline-offset: 2px;
+        border-radius: 4px;
     }
 }
 
@@ -1159,6 +1152,11 @@
         filter: none;
         transition: none;
     }
+
+    /* Stop the rotating section flower for users who request reduced motion. */
+    .animate-spin {
+        animation: none !important;
+    }
 }
 
 @layer components {
@@ -1168,6 +1166,13 @@
 
     .markdown-text ul {
         @apply pl-5 mt-2 list-disc;
+    }
+
+    /* Active nav item — subtle accent on the menu overlay */
+    .is-active-nav {
+        --tw-shadow: inset 2px 0 0 0 hsl(var(--primary));
+        box-shadow: var(--tw-shadow);
+        padding-left: 0.5rem;
     }
 
     /* Chatbot specific scrollbar override */
@@ -1400,6 +1405,13 @@ html, body {
 .mermaid-wrap {
     max-width: 100%;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mermaid-wrap svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
 
 @media (max-width: 480px) {
@@ -1445,6 +1457,301 @@ html, body {
     h1, h2, h3 {
         word-break: break-word;
         overflow-wrap: break-word;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Live Architecture Overlay (Supabase-style running connections)
+   - Pure overlay layer; does not modify the ASCII text itself.
+   - Subtle, premium SaaS dashboard aesthetic.
+   - Soft cyan/teal glow on packets and status dots.
+   - Continuous flow from Box 1 → 2 → 3 → 4 → 5 → 6.
+   ═══════════════════════════════════════════════════════════ */
+
+.live-arch-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.live-arch-status {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgb(16 185 129);
+    box-shadow:
+        0 0 4px rgba(16 185 129, 0.6),
+        0 0 10px rgba(16 185 129, 0.35);
+    transform: translate(-50%, -50%);
+    animation: live-arch-status-pulse 3.6s ease-in-out infinite;
+    will-change: opacity, transform;
+}
+
+.live-arch-status::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1px solid rgba(16 185 129, 0.25);
+    animation: live-arch-status-ring 3.6s ease-in-out infinite;
+}
+
+.live-arch-packet {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgb(34 211 238);
+    box-shadow:
+        0 0 6px rgba(34 211 238, 0.7),
+        0 0 14px rgba(34 211 238, 0.4);
+    transform: translate(-50%, -50%);
+    will-change: transform, opacity;
+}
+
+.live-arch-packet-down {
+    animation: live-arch-packet-flow-down 1.8s linear infinite;
+}
+
+.live-arch-packet-up {
+    animation: live-arch-packet-flow-up 1.8s linear infinite;
+}
+
+.live-arch-connector-line {
+    position: absolute;
+    width: 1px;
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(34 211 238, 0.35) 30%,
+        rgba(34 211 238, 0.55) 50%,
+        rgba(34 211 238, 0.35) 70%,
+        transparent 100%
+    );
+    transform: translateX(-50%);
+    background-size: 100% 200%;
+    animation: live-arch-connector-shimmer 2.4s ease-in-out infinite;
+    will-change: background-position;
+}
+
+.live-arch-scanline {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(34 211 238, 0.45) 50%,
+        transparent 100%
+    );
+    pointer-events: none;
+    opacity: 0.55;
+    animation: live-arch-scanline-sweep 7s linear infinite;
+    will-change: transform;
+}
+
+@keyframes live-arch-status-pulse {
+    0%, 100% { opacity: 0.55; transform: translate(-50%, -50%) scale(0.9); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+@keyframes live-arch-status-ring {
+    0% { transform: scale(0.7); opacity: 0.6; }
+    100% { transform: scale(1.9); opacity: 0; }
+}
+
+@keyframes live-arch-packet-flow-down {
+    0% {
+        transform: translate(-50%, -100%) scale(0.6);
+        opacity: 0;
+    }
+    15% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    85% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        transform: translate(-50%, 100%) scale(0.6);
+        opacity: 0;
+    }
+}
+
+@keyframes live-arch-packet-flow-up {
+    0% {
+        transform: translate(-50%, 100%) scale(0.6);
+        opacity: 0;
+    }
+    15% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    85% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        transform: translate(-50%, -100%) scale(0.6);
+        opacity: 0;
+    }
+}
+
+@keyframes live-arch-connector-shimmer {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 0% 200%; }
+}
+
+@keyframes live-arch-scanline-sweep {
+    0% { transform: translateY(0); opacity: 0; }
+    8% { opacity: 0.55; }
+    92% { opacity: 0.55; }
+    100% { transform: translateY(calc(100% - 2px)); opacity: 0; }
+}
+
+/* Mobile: disable continuous animations to save battery and avoid distraction */
+@media (max-width: 767px) {
+    .live-arch-packet,
+    .live-arch-connector-line,
+    .live-arch-scanline {
+        animation: none !important;
+        display: none;
+    }
+    .live-arch-status {
+        animation: live-arch-status-pulse 4.5s ease-in-out infinite;
+    }
+}
+
+/* Respect prefers-reduced-motion: keep static status indicators, drop motion */
+@media (prefers-reduced-motion: reduce) {
+    .live-arch-packet,
+    .live-arch-connector-line,
+    .live-arch-scanline {
+        animation: none !important;
+        display: none;
+    }
+    .live-arch-status::after {
+        animation: none !important;
+    }
+    .live-arch-status {
+        animation: none !important;
+        opacity: 0.85;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Mermaid Workflow Animation (premium SaaS dashboard)
+   - Inspired by Supabase, Vercel, Stripe running-connection aesthetic.
+   - Pure CSS, targets Mermaid's stable public class names.
+   - Edges get flowing dashes (data movement), a soft glow, and a hover boost.
+   - Nodes get a soft glow on hover.
+   - Diagram content, node labels, and architecture text are never modified.
+   ═══════════════════════════════════════════════════════════ */
+
+.mermaid-wrap .edgePath path.path {
+    stroke-dasharray: 5 3;
+    animation: mermaid-edge-flow 1.4s linear infinite;
+    filter: drop-shadow(0 0 1.5px rgba(56, 189, 248, 0.25));
+    transition: filter 200ms ease, stroke-width 200ms ease, stroke-dasharray 200ms ease;
+    will-change: stroke-dashoffset;
+}
+
+.mermaid-wrap .edgePath:hover path.path {
+    stroke-dasharray: 3 1.5;
+    animation-duration: 0.7s;
+    filter: drop-shadow(0 0 3px rgba(56, 189, 248, 0.55));
+}
+
+.mermaid-wrap .marker path {
+    transition: fill 200ms ease;
+}
+
+.mermaid-wrap .edgePath:hover ~ .marker path,
+.mermaid-wrap .edgePath:hover + .marker path {
+    fill: rgb(56 189 248);
+}
+
+/* Subtle node glow on hover (Mermaid emits foreignObject > div inside .node) */
+.mermaid-wrap .node {
+    transition: filter 200ms ease;
+}
+
+.mermaid-wrap .node:hover {
+    filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.45));
+}
+
+@keyframes mermaid-edge-flow {
+    to {
+        stroke-dashoffset: -16;
+    }
+}
+
+/* Stagger edges so they don't all pulse in unison */
+.mermaid-wrap .edgePath:nth-of-type(2n) path.path {
+    animation-delay: -0.4s;
+}
+.mermaid-wrap .edgePath:nth-of-type(3n) path.path {
+    animation-delay: -0.8s;
+}
+
+/* Mobile: keep static dashes for readability, drop the motion */
+@media (max-width: 767px) {
+    .mermaid-wrap .edgePath path.path {
+        animation: none;
+        stroke-dasharray: 4 2;
+        filter: none;
+    }
+    .mermaid-wrap .node:hover {
+        filter: none;
+    }
+    .mermaid-wrap .edgePath:hover path.path {
+        animation: none;
+    }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .mermaid-wrap .edgePath path.path {
+        animation: none;
+        stroke-dasharray: 4 2;
+        filter: none;
+    }
+    .mermaid-wrap .node:hover {
+        filter: none;
+    }
+    .mermaid-wrap .edgePath:hover path.path {
+        animation: none;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Hero System Status indicator
+   - Matches the Live Architecture status indicator aesthetic.
+   - Soft ambient pulse, no flash. Disables on reduced motion.
+   ═══════════════════════════════════════════════════════════ */
+
+.hero-status-dot {
+    box-shadow:
+        0 0 4px rgba(16 185 129, 0.5),
+        0 0 10px rgba(16 185 129, 0.25);
+    animation: hero-status-pulse 3.6s ease-in-out infinite;
+    will-change: opacity, transform;
+}
+
+@keyframes hero-status-pulse {
+    0%, 100% { opacity: 0.55; transform: scale(0.9); }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-status-dot {
+        animation: none;
+        opacity: 0.85;
     }
 }
 

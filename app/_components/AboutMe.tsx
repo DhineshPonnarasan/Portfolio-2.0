@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/all';
 import React from 'react';
 
 import Image from 'next/image';
+import { ABOUT_ME_BLUR_DATA_URL } from '@/lib/blur-data-urls';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -70,9 +71,12 @@ const AboutMe = () => {
                                     src="/projects/images/Dhinesh.jpg"
                                     alt="Dhinesh Sadhu Subramaniam Ponnarasan"
                                     fill
+                                    sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
                                     className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
                                     onError={() => setImgError(true)}
                                     priority
+                                    placeholder="blur"
+                                    blurDataURL={ABOUT_ME_BLUR_DATA_URL}
                                 />
                             </div>
                             {imgError && (

@@ -1,41 +1,100 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Anton, Roboto_Flex } from 'next/font/google';
 import { ReactLenis } from 'lenis/react';
 
 import 'lenis/dist/lenis.css';
 import './globals.css';
-import ScrollProgressIndicator from '@/components/ScrollProgressIndicator';
-import ParticleBackground from '@/components/ParticleBackground';
+
 import Navbar from '@/components/Navbar';
-import CustomCursor from '@/components/CustomCursor';
-import Preloader from '../components/Preloader';
+import ScrollProgressIndicator from '@/components/ScrollProgressIndicator';
+import ClientMounts from '@/components/ClientMounts';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import Script from 'next/script';
+import { LoadingProvider } from './context/LoadingContext';
+import { AudioProvider } from '@/components/AudioProvider';
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, SITE_LOCALE, SITE_TWITTER, OG_IMAGE } from '@/lib/site';
 
 const antonFont = Anton({
     weight: '400',
     style: 'normal',
     subsets: ['latin'],
     variable: '--font-anton',
+    display: 'swap',
 });
 
 const robotoFlex = Roboto_Flex({
-    weight: ['100', '400', '500', '600', '700', '800'],
+    weight: '400',
     style: 'normal',
     subsets: ['latin'],
     variable: '--font-roboto-flex',
+    display: 'swap',
 });
 
-export const metadata: Metadata = {
-    title: 'Dhinesh Portfolio',
-    description: 'Personal portfolio of Dhinesh Sadhu Subramaniam Ponnarasan',
+export const viewport: Viewport = {
+    themeColor: '#00FF66',
+    colorScheme: 'dark',
+    width: 'device-width',
+    initialScale: 1,
 };
 
-import HomeChatWidget from '@/components/HomeChatWidget';
-import { LoadingProvider } from './context/LoadingContext';
-import ScrollAnimator from '@/components/ScrollAnimator';
-import { AudioProvider } from '@/components/AudioProvider';
-import KonamiEasterEgg from '@/components/KonamiEasterEgg';
+export const metadata: Metadata = {
+    metadataBase: new URL(SITE_URL),
+    title: {
+        default: `${SITE_NAME} — AI/ML Engineer`,
+        template: `%s · ${SITE_NAME}`,
+    },
+    description: SITE_DESCRIPTION,
+    applicationName: SITE_NAME,
+    keywords: [
+        'Dhinesh Ponnarasan',
+        'AI Engineer',
+        'Machine Learning',
+        'Portfolio',
+        'Software Engineer',
+        'Next.js',
+        'Groq',
+    ],
+    authors: [{ name: 'Dhinesh Ponnarasan', url: SITE_URL }],
+    creator: 'Dhinesh Ponnarasan',
+    openGraph: {
+        type: 'website',
+        locale: SITE_LOCALE,
+        url: SITE_URL,
+        siteName: SITE_NAME,
+        title: `${SITE_NAME} — AI/ML Engineer`,
+        description: SITE_DESCRIPTION,
+        images: [
+            {
+                url: OG_IMAGE,
+                width: 1200,
+                height: 630,
+                alt: 'Dhinesh Ponnarasan — Portfolio',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: `${SITE_NAME} — AI/ML Engineer`,
+        description: SITE_DESCRIPTION,
+        images: [OG_IMAGE],
+        creator: SITE_TWITTER,
+    },
+    robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+            index: true,
+            follow: true,
+            'max-image-preview': 'large',
+            'max-snippet': -1,
+        },
+    },
+    icons: {
+        icon: '/logo/favicon.ico',
+    },
+};
+
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-MHLY1LNGY5';
 
 export default function RootLayout({
     children,
@@ -44,7 +103,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <GoogleAnalytics gaId="G-MHLY1LNGY5" />
+            {GA_MEASUREMENT_ID && <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />}
             <Script id="hotjar" strategy="afterInteractive">
                 {`(function(h,o,t,j,a,r){
                 h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
@@ -68,23 +127,9 @@ export default function RootLayout({
                 >
                     <LoadingProvider>
                         <AudioProvider>
-                            {/* <a
-                                href="https://forms.gle/t73XYJgWD5cJNr6e8"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="px-4 block bg-black text-center z-[1] text-sm py-2 hover:text-primary transition-all"
-                            >
-                                Frontend dev? I&apos;ll help you polish your resume —
-                                <span className="underline">join the waitlist</span>
-                            </a> */}
-                            <Preloader />
-                            <CustomCursor />
-                            <KonamiEasterEgg />
-                            <ParticleBackground />
-                            <ScrollAnimator />
+                            <ClientMounts />
                             <Navbar />
                             <ScrollProgressIndicator />
-                            <HomeChatWidget />
                             {children}
                         </AudioProvider>
                     </LoadingProvider>
