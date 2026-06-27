@@ -274,7 +274,27 @@ const Banner = () => {
             <ImportDhinesh />
             <ArrowAnimation />
 
-            {/* Background parallax shapes */}
+            {/* Background gradient mesh + parallax shapes */}
+            <div
+                aria-hidden="true"
+                className="hero-gradient-mesh pointer-events-none absolute inset-0 -z-10 opacity-80"
+                ref={(node) => {
+                    if (node) {
+                        // Scrub background-position on scroll via GSAP so the
+                        // hero feels alive but stays on the GPU.
+                        gsap.to(node, {
+                            backgroundPosition: '100% 100%',
+                            ease: 'none',
+                            scrollTrigger: {
+                                trigger: node,
+                                start: 'top top',
+                                end: 'bottom top',
+                                scrub: 0.6,
+                            },
+                        });
+                    }
+                }}
+            />
             <div ref={shapesRef} aria-hidden="true" className="pointer-events-none absolute inset-0 -z-0">
                 <div className="absolute -top-32 -left-32 h-72 w-72 rounded-full bg-primary/15 blur-3xl" />
                 <div className="absolute -bottom-40 -right-24 h-96 w-96 rounded-full bg-secondary/10 blur-3xl" />

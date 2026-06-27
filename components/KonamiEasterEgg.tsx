@@ -14,6 +14,7 @@ const KONAMI_CODE = [
     'b',
     'a',
 ];
+const STORAGE_KEY = 'konami:unlocked';
 
 const arraysEqual = (a: string[], b: string[]) =>
     a.length === b.length && a.every((val, idx) => val === b[idx]);
@@ -21,6 +22,18 @@ const arraysEqual = (a: string[], b: string[]) =>
 const KonamiEasterEgg = () => {
     const [input, setInput] = useState<string[]>([]);
     const { playConfirm } = useCyberSounds();
+
+    // Restore the persisted unlocked state from sessionStorage on mount so
+    // god-mode sticks across route changes within the same session.
+    useEffect(() => {
+        try {
+            if (sessionStorage.getItem(STORAGE_KEY) === '1') {
+                document.documentElement.classList.add('god-mode');
+            }
+        } catch {
+            /* private mode — fail open */
+        }
+    }, []);
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -41,14 +54,14 @@ const KonamiEasterEgg = () => {
 
     const activateGodMode = () => {
         document.documentElement.classList.toggle('god-mode');
-        playConfirm();
-
-        // Visual flair
-        if (!document.documentElement.classList.contains('god-mode')) {
-            console.log('GOD MODE DEACTIVATED');
-        } else {
-            console.log('GOD MODE ACTIVATED');
+        const isActive = document.documentElement.classList.contains('god-mode');
+        try {
+            if (isActive) sessionStorage.setItem(STORAGE_KEY, '1');
+            else sessionStorage.removeItem(STORAGE_KEY);
+        } catch {
+            /* ignore */
         }
+        playConfirm();
         setInput([]);
     };
 

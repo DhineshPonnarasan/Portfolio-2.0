@@ -118,6 +118,10 @@ export default function RootLayout({
                 className={`${antonFont.variable} ${robotoFlex.variable} antialiased min-h-screen overflow-y-auto overflow-x-hidden relative`}
                 suppressHydrationWarning
             >
+                <a href="#main" className="skip-link">
+                    Skip to main content
+                </a>
+                <div className="noise-overlay" aria-hidden="true" />
                 <ReactLenis
                     root
                     options={{

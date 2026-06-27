@@ -11,9 +11,11 @@ interface Props {
         icon?: string;
     };
     title: string;
+    /** When provided, renders a focus-visible skip link straight to this id. */
+    sectionId?: string;
 }
 
-const SectionTitle = ({ icon, title, className, classNames }: Props) => {
+const SectionTitle = ({ icon, title, className, classNames, sectionId }: Props) => {
     return (
         <div
             className={cn(
@@ -38,11 +40,22 @@ const SectionTitle = ({ icon, title, className, classNames }: Props) => {
                     'text-xl uppercase leading-none',
                     classNames?.title,
                 )}
+                id={sectionId ? `section-title-${sectionId}` : undefined}
             >
                 {title}
             </h2>
+            {sectionId && (
+                <a
+                    href={`#${sectionId}`}
+                    className="skip-link"
+                    aria-label={`Skip to ${title} section`}
+                >
+                    Skip to {title}
+                </a>
+            )}
         </div>
     );
 };
 
 export default SectionTitle;
+

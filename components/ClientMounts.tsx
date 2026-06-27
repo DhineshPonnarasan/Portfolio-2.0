@@ -44,6 +44,10 @@ export const ToastViewport = dynamic(() => import('@/components/Toast'), {
     ssr: false,
 });
 
+export const SecretTheme = dynamic(() => import('@/components/SecretTheme'), {
+    ssr: false,
+});
+
 /**
  * Renders the bundle of decorative client components used by the root layout.
  * Each is dynamically imported and hydrated on the client only.
@@ -58,6 +62,7 @@ const ClientMounts = () => (
         <HomeChatWidget />
         <CommandPalette />
         <ToastViewport />
+        <SecretTheme />
     </>
 );
 

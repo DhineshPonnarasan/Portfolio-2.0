@@ -1226,6 +1226,80 @@
         .animate-fade-in { animation: none !important; }
     }
 
+    /* ────────────────────────────────────────────────────────────────
+       Tier-3 polish: noise overlay, gradient hero, skip links,
+       secret theme, god mode.
+       ──────────────────────────────────────────────────────────────── */
+
+    /* Site-wide ~2% grain overlay built from SVG turbulence. pointer-
+       events:none + mix-blend-overlay so it never interferes with clicks. */
+    .noise-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        pointer-events: none;
+        opacity: 0.06;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+        background-size: 240px 240px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .noise-overlay { opacity: 0.04; }
+    }
+
+    /* Animated gradient hero background — driven by background-position
+       scrubbed by GSAP. The animation lives in JS so reduced motion
+       never animates it. */
+    .hero-gradient-mesh {
+        background:
+            radial-gradient(at 20% 20%, rgba(34, 211, 238, 0.30), transparent 55%),
+            radial-gradient(at 80% 30%, rgba(16, 185, 129, 0.30), transparent 60%),
+            radial-gradient(at 50% 80%, rgba(124, 58, 237, 0.25), transparent 55%),
+            radial-gradient(at 10% 90%, rgba(244, 114, 182, 0.18), transparent 60%);
+        background-size: 220% 220%;
+    }
+
+    /* Skip-links — visible on focus only. */
+    .skip-link {
+        position: absolute;
+        top: 0.5rem;
+        left: 0.5rem;
+        z-index: 500;
+        padding: 0.5rem 0.75rem;
+        border-radius: 0.5rem;
+        background: rgb(15 23 42);
+        color: white;
+        font-size: 0.875rem;
+        transform: translateY(-200%);
+        transition: transform 200ms ease;
+    }
+    .skip-link:focus {
+        transform: translateY(0);
+    }
+
+    /* Secret theme — typed 'dhinesh' anywhere (outside inputs) swaps the
+       primary accent to a punchier green for ~5s. */
+    html[data-secret-theme='on'] {
+        --primary: 80 100% 55%;
+    }
+    html[data-secret-theme='on'] .hero-gradient-mesh {
+        animation: secretPulse 1200ms ease-out 1;
+    }
+    @keyframes secretPulse {
+        0%   { filter: hue-rotate(0deg) saturate(1.4); }
+        100% { filter: hue-rotate(0deg) saturate(1); }
+    }
+
+    /* God mode (Konami) — applied via .god-mode on <html>. */
+    html.god-mode {
+        --primary: 50 100% 60%;
+    }
+    html.god-mode body {
+        background:
+            repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.02) 0 6px, transparent 6px 12px),
+            hsl(var(--background)) !important;
+    }
+
     /* Chatbot specific scrollbar override */
     .custom-scrollbar::-webkit-scrollbar {
         display: block;
