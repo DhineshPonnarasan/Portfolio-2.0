@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 import Banner from './_components/Banner';
 import AboutMe from './_components/AboutMe';
 import { SectionFallback } from './_components/SectionFallback';
+import SectionDivider from '@/components/SectionDivider';
 import { buildPersonJsonLd } from '@/lib/jsonld';
 
 // Dynamic imports for below-the-fold content to improve initial load performance.
@@ -16,6 +17,9 @@ const ProjectList = dynamic(() => import('./_components/ProjectList'));
 const Publications = dynamic(() => import('./_components/Publications'));
 const OpenSource = dynamic(() => import('./_components/OpenSource'));
 const Footer = dynamic(() => import('@/components/Footer'));
+
+// Pick a divider variant per gap so each transition feels unique.
+const DIVIDER_VARIANTS = ['wave', 'tilt', 'chunks'] as const;
 
 export default function Home() {
     const sections = [
@@ -39,19 +43,29 @@ export default function Home() {
                 dangerouslySetInnerHTML={{ __html: jsonLd }}
             />
             {sections.map((section, index) => (
-                <div
-                    key={section.key}
-                    data-animate="section"
-                    data-section={section.key}
-                    className="animate-section-shell"
-                    style={{ '--section-index': index } as CSSProperties}
-                >
-                    {section.priority ? (
-                        section.node
-                    ) : (
-                        <Suspense fallback={<SectionFallback />}>
-                            {section.node}
-                        </Suspense>
+                <div key={`wrap-${section.key}`}>
+                    <div
+                        key={section.key}
+                        data-animate="section"
+                        data-section={section.key}
+                        className="animate-section-shell"
+                        style={{ '--section-index': index } as CSSProperties}
+                    >
+                        {section.priority ? (
+                            section.node
+                        ) : (
+                            <Suspense fallback={<SectionFallback />}>
+                                {section.node}
+                            </Suspense>
+                        )}
+                    </div>
+                    {/* Divider sits BETWEEN sections, never before the first
+                        (the banner is the LCP; nothing should precede it). */}
+                    {index < sections.length - 1 && (
+                        <SectionDivider
+                            variant={DIVIDER_VARIANTS[index % DIVIDER_VARIANTS.length]}
+                            heightClass="h-12 md:h-20"
+                        />
                     )}
                 </div>
             ))}

@@ -1175,6 +1175,35 @@
         padding-left: 0.5rem;
     }
 
+    /* CursorHover — soft radial-gradient highlight that follows the mouse.
+       Reads --cursor-glow-x / --cursor-glow-y set by the CursorHover wrapper. */
+    .isolate[style*='--cursor-glow-x']::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        background: radial-gradient(
+            circle 220px at var(--cursor-glow-x, 50%) var(--cursor-glow-y, 50%),
+            var(--cursor-glow-color, rgba(16, 185, 129, 0.35)),
+            transparent 70%
+        );
+        opacity: var(--cursor-glow-intensity, 0.35);
+        transition: opacity 200ms ease;
+        border-radius: inherit;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .isolate[style*='--cursor-glow-x']::before {
+            display: none;
+        }
+    }
+
+    /* Section divider base */
+    [data-section-divider] {
+        width: 100%;
+    }
+
     /* Chatbot specific scrollbar override */
     .custom-scrollbar::-webkit-scrollbar {
         display: block;
