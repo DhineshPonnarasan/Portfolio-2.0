@@ -1,44 +1,53 @@
 'use client';
 
 import { useEffect, useState, useRef, memo } from 'react';
-import mermaid from 'mermaid';
+import type { Mermaid } from 'mermaid';
 
 interface MermaidDiagramProps {
     chart: string;
 }
 
-// Initialize mermaid once outside component
-let initialized = false;
-const initMermaid = () => {
-    if (initialized) return;
-    mermaid.initialize({
-        startOnLoad: false,
-        theme: 'dark',
-        securityLevel: 'loose',
-        fontFamily: 'inherit',
-        flowchart: {
-            htmlLabels: true,
-            useMaxWidth: false,
-            nodeSpacing: 50,
-            rankSpacing: 60,
-            curve: 'basis',
-            padding: 16,
-        },
-        themeVariables: {
-            background: 'transparent',
-            primaryColor: 'rgba(30, 41, 59, 0.85)',
-            primaryBorderColor: '#10b981',
-            primaryTextColor: '#e2e8f0',
-            lineColor: '#475569',
-            textColor: '#e2e8f0',
-            mainBkg: 'rgba(30, 41, 59, 0.7)',
-            nodeBorder: '#10b981',
-            clusterBkg: 'transparent',
-            clusterBorder: '#334155',
-            edgeLabelBackground: 'rgba(15, 23, 42, 0.9)',
-        },
-    });
-    initialized = true;
+// Initialize mermaid once outside component (lazily loaded)
+let mermaidInstance: Mermaid | null = null;
+let initPromise: Promise<Mermaid> | null = null;
+
+const initMermaid = async (): Promise<Mermaid> => {
+    if (mermaidInstance) return mermaidInstance;
+    if (initPromise) return initPromise;
+    initPromise = (async () => {
+        const mermaidModule = await import('mermaid');
+        const mermaid = mermaidModule.default;
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'dark',
+            securityLevel: 'loose',
+            fontFamily: 'inherit',
+            flowchart: {
+                htmlLabels: true,
+                useMaxWidth: false,
+                nodeSpacing: 50,
+                rankSpacing: 60,
+                curve: 'basis',
+                padding: 16,
+            },
+            themeVariables: {
+                background: 'transparent',
+                primaryColor: 'rgba(30, 41, 59, 0.85)',
+                primaryBorderColor: '#10b981',
+                primaryTextColor: '#e2e8f0',
+                lineColor: '#475569',
+                textColor: '#e2e8f0',
+                mainBkg: 'rgba(30, 41, 59, 0.7)',
+                nodeBorder: '#10b981',
+                clusterBkg: 'transparent',
+                clusterBorder: '#334155',
+                edgeLabelBackground: 'rgba(15, 23, 42, 0.9)',
+            },
+        });
+        mermaidInstance = mermaid;
+        return mermaid;
+    })();
+    return initPromise;
 };
 
 // Sanitize mermaid chart to prevent parse errors
@@ -96,8 +105,6 @@ const MermaidDiagram = memo(({ chart }: MermaidDiagramProps) => {
     const renderAttempts = useRef(0);
 
     useEffect(() => {
-        initMermaid();
-
         let cancelled = false;
         renderAttempts.current = 0;
         setError(null);
@@ -108,6 +115,8 @@ const MermaidDiagram = memo(({ chart }: MermaidDiagramProps) => {
             const sanitized = sanitizeChart(chart);
 
             try {
+                const mermaid = await initMermaid();
+                if (cancelled) return;
                 // Generate a unique ID for each render attempt
                 const uniqueId = `${idRef.current}-${renderAttempts.current++}`;
                 const { svg: result } = await mermaid.render(uniqueId, sanitized);
@@ -119,10 +128,9 @@ const MermaidDiagram = memo(({ chart }: MermaidDiagramProps) => {
                         setTimeout(() => setVisible(true), 50);
                     });
                 }
-            } catch (e: any) {
-                console.error('Mermaid render error:', e);
-                // Try to extract a meaningful error message
-                const msg = e?.message || 'Failed to render diagram';
+            } catch (e: unknown) {
+                const err = e as { message?: string };
+                const msg = err?.message || 'Failed to render diagram';
 
                 if (!cancelled) {
                     setError(msg);

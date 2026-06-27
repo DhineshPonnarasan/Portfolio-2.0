@@ -4,6 +4,14 @@ import Link from 'next/link';
 import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import { Home, FolderGit2, Cpu, BookOpen } from 'lucide-react';
+
+const QUICK_LINKS = [
+    { href: '/', label: 'Home', icon: Home },
+    { href: '/projects', label: 'Projects', icon: FolderGit2 },
+    { href: '/architecture', label: 'Architecture', icon: Cpu },
+    { href: '/blog', label: 'Blog', icon: BookOpen },
+];
 
 export default function NotFound() {
     const glichRef = useRef<HTMLHeadingElement>(null);
@@ -65,13 +73,29 @@ export default function NotFound() {
                 </div>
 
                 <div className="pt-8">
-                    <Link 
-                        href="/" 
+                    <Link
+                        href="/"
                         className="inline-flex items-center justify-center h-12 px-8 rounded-none border border-primary/50 text-primary font-mono text-sm uppercase tracking-widest hover:bg-primary/10 hover:border-primary transition-all duration-300"
                     >
                         [ Reboot System ]
                     </Link>
                 </div>
+
+                <nav
+                    className="pt-6 flex flex-wrap items-center justify-center gap-2"
+                    aria-label="Quick navigation"
+                >
+                    {QUICK_LINKS.map(({ href, label, icon: Icon }) => (
+                        <Link
+                            key={href}
+                            href={href}
+                            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-mono uppercase tracking-widest text-white/70 transition-colors hover:border-primary/40 hover:text-primary"
+                        >
+                            <Icon size={12} aria-hidden="true" />
+                            {label}
+                        </Link>
+                    ))}
+                </nav>
             </div>
             
             {/* Decorative Overlay */}

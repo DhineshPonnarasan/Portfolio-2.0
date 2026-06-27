@@ -1,5 +1,4 @@
 'use client';
-
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { setGlobalVolume } from '@/lib/audio/synth';
 
@@ -10,33 +9,42 @@ interface AudioContextType {
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
 
+const MUTE_STORAGE_KEY = 'cyber-audio-muted';
+
 export const AudioProvider = ({ children }: { children: ReactNode }) => {
     const [isMuted, setIsMuted] = useState(true);
     const [hasInteracted, setHasInteracted] = useState(false);
 
     useEffect(() => {
-        const savedMute = localStorage.getItem('cyber-audio-muted');
-        if (savedMute !== null) {
-            setIsMuted(savedMute === 'true');
-        } else {
-            setIsMuted(false);
+        // Guarded localStorage read — never throws in SSR / private-mode.
+        try {
+            const savedMute = window.localStorage.getItem(MUTE_STORAGE_KEY);
+            if (savedMute !== null) {
+                setIsMuted(savedMute === 'true');
+            } else {
+                setIsMuted(false);
+            }
+        } catch {
+            // Ignore unavailable storage (Safari private mode, SSR, etc.)
         }
     }, []);
 
     useEffect(() => {
         setGlobalVolume(isMuted ? 0 : 0.3);
-        localStorage.setItem('cyber-audio-muted', String(isMuted));
+        try {
+            window.localStorage.setItem(MUTE_STORAGE_KEY, String(isMuted));
+        } catch {
+            // Ignore quota / unavailability errors.
+        }
     }, [isMuted, hasInteracted]);
 
     const toggleMute = () => setIsMuted(prev => !prev);
 
-    // One-time listener to unlock AudioContext
+    // One-time listener to unlock AudioContext.
     useEffect(() => {
         if (hasInteracted) return;
 
-        const unlock = () => {
-            setHasInteracted(true);
-        };
+        const unlock = () => setHasInteracted(true);
         window.addEventListener('click', unlock, { once: true });
         window.addEventListener('keydown', unlock, { once: true });
         return () => {

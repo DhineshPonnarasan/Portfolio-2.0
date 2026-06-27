@@ -1,17 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Groq } from 'groq-sdk';
 import { PROJECTS } from '@/lib/data';
 import { ARCHITECTURE_DIAGRAMS } from '@/lib/architecture-diagrams';
+import { getGroqClient } from '@/lib/groq';
+import { applyRateLimit } from '@/lib/rateLimit';
+import { readJsonBody, requirePositiveInt, requireString, describeRouteError } from '@/lib/api-helpers';
 
-const groq = new Groq({
-    apiKey: process.env.GROQ_API_KEY,
-});
+const OFFLINE_FALLBACK =
+    'Challenge mode is offline. Compare your attempt against the ASCII Boxes 1→6 and check whether your components and arrows line up with the documented flow.';
 
 export async function POST(req: NextRequest) {
     try {
-        const { projectId, attempt }: { projectId?: number; attempt?: string } = await req.json();
+        const limited = applyRateLimit(req, { route: 'architecture-challenge', limit: 10, windowMs: 60_000 });
+        if (limited) return limited;
 
-        if (!projectId || !attempt?.trim()) {
+        const parsed = await readJsonBody<{ projectId?: number; attempt?: string }>(
+            req,
+            'architecture-challenge',
+        );
+        if (!parsed.ok) return parsed.response;
+
+        const projectId = requirePositiveInt(parsed.data.projectId);
+        const attempt = requireString(parsed.data.attempt);
+        if (!projectId || !attempt) {
             return NextResponse.json({ error: 'Project id and attempt description are required.' }, { status: 400 });
         }
 
@@ -22,14 +32,9 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'Project or diagram not found.' }, { status: 404 });
         }
 
-        if (!process.env.GROQ_API_KEY) {
-            return NextResponse.json(
-                {
-                    feedback:
-                        'Challenge mode is offline. Compare your attempt against the ASCII Boxes 1→6 and check whether your components and arrows line up with the documented flow.',
-                },
-                { status: 200 },
-            );
+        const groq = getGroqClient();
+        if (!groq) {
+            return NextResponse.json({ feedback: OFFLINE_FALLBACK }, { status: 200 });
         }
 
         const prompt = `You are reviewing a candidate's attempt at reconstructing the architecture for "${project.title}".
@@ -68,9 +73,7 @@ Keep it under 220 words, use Markdown paragraphs, and reference Box numbers expl
 
         return NextResponse.json({ feedback });
     } catch (error) {
-        console.error('architecture-challenge error', error);
+        describeRouteError('architecture-challenge', error);
         return NextResponse.json({ error: 'Failed to review challenge attempt.' }, { status: 500 });
     }
 }
-
-

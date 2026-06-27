@@ -12,18 +12,48 @@ import {
     Send,
     Calendar,
     Download,
+    Github,
+    Linkedin,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 import SectionTitle from '@/components/SectionTitle';
-import { GENERAL_INFO } from '@/lib/data';
+import { GENERAL_INFO, SOCIAL_LINKS } from '@/lib/data';
 import ContactForm from '@/app/_components/ContactForm';
 import { toast } from '@/lib/toast';
 import MagneticButton from '@/components/hero/MagneticButton';
+import { LeetcodeIcon, ScholarIcon } from '@/components/icons/CustomIcons';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const RESUME_COUNTER_KEY = 'resume:download-count';
+
+// Build-time stamp for the "Last deployed" line. Falls back to today's date
+// at build time so the footer never renders a blank.
+const LAST_DEPLOYED_ISO =
+    process.env.NEXT_PUBLIC_LAST_DEPLOYED ?? new Date().toISOString();
+const LAST_DEPLOYED_LABEL = new Date(LAST_DEPLOYED_ISO).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+});
+
+const SocialIcon = ({ name }: { name: string }) => {
+    switch (name.toLowerCase()) {
+        case 'github':
+            return <Github size={14} aria-hidden="true" />;
+        case 'linkedin':
+            return <Linkedin size={14} aria-hidden="true" />;
+        case 'leetcode':
+            return <LeetcodeIcon size={14} aria-hidden="true" />;
+        case 'scholar':
+            return <ScholarIcon size={14} aria-hidden="true" />;
+        case 'email':
+            return <Mail size={14} aria-hidden="true" />;
+        default:
+            return <ArrowUpRight size={14} aria-hidden="true" />;
+    }
+};
 
 const Footer = () => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -262,30 +292,104 @@ const Footer = () => {
                         </div>
                     </div>
 
-                    {/* Footer Bottom */}
-                    <div className="border-t border-white/10 pt-8 space-y-4 contact-item">
-                        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
-                            <div className="flex flex-col gap-1">
-                                <p className="text-muted-foreground">
-                                    &copy; 2025 Dhinesh Ponnarasan
+                    {/* Site Map + Social Row + Build Stamp */}
+                    <div className="border-t border-white/10 pt-8 contact-item">
+                        <div className="grid gap-8 md:grid-cols-3">
+                            <nav aria-label="Footer site map" className="space-y-3">
+                                <p className="text-[11px] font-mono uppercase tracking-[0.3em] text-white/40">
+                                    Site
                                 </p>
-                                <p className="text-muted-foreground text-xs">
-                                    All rights reserved
+                                <ul className="space-y-1.5 text-sm">
+                                    {[
+                                        { href: '/', label: 'Home' },
+                                        { href: '/#selected-projects', label: 'Projects' },
+                                        { href: '/#open-source', label: 'Open Source' },
+                                        { href: '/architecture', label: 'Architecture' },
+                                        { href: '/blog', label: 'Blog' },
+                                        { href: '/uses', label: 'Uses' },
+                                    ].map((link) => (
+                                        <li key={link.href}>
+                                            <a
+                                                href={link.href}
+                                                className="text-white/70 transition-colors hover:text-primary"
+                                            >
+                                                {link.label}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </nav>
+
+                            <div className="space-y-3">
+                                <p className="text-[11px] font-mono uppercase tracking-[0.3em] text-white/40">
+                                    Socials
+                                </p>
+                                <ul className="flex flex-wrap gap-2">
+                                    {[
+                                        ...SOCIAL_LINKS,
+                                        { name: 'email', url: `mailto:${GENERAL_INFO.email}` },
+                                    ].map((link) => (
+                                        <li key={link.name}>
+                                            <a
+                                                href={link.url}
+                                                target={link.url.startsWith('http') ? '_blank' : undefined}
+                                                rel={link.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                                aria-label={link.name}
+                                                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-white/70 transition-colors hover:border-primary/50 hover:text-primary"
+                                            >
+                                                <SocialIcon name={link.name} />
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                                <p className="text-xs text-white/50">
+                                    Resume + 30-min call CTAs are just above this footer.
                                 </p>
                             </div>
-                            <div className="flex flex-col items-end gap-2 text-right">
-                                <a
-                                    href="https://github.com/DhineshPonnarasan/portfolio-2.0"
-                                    target="_blank"
-                                    className="hover:text-primary transition-colors text-sm"
-                                >
-                                    Built with love, shipped with intent
-                                </a>
-                                <p className="text-xs text-muted-foreground/70">
-                                    Crafted with precision • Designed for impact • Engineered to inspire
+
+                            <div className="space-y-2 text-xs text-white/50 md:text-right">
+                                <p className="text-[11px] font-mono uppercase tracking-[0.3em] text-white/40">
+                                    Build
+                                </p>
+                                <p>
+                                    Built with{' '}
+                                    <span className="text-white/80">Next.js</span> +{' '}
+                                    <span aria-label="love" role="img">
+                                        ❤️
+                                    </span>
+                                    , typed in TypeScript, themed in dark mode.
+                                </p>
+                                <p>
+                                    Last deployed:{' '}
+                                    <time
+                                        dateTime={LAST_DEPLOYED_ISO}
+                                        className="font-mono text-white/70"
+                                    >
+                                        {LAST_DEPLOYED_LABEL}
+                                    </time>
+                                </p>
+                                <p>
+                                    Source on{' '}
+                                    <a
+                                        href="https://github.com/DhineshPonnarasan/portfolio-2.0"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-primary hover:underline"
+                                    >
+                                        GitHub
+                                    </a>
+                                    .
                                 </p>
                             </div>
                         </div>
+                    </div>
+
+                    {/* Footer Bottom */}
+                    <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-2 text-xs text-white/50 contact-item">
+                        <p>
+                            &copy; {new Date().getFullYear()} Dhinesh Ponnarasan. All rights reserved.
+                        </p>
+                        <p>Crafted with precision · Designed for impact · Engineered to inspire.</p>
                     </div>
                 </div>
             </div>

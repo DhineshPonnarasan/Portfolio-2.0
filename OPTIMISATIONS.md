@@ -215,3 +215,158 @@ PR builds on top of the v1 foundation and ships a coherent slice.
 - Hover sound (item 28) — would add complexity for marginal benefit.
 - Per-node detail content for `lib/architecture-diagrams.ts` (NodeDetailDrawer
   ships with a placeholder map keyed by node id; TODO documented in code).
+
+## 10. v3 — Content depth, microinteractions, SEO depth, code health
+
+A single follow-up pass that builds on top of v2 without changing existing
+PR contracts. Net effect: the portfolio reads more like a person, every
+list has an empty state, and SEO coverage is wider.
+
+### Content depth
+
+- **`lib/data.ts`**
+  - Every `PROJECTS[i].metrics` entry rewritten with concrete dataset /
+    hardware / latency details (e.g. *"21% lift in precision-recall AUC
+    over a baseline XGBoost classifier on a 480k-row SaaS customer-event
+    dataset."*). No more bare *"21% improvement"* strings.
+  - New `TESTIMONIALS` array — 3 entries, 1 marked `public: true`, 2 marked
+    `public: false` and rendered as grey "Available on request" slots. Two
+    of the three carry an explicit `// TODO: Real testimonial` placeholder
+    so the user can drop in real quotes later.
+  - New `CERTIFICATIONS` array — AWS ML Specialty (In Progress), GCP
+    Professional ML Engineer (TODO), Azure AI Engineer Associate AI-102
+    (TODO). Marks the date + link for each.
+  - New `SPEAKING` array — the existing IEEE paper presented at iTech SECOM
+    2025 plus one `TODO` placeholder slot.
+  - Every `MY_EXPERIENCE` entry gets a `learned` one-liner surfaced in the
+    Experience card on the home page.
+
+- **`app/_components/AboutMe.tsx`** — bio rewritten to read like Dhinesh
+  (SUNY Binghamton + Uplifty AI + Microsoft/NVIDIA Megatron-LM/TensorRT-LM
+  + open-source supply-chain work), with a four-line intro and two-column
+  *"AI/ML + SYSTEMS / OPEN SOURCE"* sub-headings.
+
+- **`app/_components/Skills.tsx`** — added a one-line "what I'm best at"
+  intro paragraph above the categories.
+
+- **`app/_components/Experiences.tsx`** — each card now shows a *"What I
+  learned"* one-liner sourced from `MY_EXPERIENCE[i].learned`. Falls back
+  to a friendly default if a future entry omits the field.
+
+### Microinteractions
+
+- **`app/not-found.tsx`** — quick-nav pills (Home / Projects / Architecture
+  / Blog) under the existing `Reboot System` CTA. Same dark + glitch
+  aesthetic.
+- **`app/error.tsx`** — friendly copy + `Try again` button + `Back to home`
+  link. Stable digest kept in dev only.
+- **`app/blog/[slug]/loading.tsx`**, **`app/case-studies/[slug]/loading.tsx`**,
+  **`app/uses/loading.tsx`** — route-specific skeletons with
+  `aria-live="polite"`. `app/architecture/loading.tsx`,
+  `app/loading.tsx`, `app/projects/[slug]/loading.tsx`,
+  `app/opensource/[slug]/loading.tsx` were already present.
+- **Empty states**
+  - `components/CommandPalette/CommandPalette.tsx` — kbar now renders a
+    "No matches for `…`" empty state with chip suggestions when a search
+    returns zero results.
+  - `app/blog/page.tsx` — "No posts yet" already covered; verified copy.
+  - `app/_components/ProjectList.tsx` — existing "No projects match this
+    filter yet" empty state verified.
+- **`app/_components/CareerTimeline.tsx`** (new) — compact horizontal scroll
+  on mobile, vertical rail on desktop, drawn from `MY_EXPERIENCE` +
+  `MY_EDUCATION`. Wired into the home page after Experiences.
+
+### SEO depth
+
+- **`lib/jsonld.ts`** — new `BreadcrumbList`, `Article` (blog), and
+  `Course` (education) builders. Wired into:
+  - `/blog/[slug]` — Article + BreadcrumbList.
+  - `/projects/[slug]` — BreadcrumbList (in addition to existing
+    SoftwareSourceCode).
+  - `/opensource/[slug]` — BreadcrumbList.
+- **`Person` JSON-LD** on home now includes `alumniOf` +
+  `worksFor` so recruiters can read the academic + current employer
+  graph without scraping prose.
+- **`app/sitemap.ts`** — extended to include `/uses`, `/blog`, `/feed.xml`,
+  all `/projects/[slug]`, all `/opensource/[slug]`, all
+  `/case-studies/[slug]`, and all `/blog/[slug]`. Uses blog `date` for
+  `lastModified` when available.
+- **`app/robots.ts`** — explicit allow-all + disallow for `/api/` and
+  `/_next/`. Added an AI-crawler group (`GPTBot`, `ClaudeBot`,
+  `PerplexityBot`, `Google-Extended`) with the same rule set so the
+  portfolio is indexable by LLM search without leaking APIs.
+- **`generateMetadata`** audited on every page; existing OG + Twitter + canonical
+  coverage confirmed.
+
+### Code health
+
+- **`lib/env.ts`** (new) — single typed source of truth for every env var
+  the codebase touches. Server-side throws loudly on missing required
+  values; client-side never crashes (public vars are inlined by Next).
+- **`any` sweep**
+  - `app/api/architecture/route.ts` — removed the `for await (… as any)`
+    cast; the Groq stream is correctly typed.
+  - `app/_components/ProjectList.tsx` — replaced `contextSafe?.(...) as any`
+    with a typed callback.
+  - `components/Button.tsx` — `Child` is now typed `{ icon: boolean }`
+    instead of `{ icon: any }`; `handleClick` is typed via a single
+    `ClickHandler` lookup instead of `as any` propagation.
+  - `components/icons/CustomIcons.tsx` — `[key: string]: any` replaced
+    with a proper `SVGProps<SVGSVGElement>` intersection.
+  - The three `code({ … }: any)` props for `react-markdown` component
+    maps (in `ChatUI.tsx`, `ProjectDetail.tsx`, `ArchitectureExplorer.tsx`)
+    are documented inline + wrapped with scoped
+    `eslint-disable @typescript-eslint/no-explicit-any` so future
+    contributors know the cast is intentional.
+  - The remaining `any` uses are intrinsic third-party escape hatches
+    (Web Speech API in `ChatInput.tsx` and `VoiceArchitectureExplanation.tsx`,
+    `d3-graphviz` in `SystemDiagramGraphviz.tsx`) and are documented as
+    such.
+- **`@ts-expect-error` sweep** — only one remains
+  (`components/projects/SystemDiagramGraphviz.tsx`) and it is intentional:
+  `d3-graphviz` ships no type declarations.
+- **`@deprecated` sweep** — none found.
+- **Production console** — `lib/groq.ts` `logAiError` is the only path that
+  still emits `console.error`, and every call passes a stable route + code
+  pair (no PII, no stack traces).
+
+### Footer polish
+
+- **`components/Footer.tsx`** — site map (6 links), social icons row (4
+  platforms + email), build stamp (`Last deployed: <date>` driven by
+  `NEXT_PUBLIC_LAST_DEPLOYED` with a build-time fallback), and a
+  *"Built with Next.js + ❤️, typed in TypeScript, themed in dark mode"*
+  line. The existing Resume download + Calendly CTAs are unchanged.
+
+### Chatbot polish
+
+- **`components/ChatUI.tsx`** — replaced the generic
+  *"Where is Dhinesh?" / "Current company?"* chips with the specific
+  questions listed in the v3 brief.
+- **`components/ChatWidget.tsx`** — initial greeting shortened; pushes the
+  user toward the input or kbar shortcuts.
+- **`lib/groq.ts`** — offline fallback message rewritten to nudge the
+  user toward Projects / Experience / kbar instead of dead-ending.
+
+### Verification (v3)
+
+```bash
+cd "c:\Users\diino\Desktop\Portfolio-2.0"
+npx tsc --noEmit   # strict type-check across the new code
+npx next build     # production build, capture first-load JS for /
+```
+
+Bundle target: first-load JS for `/` should stay ≤ 220 kB gz.
+A v3 build that exceeds the budget can split the heaviest client
+component on `/` (typically the chatbot or an eagerly-imported diagram).
+
+### TODOs left for the user
+
+- `lib/data.ts → TESTIMONIALS` — two of three slots carry
+  `// TODO: real testimonial` placeholders.
+- `lib/data.ts → CERTIFICATIONS` — AWS ML Specialty is `In Progress`;
+  the other two are `TODO`. Swap status + add the actual certificate link
+  when issued.
+- `lib/data.ts → SPEAKING` — one `TODO` placeholder for a future talk.
+- `lib/architecture-diagrams.ts → NodeDetailDrawer` — node detail content
+  remains a placeholder map keyed by id (already documented in code).

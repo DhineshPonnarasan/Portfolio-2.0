@@ -4,7 +4,7 @@ import { Variant } from '@/types';
 import { cn } from '@/lib/utils';
 import { useCyberSounds } from '@/hooks/useCyberSounds';
 
-const Child = ({ icon }: any) => (
+const Child = ({ icon }: { icon: boolean }) => (
     <span className="flex items-center justify-center gap-3">
         <svg
             className="animate-spin h-5 w-5 text-white"
@@ -81,9 +81,13 @@ const Button = ({
         if (!loading) playHover();
     };
 
-    const handleClick = (e: React.MouseEvent<any>) => {
+    // The component is either a Link or a button — both expose `onClick` with a
+    // compatible signature, so the typed call below is safe.
+    type ClickHandler = ((_event: React.MouseEvent) => void) | undefined;
+    const onClickProp = (rest as { onClick?: ClickHandler }).onClick;
+    const handleClick: React.MouseEventHandler = (event) => {
         if (!loading) playClick();
-        if (rest.onClick) (rest as any).onClick(e);
+        onClickProp?.(event);
     };
 
     if (as === 'link') {

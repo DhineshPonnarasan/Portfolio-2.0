@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Groq } from 'groq-sdk';
 import { PROJECTS } from '@/lib/data';
 import { ARCHITECTURE_DIAGRAMS } from '@/lib/architecture-diagrams';
-
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+import { getGroqClient } from '@/lib/groq';
+import { applyRateLimit } from '@/lib/rateLimit';
+import { buildConceptualArchitectureExplanation } from '@/lib/architecture';
+import { readJsonBody, requirePositiveInt, requireString, describeRouteError } from '@/lib/api-helpers';
 
 const SYSTEM_PROMPT = `You are a senior systems architect explaining ML and data architectures.
 
@@ -21,16 +20,18 @@ If you don't know something, say "This detail isn't documented in the architectu
 
 export async function POST(req: NextRequest) {
   try {
-    if (!process.env.GROQ_API_KEY) {
-      return NextResponse.json({ error: 'Service temporarily unavailable' }, { status: 500 });
-    }
+    const limited = applyRateLimit(req, { route: 'architecture-intel', limit: 10, windowMs: 60_000 });
+    if (limited) return limited;
 
-    const { projectId, question }: {
-      projectId?: number;
-      question?: string;
-    } = await req.json();
+    const parsed = await readJsonBody<{ projectId?: number; question?: string }>(
+      req,
+      'architecture-intel',
+    );
+    if (!parsed.ok) return parsed.response;
 
-    if (!projectId || !question?.trim()) {
+    const projectId = requirePositiveInt(parsed.data.projectId);
+    const question = requireString(parsed.data.question);
+    if (!projectId || !question) {
       return NextResponse.json({ error: 'Project id and question are required.' }, { status: 400 });
     }
 
@@ -42,6 +43,14 @@ export async function POST(req: NextRequest) {
     }
 
     const techSummary = project.techStack?.join(', ') || project.techAndTechniques?.join(', ') || 'Not specified';
+
+    const groq = getGroqClient();
+    if (!groq) {
+      return NextResponse.json(
+        { answer: buildConceptualArchitectureExplanation(project) },
+        { status: 200 },
+      );
+    }
 
     const userPrompt = `Project: ${project.title}
 Tech: ${techSummary}
@@ -71,7 +80,7 @@ Respond with bullet points only. Reference Box numbers explicitly.`;
 
     return NextResponse.json({ answer });
   } catch (error) {
-    console.error('architecture-intel error', error);
+    describeRouteError('architecture-intel', error);
     return NextResponse.json({ error: 'Unable to process request. Please try again.' }, { status: 500 });
   }
 }

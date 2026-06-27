@@ -41,15 +41,15 @@ interface ChatUIProps {
 }
 
 const SUGGESTED_QUESTIONS = [
-    "Where is Dhinesh?",
-    "Current company?",
-    "Top 5 skills?",
-    "Education background?",
-    "Work experience?",
-    "Show his projects",
-    "Contact info?",
-    "Recent publications?",
-    "Open source contributions?",
+    "What projects has Dhinesh worked on?",
+    "Tell me about the customer churn project.",
+    "What are his open-source contributions?",
+    "How do I get in touch with him?",
+    "What does he do at Uplifty AI?",
+    "Where is Dhinesh based?",
+    "What is his research focus?",
+    "What is his tech stack?",
+    "Tell me about his publications.",
 ];
 
 const COLLAPSE_LINE_COUNT = 12; // Above this, assistant messages get a "show more" toggle.
@@ -443,6 +443,8 @@ const ChatUI = ({
                                                 <ReactMarkdown
                                                     remarkPlugins={[remarkGfm]}
                                                     components={{
+                                                        // See ProjectDetail for the rationale on the `any` cast.
+                                                        /* eslint-disable @typescript-eslint/no-explicit-any */
                                                         code({ node: _node, inline, className, children, ...props }: any) {
                                                             const match = /language-(\w+)/.exec(className || '');
                                                             if (match && match[1] === 'mermaid') {
@@ -508,6 +510,7 @@ const ChatUI = ({
                                                         p: ({ children }) => (
                                                             <p className="my-1.5 leading-relaxed">{children}</p>
                                                         ),
+                                                        /* eslint-enable @typescript-eslint/no-explicit-any */
                                                     }}
                                                 >
                                                     {visibleContent}

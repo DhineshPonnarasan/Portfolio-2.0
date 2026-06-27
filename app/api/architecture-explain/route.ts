@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Groq } from 'groq-sdk';
 import { PROJECTS } from '@/lib/data';
 import { ARCHITECTURE_DIAGRAMS } from '@/lib/architecture-diagrams';
-
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+import { getGroqClient } from '@/lib/groq';
+import { applyRateLimit } from '@/lib/rateLimit';
+import { buildConceptualArchitectureExplanation } from '@/lib/architecture';
+import { readJsonBody, requirePositiveInt, describeRouteError } from '@/lib/api-helpers';
 
 const SYSTEM_PROMPT = `You are a senior systems architect who explains designs in one confident voice.
 - Describe the flow strictly from Box 1 → Box 6.
@@ -16,12 +15,13 @@ const SYSTEM_PROMPT = `You are a senior systems architect who explains designs i
 
 export async function POST(req: NextRequest) {
   try {
-    if (!process.env.GROQ_API_KEY) {
-      return NextResponse.json({ error: 'GROQ API key missing' }, { status: 500 });
-    }
+    const limited = applyRateLimit(req, { route: 'architecture-explain', limit: 10, windowMs: 60_000 });
+    if (limited) return limited;
 
-    const { projectId }: { projectId?: number } = await req.json();
+    const parsed = await readJsonBody<{ projectId?: number }>(req, 'architecture-explain');
+    if (!parsed.ok) return parsed.response;
 
+    const projectId = requirePositiveInt(parsed.data.projectId);
     if (!projectId) {
       return NextResponse.json({ error: 'Project id is required.' }, { status: 400 });
     }
@@ -31,6 +31,14 @@ export async function POST(req: NextRequest) {
 
     if (!project || !diagram) {
       return NextResponse.json({ error: 'Project or ASCII diagram not found.' }, { status: 404 });
+    }
+
+    const groq = getGroqClient();
+    if (!groq) {
+      return NextResponse.json(
+        { explanation: buildConceptualArchitectureExplanation(project) },
+        { status: 200 },
+      );
     }
 
     const description = Array.isArray(project.description)
@@ -62,7 +70,7 @@ Generate a single explanation that narrates how work moves from Box 1 to Box 6, 
 
     return NextResponse.json({ explanation });
   } catch (error) {
-    console.error('architecture-explain error', error);
+    describeRouteError('architecture-explain', error);
     return NextResponse.json({ error: 'Failed to explain architecture.' }, { status: 500 });
   }
 }

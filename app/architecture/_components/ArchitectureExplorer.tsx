@@ -122,7 +122,11 @@ const ArchitectureExplorer = ({ projects }: Props) => {
 
             if (!response.ok || !response.body) {
                 const data = await response.json().catch(() => ({}));
-                throw new Error((data as any).error || 'Unable to generate architecture right now.');
+                const errorMessage =
+                    typeof data === 'object' && data !== null && 'error' in data
+                        ? String((data as { error: unknown }).error)
+                        : 'Unable to generate architecture right now.';
+                throw new Error(errorMessage);
             }
 
             const reader = response.body.getReader();
@@ -252,6 +256,8 @@ const ArchitectureExplorer = ({ projects }: Props) => {
                                     <ReactMarkdown
                                         remarkPlugins={[remarkGfm]}
                                         components={{
+                                            // See ProjectDetail for the rationale on the `any` cast.
+                                            /* eslint-disable @typescript-eslint/no-explicit-any */
                                             code({ node: _node, inline, className, children, ...props }: any) {
                                                 const match = /language-(\w+)/.exec(className || '');
                                                 if (match && match[1] === 'mermaid') {
@@ -274,6 +280,7 @@ const ArchitectureExplorer = ({ projects }: Props) => {
                                                     </code>
                                                 );
                                             },
+                                            /* eslint-enable @typescript-eslint/no-explicit-any */
                                         }}
                                     >
                                         {projectState.explanation}

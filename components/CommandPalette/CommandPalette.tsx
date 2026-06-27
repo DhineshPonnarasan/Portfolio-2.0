@@ -122,48 +122,78 @@ async function copyToClipboard(text: string, label: string) {
     }
 }
 
+// `kbar` exposes `query.setSearch(...)` but not a synchronous getter; we track
+// the current query string locally via a small pub-sub store.
+import { useKbarQuery, setQuery as setKbarQuery } from './kbar-search-store';
+
 const StyledSearch = () => (
     <KBarSearch
         className="w-full bg-transparent px-5 py-4 text-base text-white outline-none placeholder:text-white/40"
         placeholder="Search sections, projects, OSS, actions…"
+        onChange={(event) => setKbarQuery((event.target as HTMLInputElement).value)}
     />
 );
 
 const StyledResults = () => {
     const { results } = useMatches();
+    const query = useKbarQuery();
+    const isEmpty = results.length === 0;
 
     return (
-        <KBarResults
-            items={results}
-            onRender={({ item, active }) =>
-                typeof item === 'string' ? (
-                    <div className="px-5 pb-1 pt-4 text-[10px] uppercase tracking-[0.3em] text-white/40">
-                        {item}
-                    </div>
-                ) : (
-                    <div
-                        className={cn(
-                            'flex items-center gap-3 px-5 py-2.5 text-sm transition-colors',
-                            active ? 'bg-primary/15 text-primary' : 'text-white/85',
-                        )}
-                    >
-                        <span className="flex-1 truncate">{item.name}</span>
-                        {item.shortcut?.length ? (
-                            <span className="flex gap-1 text-[10px] text-white/40 font-mono">
-                                {item.shortcut.map((s) => (
-                                    <kbd
-                                        key={s}
-                                        className="rounded border border-white/15 bg-white/[0.04] px-1.5 py-0.5"
-                                    >
-                                        {s}
-                                    </kbd>
-                                ))}
-                            </span>
-                        ) : null}
-                    </div>
-                )
-            }
-        />
+        <>
+            <KBarResults
+                items={results}
+                onRender={({ item, active }) =>
+                    typeof item === 'string' ? (
+                        <div className="px-5 pb-1 pt-4 text-[10px] uppercase tracking-[0.3em] text-white/40">
+                            {item}
+                        </div>
+                    ) : (
+                        <div
+                            className={cn(
+                                'flex items-center gap-3 px-5 py-2.5 text-sm transition-colors',
+                                active ? 'bg-primary/15 text-primary' : 'text-white/85',
+                            )}
+                        >
+                            <span className="flex-1 truncate">{item.name}</span>
+                            {item.shortcut?.length ? (
+                                <span className="flex gap-1 text-[10px] text-white/40 font-mono">
+                                    {item.shortcut.map((s) => (
+                                        <kbd
+                                            key={s}
+                                            className="rounded border border-white/15 bg-white/[0.04] px-1.5 py-0.5"
+                                        >
+                                            {s}
+                                        </kbd>
+                                    ))}
+                                </span>
+                            ) : null}
+                        </div>
+                    )
+                }
+            />
+            {isEmpty && query.trim().length > 0 && (
+                <div
+                    className="flex flex-col items-center gap-2 px-6 py-10 text-center"
+                    role="status"
+                    aria-live="polite"
+                >
+                    <p className="text-sm font-mono uppercase tracking-[0.3em] text-white/40">
+                        No matches
+                    </p>
+                    <p className="text-sm text-white/70">
+                        Nothing matches{' '}
+                        <span className="text-primary">&ldquo;{query}&rdquo;</span>.
+                        Try{' '}
+                        <span className="text-primary">
+                            project, architecture, github, contact
+                        </span>
+                        , or press <kbd className="rounded border border-white/15 bg-white/[0.04] px-1.5 py-0.5 text-xs">esc</kbd>{' '}
+                        to close.
+                    </p>
+                </div>
+            )}
+        </>
     );
 };
 

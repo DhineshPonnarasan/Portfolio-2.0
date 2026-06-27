@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useReducedMotion } from '@/lib/motion-prefs';
 
 export type PopupTheme = 'professional' | 'modern' | 'vibrant';
 export type PopupPosition = 'center' | 'bottom-right' | 'top';
@@ -46,6 +47,8 @@ const WelcomePopup = ({
     theme = 'modern',
     position = 'bottom-right'
 }: WelcomePopupProps) => {
+    const reducedMotion = useReducedMotion();
+
     // Timer Logic
     useEffect(() => {
         if (!isVisible) return;
@@ -54,7 +57,16 @@ const WelcomePopup = ({
             onClose();
         }, duration);
 
-        return () => clearTimeout(timer);
+        // Esc to dismiss — non-blocking accessibility win.
+        const handleKey = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') onClose();
+        };
+        window.addEventListener('keydown', handleKey);
+
+        return () => {
+            clearTimeout(timer);
+            window.removeEventListener('keydown', handleKey);
+        };
     }, [isVisible, duration, onClose]);
 
     // Theme Styles configuration
@@ -65,9 +77,11 @@ const WelcomePopup = ({
     };
 
     // Position Styles configuration
+    // `bottom-right` adapts: top-right on mobile (avoids chat button), bottom-right on desktop.
     const positionStyles = {
         center: "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
-        "bottom-right": "bottom-24 right-6 md:right-10 origin-bottom-right",
+        "bottom-right":
+            "top-20 right-4 max-w-[calc(100vw-2rem)] md:bottom-24 md:top-auto md:right-10 md:max-w-[400px] origin-top-right md:origin-bottom-right",
         top: "top-6 left-1/2 -translate-x-1/2"
     };
 
@@ -75,9 +89,9 @@ const WelcomePopup = ({
         <AnimatePresence>
             {isVisible && (
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                    initial={reducedMotion ? false : { opacity: 0, scale: 0.9, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                    exit={reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.9, y: 20 }}
                     transition={{ duration: 0.3, ease: "easeOut" }}
                     className={cn(
                         "fixed z-[100] w-[calc(100vw-40px)] md:w-[400px] rounded-lg p-5 shadow-xl backdrop-blur-sm overflow-hidden",

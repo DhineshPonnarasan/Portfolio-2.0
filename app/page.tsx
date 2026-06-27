@@ -12,6 +12,7 @@ import { buildPersonJsonLd } from '@/lib/jsonld';
 // still get chunk-splitting and lazy hydration for these heavier components.
 const Education = dynamic(() => import('./_components/Education'));
 const Experiences = dynamic(() => import('./_components/Experiences'));
+const CareerTimeline = dynamic(() => import('./_components/CareerTimeline'));
 const Skills = dynamic(() => import('./_components/Skills'));
 const ProjectList = dynamic(() => import('./_components/ProjectList'));
 const Publications = dynamic(() => import('./_components/Publications'));
@@ -30,6 +31,7 @@ export default function Home() {
         { key: 'about', node: <AboutMe />, priority: true },
         { key: 'education', node: <Education /> },
         { key: 'experience', node: <Experiences /> },
+        { key: 'timeline', node: <CareerTimeline /> },
         { key: 'projects', node: <ProjectList /> },
         { key: 'skills', node: <Skills /> },
         { key: 'oss', node: <OpenSource /> },

@@ -40,7 +40,9 @@ const SystemDiagram = ({ diagram, title, className = "" }: SystemDiagramProps) =
         // Render the diagram
         await mermaid.contentLoaded();
       } catch (error) {
-        console.error('Mermaid diagram render error:', error);
+        if (process.env.NODE_ENV !== 'production') {
+          console.error('Mermaid diagram render error:', error);
+        }
         if (containerRef.current) {
           containerRef.current.innerHTML = `<div class="text-destructive p-4">Failed to render diagram</div>`;
         }

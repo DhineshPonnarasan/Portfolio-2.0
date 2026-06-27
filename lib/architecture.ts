@@ -1,24 +1,8 @@
 
-import { Groq } from 'groq-sdk';
 import { PROJECTS, MY_EXPERIENCE, MY_PUBLICATIONS, MY_EDUCATION, GENERAL_INFO } from '@/lib/data';
 import { ARCHITECTURE_DIAGRAMS } from '@/lib/architecture-diagrams';
 import { IProject } from '@/types';
-
-let groqClient: Groq | null = null;
-
-const getGroqClient = () => {
-    if (groqClient) return groqClient;
-
-    if (typeof process === 'undefined' || !process.env.GROQ_API_KEY) {
-        return null;
-    }
-
-    groqClient = new Groq({
-        apiKey: process.env.GROQ_API_KEY,
-    });
-
-    return groqClient;
-};
+import { getGroqClient, logAiError } from '@/lib/groq';
 
 export type ArchitectureMode = 'overview' | 'data' | 'deployment';
 
@@ -89,7 +73,6 @@ export async function generateArchitectureExplanation(
     const client = getGroqClient();
 
     if (!client) {
-        console.warn('Groq API unavailable, using fallback architecture explanation');
         return buildConceptualArchitectureExplanation(project);
     }
 
@@ -111,8 +94,8 @@ export async function generateArchitectureExplanation(
         });
 
         return chatCompletion.choices[0]?.message?.content || buildConceptualArchitectureExplanation(project);
-    } catch (error) {
-        console.error('Error generating architecture:', error);
+    } catch {
+        logAiError('architecture', 'generate_failed');
         return buildConceptualArchitectureExplanation(project);
     }
 }

@@ -1,5 +1,4 @@
-import { NextRequest } from 'next/server';
-import { Groq } from 'groq-sdk';
+import { NextRequest, NextResponse } from 'next/server';
 import { ARCHITECTURE_DIAGRAMS } from '@/lib/architecture-diagrams';
 import {
     ArchitectureMode,
@@ -8,19 +7,9 @@ import {
     generateArchitecturePrompt,
     generateArchitectureExplanation,
 } from '@/lib/architecture';
-
-let groqClient: Groq | null = null;
-
-const getGroqClient = () => {
-    if (groqClient) return groqClient;
-    if (!process.env.GROQ_API_KEY) {
-        return null;
-    }
-    groqClient = new Groq({
-        apiKey: process.env.GROQ_API_KEY,
-    });
-    return groqClient;
-};
+import { getGroqClient, logAiError } from '@/lib/groq';
+import { applyRateLimit } from '@/lib/rateLimit';
+import { readJsonBody, requireString, describeRouteError } from '@/lib/api-helpers';
 
 function toMode(value: string | undefined): ArchitectureMode {
     if (value === 'data' || value === 'deployment') return value;
@@ -29,25 +18,23 @@ function toMode(value: string | undefined): ArchitectureMode {
 
 export async function POST(req: NextRequest) {
     try {
-        const { slug, mode: rawMode }: { slug?: string; mode?: ArchitectureMode | string } = await req.json();
+        const limited = applyRateLimit(req, { route: 'architecture', limit: 10, windowMs: 60_000 });
+        if (limited) return limited;
 
+        const parsed = await readJsonBody<{ slug?: string; mode?: string }>(req, 'architecture');
+        if (!parsed.ok) return parsed.response;
+
+        const slug = requireString(parsed.data.slug);
         if (!slug) {
-            return new Response(JSON.stringify({ error: 'Project slug is required.' }), {
-                status: 400,
-                headers: { 'Content-Type': 'application/json' },
-            });
+            return NextResponse.json({ error: 'Project slug is required.' }, { status: 400 });
         }
 
         const project = findProject(slug);
-
         if (!project) {
-            return new Response(JSON.stringify({ error: 'Project not found.' }), {
-                status: 404,
-                headers: { 'Content-Type': 'application/json' },
-            });
+            return NextResponse.json({ error: 'Project not found.' }, { status: 404 });
         }
 
-        const mode = toMode(typeof rawMode === 'string' ? rawMode : 'overview');
+        const mode = toMode(requireString(parsed.data.mode) ?? 'overview');
         const diagram = ARCHITECTURE_DIAGRAMS[project.id];
         const client = getGroqClient();
 
@@ -94,7 +81,7 @@ export async function POST(req: NextRequest) {
         const stream = new ReadableStream({
             async start(controller) {
                 try {
-                    for await (const chunk of completion as any) {
+                    for await (const chunk of completion) {
                         if (chunk.choices?.[0]?.finish_reason === 'stop') {
                             break;
                         }
@@ -103,9 +90,8 @@ export async function POST(req: NextRequest) {
                             controller.enqueue(encoder.encode(content));
                         }
                     }
-                } catch (error) {
-                    console.error('architecture stream error', error);
-                    // Send fallback explanation instead of error
+                } catch {
+                    logAiError('architecture', 'stream_failed');
                     const fallback = buildConceptualArchitectureExplanation(project);
                     controller.enqueue(encoder.encode(fallback));
                 } finally {
@@ -122,12 +108,7 @@ export async function POST(req: NextRequest) {
             },
         });
     } catch (error) {
-        console.error('architecture route error', error);
-        return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
-            status: 500,
-            headers: { 'Content-Type': 'application/json' },
-        });
+        describeRouteError('architecture', error);
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }
-
-

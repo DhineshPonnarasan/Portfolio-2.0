@@ -7,7 +7,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
 import { ArrowUpRight, Filter, X } from 'lucide-react';
 import Image from 'next/image';
-import React, { useRef, useState, MouseEvent, useMemo } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 import Project from './Project';
 import MetricCounter from '@/components/projects/MetricCounter';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -61,7 +61,7 @@ const ProjectList = () => {
             if (reducedMotion) return;
 
             let frame: number | null = null;
-            let latestEvent: MouseEvent | null = null;
+            let latestEvent: globalThis.MouseEvent | null = null;
 
             const flush = () => {
                 frame = null;
@@ -86,11 +86,17 @@ const ProjectList = () => {
                 });
             };
 
-            const handleMouseMove = contextSafe?.((e: MouseEvent) => {
-                latestEvent = e;
-                if (frame !== null) return;
-                frame = requestAnimationFrame(flush);
-            }) as any;
+            const handleMouseMove = (contextSafe
+                ? contextSafe((e: globalThis.MouseEvent) => {
+                      latestEvent = e;
+                      if (frame !== null) return;
+                      frame = requestAnimationFrame(flush);
+                  })
+                : (e: globalThis.MouseEvent) => {
+                      latestEvent = e;
+                      if (frame !== null) return;
+                      frame = requestAnimationFrame(flush);
+                  }) as unknown as (_e: globalThis.MouseEvent) => void;
 
             window.addEventListener('mousemove', handleMouseMove, { passive: true });
 

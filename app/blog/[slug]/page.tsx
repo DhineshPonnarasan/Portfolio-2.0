@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { getAllPosts, getPost } from '@/lib/blog';
 import { SITE_URL } from '@/lib/site';
+import { buildBlogPostJsonLd, buildBreadcrumbJsonLd } from '@/lib/jsonld';
 
 export const generateStaticParams = async () => {
     const posts = await getAllPosts();
@@ -41,10 +42,23 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
     const { slug } = await params;
     const post = await getPost(slug);
     if (!post) return notFound();
+    const pageUrl = `${SITE_URL}/blog/${post.slug}`;
 
     return (
         <main className="pt-24 pb-16 min-h-screen">
             <article className="container mx-auto px-4 max-w-3xl">
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: buildBreadcrumbJsonLd([
+                        { name: 'Home', url: SITE_URL },
+                        { name: 'Blog', url: `${SITE_URL}/blog` },
+                        { name: post.title, url: pageUrl },
+                    ]) }}
+                />
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: buildBlogPostJsonLd(post) }}
+                />
                 <Link
                     href="/blog"
                     className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-white/50 hover:text-primary transition-colors"

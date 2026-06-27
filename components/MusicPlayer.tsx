@@ -1,8 +1,10 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { memo, useState, useRef, useEffect } from 'react';
 import { VolumeX, Music, Play, Pause, SkipForward } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { logAiError } from '@/lib/groq';
+import { useReducedMotion } from '@/lib/motion-prefs';
 
 const SONG_NAME = 'Naan Un';
 const AUDIO_SRC = '/Naan Un.mpeg';
@@ -10,36 +12,42 @@ const AUDIO_SRC = '/Naan Un.mpeg';
 const SAFE_AUDIO_SRC = encodeURI(AUDIO_SRC);
 const MAX_DURATION = 60; // 60 seconds limit
 
-const MusicPlayer = () => {
+const MusicPlayer = memo(() => {
     const [isOpen, setIsOpen] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const audioRef = useRef<HTMLAudioElement | null>(null);
+    const timeUpdateRef = useRef<(() => void) | null>(null);
+    const reducedMotion = useReducedMotion();
 
-    // Initialize audio element
-    useEffect(() => {
-        audioRef.current = new Audio(SAFE_AUDIO_SRC);
-        audioRef.current.loop = true;
-        audioRef.current.volume = 0.3;
-
-        // Time update handler for 60-second limit
+    // Lazily create the audio element on first play (not on mount).
+    // This avoids loading the 6.9MB asset for users who never click play.
+    const ensureAudio = () => {
+        if (audioRef.current) return audioRef.current;
+        const audio = new Audio(SAFE_AUDIO_SRC);
+        audio.loop = true;
+        audio.volume = 0.3;
         const handleTimeUpdate = () => {
-            if (audioRef.current) {
-                const time = audioRef.current.currentTime;
-                setCurrentTime(time);
-
-                // Reset at 60 seconds
-                if (time >= MAX_DURATION) {
-                    audioRef.current.currentTime = 0;
-                }
+            const time = audio.currentTime;
+            setCurrentTime(time);
+            // Reset at 60 seconds
+            if (time >= MAX_DURATION) {
+                audio.currentTime = 0;
             }
         };
+        audio.addEventListener('timeupdate', handleTimeUpdate);
+        timeUpdateRef.current = handleTimeUpdate;
+        audioRef.current = audio;
+        return audio;
+    };
 
-        audioRef.current.addEventListener('timeupdate', handleTimeUpdate);
-
+    // Cleanup on unmount.
+    useEffect(() => {
         return () => {
             if (audioRef.current) {
-                audioRef.current.removeEventListener('timeupdate', handleTimeUpdate);
+                if (timeUpdateRef.current) {
+                    audioRef.current.removeEventListener('timeupdate', timeUpdateRef.current);
+                }
                 audioRef.current.pause();
                 audioRef.current = null;
             }
@@ -47,12 +55,18 @@ const MusicPlayer = () => {
     }, []);
 
     const togglePlay = () => {
-        if (!audioRef.current) return;
+        const audio = ensureAudio();
+        if (!audio) return;
 
         if (isPlaying) {
-            audioRef.current.pause();
+            audio.pause();
         } else {
-            audioRef.current.play().catch(console.warn);
+            audio.play().catch((err) => {
+                logAiError('music', 'play_failed');
+                if (process.env.NODE_ENV !== 'production') {
+                    console.warn('Audio playback failed:', err);
+                }
+            });
         }
         setIsPlaying(!isPlaying);
     };
@@ -74,12 +88,13 @@ const MusicPlayer = () => {
         >
             {/* Trigger Button */}
             <button
-                className="size-10 flex items-center justify-center rounded-full bg-black/10 backdrop-blur-sm border border-white/5 text-muted-foreground hover:text-white hover:bg-white/10 transition-all z-[2]"
-                aria-label={isPlaying ? 'Music playing' : 'Music paused'}
+                className="size-10 flex items-center justify-center rounded-full bg-black/10 backdrop-blur-sm border border-white/5 text-muted-foreground hover:text-white hover:bg-white/10 transition-all z-[2] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                aria-label={isPlaying ? 'Music playing — click to pause' : 'Music paused — click to play'}
+                aria-pressed={isPlaying}
                 onClick={togglePlay}
             >
                 {isPlaying ? (
-                    <Music className="size-5 animate-pulse text-primary" />
+                    <Music className={`size-5 text-primary ${reducedMotion ? '' : 'animate-pulse'}`} />
                 ) : (
                     <VolumeX className="size-5" />
                 )}
@@ -89,9 +104,9 @@ const MusicPlayer = () => {
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                        initial={reducedMotion ? false : { opacity: 0, y: -10, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                        exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -10, scale: 0.95 }}
                         transition={{ duration: 0.2, ease: 'easeOut' }}
                         className="absolute right-0 top-full mt-2 z-50 w-64"
                     >
@@ -166,6 +181,7 @@ const MusicPlayer = () => {
             </AnimatePresence>
         </div>
     );
-};
+});
 
 export default MusicPlayer;
+MusicPlayer.displayName = 'MusicPlayer';

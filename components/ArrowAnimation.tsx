@@ -1,18 +1,33 @@
+'use client';
+
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/all';
 import { useRef } from 'react';
+import { useReducedMotion } from '@/lib/motion-prefs';
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(useGSAP);
 
 const ArrowAnimation = () => {
     const svgRef = useRef<SVGSVGElement>(null);
     const arrow1Ref = useRef<SVGPathElement>(null);
     const arrow2Ref = useRef<SVGPathElement>(null);
+    const reducedMotion = useReducedMotion();
 
     useGSAP(() => {
         const length1 = arrow1Ref.current?.getTotalLength() ?? 0;
         const length2 = arrow2Ref.current?.getTotalLength() ?? 0;
+
+        if (reducedMotion) {
+            // Render statically once, then stop. No infinite timeline.
+            gsap.set('#banner-arrow-svg', { autoAlpha: 1, fill: '#ffffff08' });
+            if (length1) {
+                gsap.set('.svg-arrow-1', { strokeDashoffset: 0 });
+            }
+            if (length2) {
+                gsap.set('.svg-arrow-2', { strokeDashoffset: 0 });
+            }
+            return;
+        }
 
         gsap.set('#banner-arrow-svg', { fill: 'transparent', autoAlpha: 0 });
         if (length1) {
@@ -49,7 +64,7 @@ const ArrowAnimation = () => {
             duration: 0,
             autoAlpha: 0,
         });
-    });
+    }, [reducedMotion]);
 
     return (
         <svg
@@ -61,6 +76,7 @@ const ArrowAnimation = () => {
             xmlns="http://www.w3.org/2000/svg"
             className="absolute bottom-20 left-1/2 -translate-x-1/2 z-0"
             ref={svgRef}
+            aria-hidden="true"
         >
             <path
                 className="svg-arrow svg-arrow-1"

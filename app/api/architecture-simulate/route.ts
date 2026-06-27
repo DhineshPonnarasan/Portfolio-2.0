@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Groq } from 'groq-sdk';
 import { PROJECTS } from '@/lib/data';
 import { ARCHITECTURE_DIAGRAMS } from '@/lib/architecture-diagrams';
-
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+import { getGroqClient } from '@/lib/groq';
+import { applyRateLimit } from '@/lib/rateLimit';
+import { buildConceptualArchitectureExplanation } from '@/lib/architecture';
+import { readJsonBody, requirePositiveInt, requireString, describeRouteError } from '@/lib/api-helpers';
 
 const SYSTEM_PROMPT = `You are a calm, precise staff engineer who narrates how an architecture behaves under stress.
 - Reference Box numbers (1→6) and arrows connecting them.
@@ -15,13 +14,18 @@ const SYSTEM_PROMPT = `You are a calm, precise staff engineer who narrates how a
 
 export async function POST(req: NextRequest) {
   try {
-    if (!process.env.GROQ_API_KEY) {
-      return NextResponse.json({ error: 'GROQ API key missing' }, { status: 500 });
-    }
+    const limited = applyRateLimit(req, { route: 'architecture-simulate', limit: 10, windowMs: 60_000 });
+    if (limited) return limited;
 
-    const { projectId, scenario }: { projectId?: number; scenario?: string } = await req.json();
+    const parsed = await readJsonBody<{ projectId?: number; scenario?: string }>(
+      req,
+      'architecture-simulate',
+    );
+    if (!parsed.ok) return parsed.response;
 
-    if (!projectId || !scenario?.trim()) {
+    const projectId = requirePositiveInt(parsed.data.projectId);
+    const scenario = requireString(parsed.data.scenario);
+    if (!projectId || !scenario) {
       return NextResponse.json({ error: 'Project id and scenario are required.' }, { status: 400 });
     }
 
@@ -30,6 +34,14 @@ export async function POST(req: NextRequest) {
 
     if (!project || !diagram) {
       return NextResponse.json({ error: 'Project or ASCII diagram not found.' }, { status: 404 });
+    }
+
+    const groq = getGroqClient();
+    if (!groq) {
+      return NextResponse.json(
+        { simulation: buildConceptualArchitectureExplanation(project) },
+        { status: 200 },
+      );
     }
 
     const description = Array.isArray(project.description)
@@ -62,7 +74,7 @@ Narrate, using Box numbers, how this scenario plays out and how engineers stabil
 
     return NextResponse.json({ simulation });
   } catch (error) {
-    console.error('architecture-simulate error', error);
+    describeRouteError('architecture-simulate', error);
     return NextResponse.json({ error: 'Failed to simulate architecture.' }, { status: 500 });
   }
 }

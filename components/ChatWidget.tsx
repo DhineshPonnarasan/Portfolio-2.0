@@ -13,7 +13,8 @@ import WelcomePopup from './WelcomePopup';
 const INITIAL_MESSAGE: Message = {
     role: 'assistant',
     content:
-        "Hi there! ☀️ How's your day going?\n\nI'm Chitti, Dhinesh's AI-powered personalised chatbot. Ask me anything about Dhinesh, his projects, skills, experience, or any other question you have.",
+        "Hi there! I'm Chitti — Dhinesh's portfolio chatbot.\n\nAsk me about his projects, open-source work, experience, or how to get in touch. " +
+        'Press `/` to focus this input, or hit any chip below to start.',
 };
 
 const MAX_CONTEXT_MESSAGES = 10;

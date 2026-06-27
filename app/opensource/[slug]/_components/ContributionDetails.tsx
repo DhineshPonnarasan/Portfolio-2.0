@@ -3,7 +3,7 @@ import TransitionLink from '@/components/TransitionLink';
 import { IContribution } from '@/types';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { ArrowLeft, ExternalLink, Calendar, User, Code2, GitPullRequest, Building2 } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Calendar, User, Code2, Building2 } from 'lucide-react';
 import { useRef } from 'react';
 
 interface Props {
@@ -91,29 +91,6 @@ const ContributionDetails = ({ contribution }: Props) => {
                                         {tech}
                                     </span>
                                 ))}
-                            </div>
-                        </div>
-                    )}
-
-                    {contribution.stats && (
-                        <div className="bg-zinc-900/50 border border-white/10 rounded-2xl p-6">
-                            <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                                <GitPullRequest className="size-5 text-primary" />
-                                Impact Metrics
-                            </h3>
-                            <div className="grid grid-cols-3 gap-4">
-                                <div className="text-center p-3 bg-white/5 rounded-xl border border-white/5">
-                                    <div className="text-2xl font-bold text-primary mb-1">{contribution.stats.pullRequests}</div>
-                                    <div className="text-xs text-muted-foreground uppercase tracking-wider">PRs</div>
-                                </div>
-                                <div className="text-center p-3 bg-white/5 rounded-xl border border-white/5">
-                                    <div className="text-2xl font-bold text-primary mb-1">{contribution.stats.commits}</div>
-                                    <div className="text-xs text-muted-foreground uppercase tracking-wider">Commits</div>
-                                </div>
-                                <div className="text-center p-3 bg-white/5 rounded-xl border border-white/5">
-                                    <div className="text-2xl font-bold text-primary mb-1">{contribution.stats.linesOfCode}</div>
-                                    <div className="text-xs text-muted-foreground uppercase tracking-wider">Lines</div>
-                                </div>
                             </div>
                         </div>
                     )}

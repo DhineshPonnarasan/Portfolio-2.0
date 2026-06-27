@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { getArchitectureDiagram } from '@/lib/architecture-diagrams';
+import LiveArchitectureOverlay from './LiveArchitectureOverlay';
 
 interface Props {
 	projectId: number;
@@ -76,17 +77,26 @@ const SystemArchitectureDiagrams: React.FC<Props> = ({ projectId, showVoiceButto
 	}
 
 	return (
-		<div className="w-full overflow-x-auto custom-scrollbar select-none" role="img" aria-label={`System Architecture Diagram for Project ${projectId}`}>
+		<div
+			className="relative w-full overflow-x-auto custom-scrollbar select-none"
+			role="img"
+			aria-label={`System Architecture Diagram for Project ${projectId}`}
+		>
 			<span className="sr-only">
 				Graphical representation of the system architecture using ASCII art.
 				Visual elements include data sources, ingestion pipelines, model training, and deployment workflows.
+				Animated overlay shows status indicators on each component and a continuous data flow between
+				connected components.
 			</span>
-			<pre 
-				aria-hidden="true" 
-				className="font-mono text-[10px] xs:text-[11px] sm:text-xs md:text-sm leading-[1.2] whitespace-pre px-4 py-6 bg-zinc-950/50 rounded-xl border border-white/5 shadow-inner"
-			>
-				{processedLines}
-			</pre>
+			<div className="relative">
+				<pre
+					aria-hidden="true"
+					className="font-mono text-[10px] xs:text-[11px] sm:text-xs md:text-sm leading-[1.2] whitespace-pre px-4 py-6 bg-zinc-950/50 rounded-xl border border-white/5 shadow-inner"
+				>
+					{processedLines}
+				</pre>
+				<LiveArchitectureOverlay text={diagram} />
+			</div>
 		</div>
 	);
 };

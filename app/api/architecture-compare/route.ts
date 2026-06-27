@@ -1,21 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Groq } from 'groq-sdk';
 import { PROJECTS } from '@/lib/data';
 import { ARCHITECTURE_DIAGRAMS } from '@/lib/architecture-diagrams';
-
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+import { getGroqClient } from '@/lib/groq';
+import { applyRateLimit } from '@/lib/rateLimit';
+import { readJsonBody, requirePositiveInt, describeRouteError } from '@/lib/api-helpers';
 
 const SYSTEM_PROMPT = `You are a battle-tested principal engineer. When comparing systems, you speak in crisp engineering language with zero fluff.`;
 
+const OFFLINE_FALLBACK =
+    'Live architecture comparison is offline. Open the dedicated comparison panel from any project page to view side-by-side flows.';
+
 export async function POST(req: NextRequest) {
   try {
-    if (!process.env.GROQ_API_KEY) {
-      return NextResponse.json({ error: 'GROQ API key missing' }, { status: 500 });
-    }
+    const limited = applyRateLimit(req, { route: 'architecture-compare', limit: 10, windowMs: 60_000 });
+    if (limited) return limited;
 
-    const { firstProjectId, secondProjectId }: { firstProjectId?: number; secondProjectId?: number } = await req.json();
+    const parsed = await readJsonBody<{ firstProjectId?: number; secondProjectId?: number }>(
+      req,
+      'architecture-compare',
+    );
+    if (!parsed.ok) return parsed.response;
+
+    const firstProjectId = requirePositiveInt(parsed.data.firstProjectId);
+    const secondProjectId = requirePositiveInt(parsed.data.secondProjectId);
 
     if (!firstProjectId || !secondProjectId || firstProjectId === secondProjectId) {
       return NextResponse.json({ error: 'Select two different projects.' }, { status: 400 });
@@ -29,6 +36,11 @@ export async function POST(req: NextRequest) {
 
     if (!firstProject || !secondProject || !firstDiagram || !secondDiagram) {
       return NextResponse.json({ error: 'Unable to locate diagrams for one of the projects.' }, { status: 404 });
+    }
+
+    const groq = getGroqClient();
+    if (!groq) {
+      return NextResponse.json({ comparison: OFFLINE_FALLBACK }, { status: 200 });
     }
 
     const firstSummary = Array.isArray(firstProject.description)
@@ -49,16 +61,16 @@ export async function POST(req: NextRequest) {
 
 ---
 ${firstProject.title}:
-Description: ${firstSummary}
-Tech: ${firstProject.techStack?.join(', ') || firstProject.techAndTechniques?.join(', ') || 'Not specified'}
-ASCII diagram:
+|Description: ${firstSummary}
+|Tech: ${firstProject.techStack?.join(', ') || firstProject.techAndTechniques?.join(', ') || 'Not specified'}
+|ASCII diagram:
 ${firstDiagram}
 
 ---
 ${secondProject.title}:
-Description: ${secondSummary}
-Tech: ${secondProject.techStack?.join(', ') || secondProject.techAndTechniques?.join(', ') || 'Not specified'}
-ASCII diagram:
+|Description: ${secondSummary}
+|Tech: ${secondProject.techStack?.join(', ') || secondProject.techAndTechniques?.join(', ') || 'Not specified'}
+|ASCII diagram:
 ${secondDiagram}`;
 
     const completion = await groq.chat.completions.create({
@@ -79,7 +91,7 @@ ${secondDiagram}`;
 
     return NextResponse.json({ comparison });
   } catch (error) {
-    console.error('architecture-compare error', error);
+    describeRouteError('architecture-compare', error);
     return NextResponse.json({ error: 'Failed to compare architectures.' }, { status: 500 });
   }
 }

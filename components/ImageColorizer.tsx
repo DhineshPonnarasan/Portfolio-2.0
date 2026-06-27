@@ -162,7 +162,9 @@ const ImageColorizer: React.FC = () => {
                 message,
                 code: 'PROCESSING_FAILED',
             });
-            console.error('Image processing error:', err);
+            if (process.env.NODE_ENV !== 'production') {
+                console.error('Image processing error:', err);
+            }
         } finally {
             setIsProcessing(false);
         }
@@ -183,7 +185,7 @@ const ImageColorizer: React.FC = () => {
             <div className="flex flex-col gap-8">
                 {/* Header */}
                 <div className="text-center space-y-2">
-                    <h2 className="text-3xl font-anton text-primary">AI Image Colorizer</h2>
+                    <h2 className="text-3xl font-anton text-primary">Tone Preview</h2>
                     <p className="text-muted-foreground">Transform black and white photos into vibrant color images</p>
                 </div>
 

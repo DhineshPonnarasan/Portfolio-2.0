@@ -10,6 +10,7 @@ import parse from 'html-react-parser';
 import { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Briefcase, MapPin, Calendar, ChevronDown } from 'lucide-react';
+import Image from 'next/image';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -98,9 +99,13 @@ const Experiences = () => {
                                             <div className="space-y-1">
                                                 <div className="flex items-center gap-4">
                                                     <div className="flex-shrink-0 h-10 w-10 md:h-10 md:w-10 rounded-full overflow-hidden bg-white/5 flex items-center justify-center">
-                                                        <img
+                                                        <Image
                                                             src={COMPANY_LOGOS[item.company] ?? '/logo/chatbot-avatar.png'}
                                                             alt={item.company}
+                                                            width={36}
+                                                            height={36}
+                                                            sizes="36px"
+                                                            loading="lazy"
                                                             className="h-8 w-8 md:h-9 md:w-9 object-cover"
                                                         />
                                                     </div>
@@ -132,7 +137,9 @@ const Experiences = () => {
                                         </div>
 
                                         <p className="text-sm leading-relaxed text-white/75">
-                                            {(item as any).summary || 'Built products, shipped features, and collaborated across teams.'}
+                                            {'learned' in item && typeof (item as { learned?: string }).learned === 'string'
+                                                ? (item as { learned: string }).learned
+                                                : 'Built products, shipped features, and collaborated across teams.'}
                                         </p>
 
                                         <div className="flex flex-wrap gap-2 text-[11px] uppercase tracking-[0.12em] text-white/60">

@@ -6,8 +6,17 @@ interface ChatInputProps {
     onSend: (_message: string) => void;
     isLoading: boolean;
     placeholder?: string;
+    /** Fired on every input change so the parent can show a char counter. */
+    onInputChange?: (_length: number) => void;
 }
-const ChatInput = ({ onSend, isLoading, placeholder = "Talk to Chitti" }: ChatInputProps) => {
+const MAX_INPUT_LENGTH = 1500;
+
+const ChatInput = ({
+    onSend,
+    isLoading,
+    placeholder = 'Talk to Chitti',
+    onInputChange,
+}: ChatInputProps) => {
     const [input, setInput] = useState('');
     const [isListening, setIsListening] = useState(false);
     const [isSupported, setIsSupported] = useState(false);
@@ -75,10 +84,13 @@ const ChatInput = ({ onSend, isLoading, placeholder = "Talk to Chitti" }: ChatIn
             }
             // Show accumulated final + live interim in the input field
             setInput(finalTranscriptRef.current + interim);
+            onInputChange?.((finalTranscriptRef.current + interim).length);
         };
 
         recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
-            console.error('Speech recognition error:', event.error);
+            if (process.env.NODE_ENV !== 'production') {
+                console.error('Speech recognition error:', event.error);
+            }
             if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
                 setVoiceError('Microphone access denied. Please allow microphone in browser settings.');
                 stopListening();
@@ -124,7 +136,9 @@ const ChatInput = ({ onSend, isLoading, placeholder = "Talk to Chitti" }: ChatIn
         try {
             recognition.start();
         } catch (error) {
-            console.error('Error starting speech recognition:', error);
+            if (process.env.NODE_ENV !== 'production') {
+                console.error('Error starting speech recognition:', error);
+            }
             setIsListening(false);
             recognitionRef.current = null;
             setVoiceError('Could not start voice input. Please try again.');
@@ -133,9 +147,12 @@ const ChatInput = ({ onSend, isLoading, placeholder = "Talk to Chitti" }: ChatIn
 
     const handleSubmit = (e?: React.FormEvent) => {
         e?.preventDefault();
-        if (!input.trim() || isLoading) return;
-        onSend(input.trim());
+        const trimmed = input.trim();
+        if (!trimmed || isLoading) return;
+        if (trimmed.length > MAX_INPUT_LENGTH) return;
+        onSend(trimmed);
         setInput('');
+        onInputChange?.(0);
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -174,10 +191,16 @@ const ChatInput = ({ onSend, isLoading, placeholder = "Talk to Chitti" }: ChatIn
                     ref={inputRef}
                     type="text"
                     value={input}
-                    onChange={(e) => setInput(e.target.value)}
+                    onChange={(e) => {
+                        const v = e.target.value;
+                        setInput(v);
+                        onInputChange?.(v.length);
+                    }}
                     onKeyDown={handleKeyDown}
                     placeholder={isListening ? '🎙️ Listening...' : placeholder}
                     disabled={isLoading}
+                    data-chat-input
+                    maxLength={MAX_INPUT_LENGTH}
                     className={cn(
                         "flex-1 bg-[#2a2a2a] border rounded-xl rounded-l-none outline-none text-sm text-zinc-200 placeholder:text-zinc-500 px-4 py-3 pl-6 disabled:opacity-50 transition-colors",
                         isListening

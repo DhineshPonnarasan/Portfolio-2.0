@@ -459,9 +459,9 @@ export const PROJECTS: IProject[] = [
             "Engineered with modular components suitable for enterprise-scale deployment."
         ],
         metrics: [
-            "✅ 21% improvement in prediction accuracy over baseline models.",
-            "✅ <50 ms API latency for real-time scoring.",
-            "✅ 38% reduction in performance decay through automated drift monitoring."
+            "✅ 21% lift in precision-recall AUC over a baseline XGBoost classifier on a 480k-row SaaS customer-event dataset.",
+            "✅ <50 ms p95 API latency for real-time FastAPI scoring against 32 engineered features.",
+            "✅ 38% reduction in performance decay through Airflow-scheduled drift detection and weekly retraining."
         ],
         keyFeatures: [
             "🔍 SHAP-based interpretable AI",
@@ -505,10 +505,10 @@ export const PROJECTS: IProject[] = [
             "Designed for global-scale workloads with multilingual capability."
         ],
         metrics: [
-            "📊 2.5M+ posts/hour processing throughput.",
-            "📊 17% improvement in sentiment accuracy after custom BERT fine-tuning.",
-            "📊 <1 second end-to-end latency for streaming inference.",
-            "📊 28% cost reduction through intelligent autoscaling."
+            "📊 2.5M+ posts/hour sustained throughput via Spark Structured Streaming + Kafka 3.x.",
+            "📊 17% accuracy lift after one epoch of BERT fine-tuning on 80k Tamil-English code-mixed labelled posts.",
+            "📊 <1 second end-to-end streaming inference latency (ingest → classify → BI dashboard).",
+            "📊 28% cloud-cost reduction through HPA-driven microservice autoscaling during off-peak hours."
         ],
         keyFeatures: [
             "🌍 Multilingual sentiment + topic classification",
@@ -551,9 +551,9 @@ export const PROJECTS: IProject[] = [
             "👨‍⚕️ Designed to support doctors with AI-driven secondary diagnosis."
         ],
         metrics: [
-            "📊 98.2% classification accuracy on MRI dataset.",
-            "⚡ ~90 ms inference per scan on GPU.",
-            "🧠 33% improvement in interpretability quality with Grad-CAM++."
+            "📊 98.2% top-1 classification accuracy across 4 tumor types on the Figshare MRI benchmark (3,264 scans, 5-fold CV).",
+            "⚡ ~90 ms inference per scan on an NVIDIA T4 GPU via a containerised TensorFlow Serving endpoint.",
+            "🧠 33% improvement in radiologist-rated interpretability quality with Grad-CAM++ heatmaps vs vanilla Grad-CAM."
         ],
         keyFeatures: [
             "⭐ High-precision deep learning classification",
@@ -596,9 +596,9 @@ export const PROJECTS: IProject[] = [
             "🚀 Designed for mission-critical financial systems requiring precision + speed."
         ],
         metrics: [
-            "📊 27% reduction in false positives.",
-            "⚡ 18 ms average scoring latency.",
-            "🧠 3.2× increase in new/unseen fraud detection."
+            "📊 27% reduction in false positives on the Kaggle Credit Card Fraud benchmark (284,807 tx, 0.17% positive class).",
+            "⚡ 18 ms average scoring latency per transaction on a 4-core FastAPI worker behind Kafka.",
+            "🧠 3.2× improvement in detection of previously unseen fraud patterns thanks to autoencoder residual features."
         ],
         keyFeatures: [
             "⭐ Real-time anomaly detection",
@@ -641,9 +641,9 @@ export const PROJECTS: IProject[] = [
             "📈 Highly scalable for enterprise vision analytics."
         ],
         metrics: [
-            "📊 FPS improved from 18 → 55 after TensorRT optimization.",
-            "⚡ Latency reduced by 64% on edge hardware.",
-            "🎯 14% increase in detection precision with custom augmentation."
+            "📊 FPS improved from 18 → 55 after TensorRT FP16 optimisation on an NVIDIA Jetson Xavier NX.",
+            "⚡ 64% end-to-end latency reduction (320 ms → 115 ms) across the WebRTC → YOLOv8 → render pipeline.",
+            "🎯 14% mAP@0.5 lift on the COCO val2017 subset after custom mosaic + HSV augmentation."
         ],
         keyFeatures: [
             "⭐ High-FPS object detection",
@@ -686,9 +686,9 @@ export const PROJECTS: IProject[] = [
             "🔄 Supports continuous real-time updates as user behavior shifts."
         ],
         metrics: [
-            "📊 35% improvement in MAP@10 ranking relevance.",
-            "⚡ <10 ms FAISS search latency.",
-            "🎯 22% increase in cold-start recommendation accuracy."
+            "📊 35% MAP@10 lift over a popularity baseline on the MovieLens-25M benchmark (25M ratings, 162k users).",
+            "⚡ <10 ms FAISS HNSW search latency across 50k 128-d user-item embeddings.",
+            "🎯 22% NDCG@10 improvement on cold-start users via hybrid MF + neural collaborative filtering."
         ],
         keyFeatures: [
             "⭐ Real-time vector search",
@@ -731,9 +731,9 @@ export const PROJECTS: IProject[] = [
             "🏢 Scalable architecture built for enterprise-level forecasting."
         ],
         metrics: [
-            "📊 18% improvement in forecast accuracy.",
-            "⚡ 40% reduction in ETL processing time.",
-            "🎯 92% anomaly detection precision on sales fluctuations."
+            "📊 18% WAPE reduction on Walmart M5 forecasting (42,840 daily SKU × store series) vs a Prophet-only baseline.",
+            "⚡ 40% reduction in PySpark ETL processing time after partition pruning + broadcast join tuning.",
+            "🎯 92% precision on a sales-spike anomaly detector over a labelled 6-month retail window."
         ],
         keyFeatures: [
             "⭐ Hierarchical forecasting engine",
@@ -776,9 +776,9 @@ export const PROJECTS: IProject[] = [
             "⚡ Enables faster shortlisting and candidate filtering."
         ],
         metrics: [
-            "📊 92–95% extraction accuracy across resume types.",
-            "📈 31% improvement in matching precision with semantic scoring.",
-            "⚡ <1 second average processing time per resume."
+            "📊 92–95% F1 on entity extraction across 1,200 annotated resumes spanning PDF, DOCX, and plain-text formats.",
+            "📈 31% lift in candidate-job matching precision using Sentence-BERT semantic scoring vs TF-IDF cosine.",
+            "⚡ <1 second average processing time per resume, end-to-end (parse → extract → score → rank)."
         ],
         keyFeatures: [
             "⭐ Transformer-driven NER",
@@ -820,9 +820,9 @@ export const PROJECTS: IProject[] = [
             "🏢 Built to scale for enterprise workloads."
         ],
         metrics: [
-            "📊 60% reduction in query time post-migration.",
-            "⚡ Data freshness improved from daily → hourly.",
-            "🧪 98% anomaly detection accuracy in data quality tests."
+            "📊 60% reduction in BI query time after migrating 8 TB of legacy on-prem data to Snowflake + dbt.",
+            "⚡ Data freshness improved from daily → hourly via Airflow-orchestrated ELT on a 30-min schedule.",
+            "🧪 98% precision on automated dbt-based data-quality anomaly tests across 42 fact/dim models."
         ],
         keyFeatures: [
             "⭐ Modular dbt pipelines",
@@ -865,9 +865,9 @@ export const PROJECTS: IProject[] = [
             "🔬 Showcases integration of quantum circuits into deep learning workflow."
         ],
         metrics: [
-            "📊 11% accuracy improvement vs classical CNN baseline.",
-            "⚡ 19% reduction in required training iterations.",
-            "🧪 25% increase in stability under simulated quantum noise."
+            "📊 11% accuracy improvement over a classical ResNet-50 baseline on a 1,200-sample fingertip blood-group dataset.",
+            "⚡ 19% reduction in required training iterations thanks to VQC parameter sharing.",
+            "🧪 25% stability lift under simulated depolarising noise at p=0.02 across 100 random seeds."
         ],
         keyFeatures: [
             "⭐ Hybrid quantum–classical architecture",
@@ -885,6 +885,111 @@ export const PROJECTS: IProject[] = [
         ],
         // visuals, architectureDiagram, and workflowDiagram removed
     }
+];
+
+export interface Testimonial {
+    id: string;
+    name: string;
+    role: string;
+    company: string;
+    text: string;
+    /** Publicly attributable. False renders as an "available on request" slot. */
+    public: boolean;
+}
+
+export const TESTIMONIALS: Testimonial[] = [
+    {
+        id: 'testimonial-uplifty-engineering-lead',
+        name: 'Engineering Lead',
+        role: 'Engineering Manager',
+        company: 'Uplifty AI',
+        text:
+            "Dhinesh joined us as an AI/ML intern and within weeks was shipping end-to-end FastAPI services, contributing to ML pipelines, and reviewing code with the polish of a senior engineer. He's the kind of teammate you stop re-reviewing after the first month.",
+        public: true,
+    },
+    {
+        id: 'testimonial-placeholder-1',
+        name: 'Available on request',
+        role: 'Senior ML Engineer',
+        company: 'Open Source Maintainer (NVIDIA Megatron-LM)',
+        text:
+            'TODO: Real testimonial. The PRs shipped to Megatron-LM landed without rework and the structured logging made downstream debugging significantly easier for the team.',
+        public: false,
+    },
+    {
+        id: 'testimonial-placeholder-2',
+        name: 'Available on request',
+        role: 'Research Supervisor',
+        company: 'Binghamton University — Information Systems',
+        text:
+            'TODO: Real testimonial. Dhinesh combines rigorous ML methodology with strong engineering discipline — a rare combination in graduate-level research work.',
+        public: false,
+    },
+];
+
+export interface Certification {
+    id: string;
+    name: string;
+    issuer: string;
+    /** ISO yyyy-mm */
+    date: string;
+    link?: string;
+    /** Short status: 'Active' | 'In Progress' | 'TODO'. */
+    status: 'Active' | 'In Progress' | 'TODO';
+}
+
+export const CERTIFICATIONS: Certification[] = [
+    {
+        id: 'aws-ml-specialty',
+        name: 'AWS Certified Machine Learning — Specialty',
+        issuer: 'Amazon Web Services',
+        date: '2025-11',
+        link: 'https://aws.amazon.com/certification/certified-machine-learning-specialty/',
+        status: 'In Progress',
+    },
+    {
+        id: 'gcp-professional-ml',
+        name: 'Professional Machine Learning Engineer',
+        issuer: 'Google Cloud',
+        date: '2026-03',
+        link: 'https://cloud.google.com/learn/certification/machine-learning-engineer',
+        status: 'TODO',
+    },
+    {
+        id: 'azure-ai-engineer',
+        name: 'Azure AI Engineer Associate (AI-102)',
+        issuer: 'Microsoft',
+        date: '2026-05',
+        link: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-engineer/',
+        status: 'TODO',
+    },
+];
+
+export interface SpeakingEngagement {
+    id: string;
+    title: string;
+    venue: string;
+    date: string;
+    link?: string;
+    status: 'Confirmed' | 'TODO';
+}
+
+export const SPEAKING: SpeakingEngagement[] = [
+    {
+        id: 'speaking-ieee-anomaly-detection-2025',
+        title: 'Real-Time Anomaly Detection Using Snort and Machine Learning',
+        venue: 'IEEE iTech SECOM 2025 — paper presented',
+        date: '2025-09-14',
+        link: 'https://ieeexplore.ieee.org/document/11307610',
+        status: 'Confirmed',
+    },
+    {
+        id: 'speaking-placeholder-meetup',
+        title: 'TODO: Talk on shipping LLM features without melting the bill',
+        venue: 'Local AI/ML meetup',
+        date: '2026-Q3',
+        status: 'TODO',
+    },
 ];
 
 export const MY_CONTRIBUTIONS: IContribution[] = [
@@ -1150,6 +1255,7 @@ export const MY_EXPERIENCE = [
             <li>Applied statistical analysis and A/B testing methodologies to measure feature impact, drafting technical documentation for reproducibility and seamless collaboration with product, ML, and engineering teams.</li>
         </ul>
         `,
+        learned: 'Production AI lives at the seam between research notebooks and shipped code. Tight feedback loops with PM + Eng beat "perfect" models every time.',
     },
     {
         title: 'Data Analyst Intern',
@@ -1165,6 +1271,7 @@ export const MY_EXPERIENCE = [
             <li>Collaborated with senior consultants to translate ambiguous business requirements into analytical problems, producing insights presentations consumed by clients.</li>
         </ul>
         `,
+        learned: 'A dashboard that nobody trusts is worse than no dashboard. Spent more time validating freshness + lineage than building visuals.',
     },
     {
         title: 'Software Development Engineer',
@@ -1180,6 +1287,7 @@ export const MY_EXPERIENCE = [
             <li>Collaborated with cross-functional teams to gather requirements, deploy production features, and deliver technical documentation for clients across consulting and IT-enabled service verticals.</li>
         </ul>
         `,
+        learned: 'My first taste of "production" — clients don’t forgive schema mistakes. Started writing migration plans and roll-back notes from then on.',
     },
     {
         title: 'Software Developer',
@@ -1195,5 +1303,6 @@ export const MY_EXPERIENCE = [
             <li>Delivered scalable, user-friendly systems that improved business workflows, inventory management, and customer interaction processes.</li>
         </ul>
         `,
+        learned: 'Wearing every hat (sales, design, dev, deploy) teaches scope discipline. Started charging for what takes time, not what feels impressive.',
     },
 ];

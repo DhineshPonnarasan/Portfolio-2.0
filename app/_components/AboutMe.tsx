@@ -94,51 +94,64 @@ const AboutMe = () => {
                     <div className="lg:col-span-7 flex flex-col justify-between gap-10">
                         <div className="space-y-6 slide-up-and-fade">
                             <p className="text-xl md:text-2xl font-light leading-relaxed">
-                                I believe in a user centered design approach, ensuring that
-                                the products I build are not only functional but also
-                                intuitive and enjoyable to use.
+                                I&apos;m Dhinesh — an AI/ML engineer currently interning at
+                                <span className="text-primary"> Uplifty AI</span> in Austin and
+                                pursuing my MS in Information Systems (Applied Data Science) at
+                                <span className="text-primary"> SUNY Binghamton</span>.
+                                I build production systems at the seam where research meets
+                                infrastructure: gradient-boosted ensembles, transformer-powered
+                                NLP, streaming data pipelines, and the FastAPI services that
+                                put them in front of users.
                             </p>
                             <p className="text-muted-foreground text-lg leading-relaxed">
-                                With a strong foundation in both frontend and backend
-                                development, I have the ability to work across the
-                                entire stack, from designing user interfaces to
-                                architecting database schemas. I am passionate about
-                                learning new technologies and staying up-to-date with
-                                the latest industry trends.
+                                Outside of work I contribute upstream to
+                                <span className="text-primary"> Microsoft</span>,
+                                <span className="text-primary"> NVIDIA Megatron-LM</span>,
+                                <span className="text-primary"> NVIDIA TensorRT-LLM</span>,
+                                <span className="text-primary"> CodeGraphContext</span>,
+                                <span className="text-primary"> Scanapi</span>, and
+                                <span className="text-primary"> OLake</span> — adding regression
+                                tests, hardening protocol validation, pinning supply chains
+                                to immutable SHAs, and shipping the kind of fixes that compound
+                                across releases.
+                            </p>
+                            <p className="text-muted-foreground text-lg leading-relaxed">
+                                What I care about most: clean abstractions, observable systems,
+                                reproducible experiments, and writing code that the next person
+                                on the team can actually maintain.
                             </p>
                         </div>
 
                         <div className="grid sm:grid-cols-2 gap-10 slide-up-and-fade">
                             <div>
                                 <h3 className="text-xl font-anton mb-4 text-primary">
-                                    DESIGN
+                                    AI/ML + SYSTEMS
                                 </h3>
                                 <p className="text-muted-foreground">
-                                    I start by understanding the user&apos;s needs and
-                                    goals, then I create wireframes and prototypes to
-                                    visualize the solution. I focus on creating clean
-                                    and modern designs that are easy to navigate and
-                                    visually appealing.
+                                    Comfortable going from a notebook prototype to a
+                                    containerised inference service — feature stores,
+                                    SHAP-driven explainability, Airflow retraining loops,
+                                    and p99 latency budgets that someone will actually
+                                    enforce.
                                 </p>
                             </div>
                             <div>
                                 <h3 className="text-xl font-anton mb-4 text-primary">
-                                    DEVELOPMENT
+                                    OPEN SOURCE
                                 </h3>
                                 <p className="text-muted-foreground">
-                                    I use the latest technologies and best practices to
-                                    build robust and scalable applications. I write
-                                    clean and maintainable code, and I always test my
-                                    work to ensure that it meets the highest quality
-                                    standards.
+                                    I treat upstream contributions like production
+                                    work: regression tests, clear commit messages, supply
+                                    chain pinning, and PRs that respect the maintainers&apos;
+                                    review bandwidth.
                                 </p>
                             </div>
                         </div>
 
                         <div className="slide-up-and-fade">
                             <p className="text-xl font-medium">
-                                I strive to deliver experiences that not only
-                                engage users but also drive tangible results.
+                                I&apos;m at my best when the problem is ambiguous,
+                                the data is messy, and the answer has to ship next week.
                             </p>
                         </div>
                     </div>

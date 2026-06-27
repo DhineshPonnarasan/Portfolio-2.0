@@ -18,6 +18,7 @@ import remarkGfm from 'remark-gfm';
 import MermaidDiagram from '../MermaidDiagram';
 import { getArchitectureMetadata } from '@/lib/architecture';
 import { MERMAID_DIAGRAMS } from '@/lib/mermaid-templates';
+import Image from 'next/image';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 interface Props {
@@ -42,7 +43,7 @@ const ProjectDetail = ({ project }: Props) => {
     const architectureDescribeId = `${architectureAnchorId}-diagram-desc`;
     const { complexity, style } = getArchitectureMetadata(project.id);
     const [activeMode, setActiveMode] = useState<'overview' | 'data' | 'deployment'>('overview');
-    const [viewMode, setViewMode] = useState<'ascii' | 'architecture' | 'workflow'>('ascii');
+    const [viewMode, setViewMode] = useState<'ascii' | 'architecture' | 'workflow' | 'schematic'>('ascii');
 
     const mermaidTemplates = MERMAID_DIAGRAMS[project.slug as keyof typeof MERMAID_DIAGRAMS];
 
@@ -142,6 +143,30 @@ const ProjectDetail = ({ project }: Props) => {
         }
         setIsExplanationVisible(true);
         setExplainError(null);
+
+        // 7-day localStorage cache keyed by (slug, mode). Mirrors the
+        // pattern used on /architecture and reduces repeat Groq calls.
+        const CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+        const cacheKey = `architecture:explain:${project.slug}:${activeMode}`;
+
+        try {
+            const cached = typeof window !== 'undefined' ? window.localStorage.getItem(cacheKey) : null;
+            if (cached) {
+                try {
+                    const parsed = JSON.parse(cached) as { ts: number; value: string };
+                    if (typeof parsed?.ts === 'number' && parsed.value && Date.now() - parsed.ts < CACHE_TTL_MS) {
+                        setExplanation(parsed.value);
+                        triggerBadge('Loaded from cache');
+                        return;
+                    }
+                } catch {
+                    // Ignore malformed cache and continue to fetch.
+                }
+            }
+        } catch {
+            // localStorage may be unavailable (e.g. SSR, private mode); fall through to fetch.
+        }
+
         setIsExplainLoading(true);
         setExplanation(null);
         try {
@@ -153,7 +178,11 @@ const ProjectDetail = ({ project }: Props) => {
 
             if (!response.ok || !response.body) {
                 const data = await response.json().catch(() => ({}));
-                throw new Error((data as any).error || 'Unable to explain this architecture right now.');
+                const errorMessage =
+                    typeof data === 'object' && data !== null && 'error' in data
+                        ? String((data as { error: unknown }).error)
+                        : 'Unable to explain this architecture right now.';
+                throw new Error(errorMessage);
             }
 
             const reader = response.body.getReader();
@@ -169,6 +198,17 @@ const ProjectDetail = ({ project }: Props) => {
                     accumulated += chunk;
                     setExplanation(accumulated);
                 }
+            }
+
+            try {
+                if (typeof window !== 'undefined' && accumulated) {
+                    window.localStorage.setItem(
+                        cacheKey,
+                        JSON.stringify({ ts: Date.now(), value: accumulated }),
+                    );
+                }
+            } catch {
+                // Ignore quota / unavailability errors.
             }
         } catch (error) {
             setExplainError(error instanceof Error ? error.message : 'Unexpected error.');
@@ -205,32 +245,62 @@ const ProjectDetail = ({ project }: Props) => {
 
                 <div className="min-h-[calc(100vh-200px)] flex" id="info">
                     <div className="relative w-full">
-                        <div className="flex items-start gap-4 sm:gap-6 mx-auto mb-10 max-w-[800px] flex-wrap md:flex-nowrap">
-                            <h1 className="fade-in-later opacity-0 text-3xl sm:text-4xl md:text-[60px] leading-none font-anton overflow-hidden break-words min-w-0">
-                                <span className="inline-block">{project.title}</span>
-                            </h1>
-                            <div className="fade-in-later opacity-0 flex gap-3">
-                                {project.sourceCode && (
-                                    <a
-                                        href={project.sourceCode}
-                                        target="_blank"
-                                        rel="noreferrer noopener"
-                                        className="hover:text-primary"
-                                    >
-                                        <Github size={30} />
-                                    </a>
-                                )}
-                                {project.liveUrl && (
-                                    <a
-                                        href={project.liveUrl}
-                                        target="_blank"
-                                        rel="noreferrer noopener"
-                                        className="hover:text-primary"
-                                    >
-                                        <ExternalLink size={30} />
-                                    </a>
-                                )}
+                        <div className="mx-auto mb-10 max-w-[800px]">
+                            <div className="fade-in-later opacity-0 flex items-start justify-between gap-4 sm:gap-6">
+                                <h1 className="text-3xl sm:text-4xl md:text-[60px] leading-[1.05] font-anton break-words [overflow-wrap:anywhere] hyphens-auto">
+                                    {project.title}
+                                </h1>
+                                <div className="flex shrink-0 gap-3 pt-2">
+                                    {project.sourceCode && (
+                                        <a
+                                            href={project.sourceCode}
+                                            target="_blank"
+                                            rel="noreferrer noopener"
+                                            aria-label={`${project.title} source code on GitHub`}
+                                            className="hover:text-primary"
+                                        >
+                                            <Github size={30} />
+                                        </a>
+                                    )}
+                                    {project.liveUrl && (
+                                        <a
+                                            href={project.liveUrl}
+                                            target="_blank"
+                                            rel="noreferrer noopener"
+                                            aria-label={`${project.title} live demo`}
+                                            className="hover:text-primary"
+                                        >
+                                            <ExternalLink size={30} />
+                                        </a>
+                                    )}
+                                </div>
                             </div>
+                        </div>
+
+                        {/* Jump to architecture — discoverability link, above the fold */}
+                        <div className="fade-in-later mb-8 max-w-[800px] mx-auto">
+                            <a
+                                href={`#${architectureAnchorId}`}
+                                className="group inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-[0.2em] text-muted-foreground hover:text-primary transition-colors"
+                            >
+                                <span className="relative h-2 w-2 rounded-full bg-primary/60 group-hover:bg-primary group-hover:shadow-[0_0_8px_rgba(16,185,129,0.6)] transition-all" />
+                                <span>Jump to architecture</span>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="14"
+                                    height="14"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className="transition-transform group-hover:translate-y-0.5"
+                                >
+                                    <path d="M12 5v14" />
+                                    <path d="m19 12-7 7-7-7" />
+                                </svg>
+                            </a>
                         </div>
 
                         <div className="max-w-[800px] space-y-7 pb-20 mx-auto">
@@ -317,21 +387,26 @@ const ProjectDetail = ({ project }: Props) => {
                             )}
 
                             {project.interestingHighlights && project.interestingHighlights.length > 0 && (
-                                <div className="fade-in-later">
+                                <div className="mt-10 fade-in-later" id={architectureAnchorId} ref={architectureAnchorRef}>
                                     <h4 className="text-xl font-bold mb-4 text-primary flex items-center gap-2">
                                         <span className="w-1 h-6 bg-gradient-to-b from-primary to-secondary rounded-full"></span>
-                                        Interesting Highlights
+                                        System Architecture
                                     </h4>
-                                    <ul className="custom-bullet-list space-y-3">
-                                        {project.interestingHighlights.map((point, i) => (
-                                            <li key={i} className="text-lg text-muted-foreground/90">{point}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
 
-                            {project.interestingHighlights && project.interestingHighlights.length > 0 && (
-                                <div className="mt-10 fade-in-later" id={architectureAnchorId} ref={architectureAnchorRef}>
+                                    {/* Interactive Features callout — discoverability */}
+                                    <p className="text-xs sm:text-sm text-muted-foreground/70 mb-4 max-w-2xl">
+                                        Try the interactive tools below.{' '}
+                                        <span className="text-foreground/80">Explain Flow</span>
+                                        {' · '}
+                                        <span className="text-foreground/80">Ask Questions</span>
+                                        {' · '}
+                                        <span className="text-foreground/80">Voice</span>
+                                        {' · '}
+                                        <span className="text-foreground/80">Compare</span>
+                                        {' · '}
+                                        <span className="text-foreground/80">Simulate</span>
+                                    </p>
+
                                     <div className="flex flex-wrap items-center gap-3">
                                         <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-muted-foreground/80">
                                             <span className="font-semibold capitalize">{complexity}</span> complexity
@@ -364,6 +439,18 @@ const ProjectDetail = ({ project }: Props) => {
                                                     aria-pressed={viewMode === 'ascii'}
                                                 >
                                                     Detailed
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className={`architecture-view-mode-btn px-3 py-1.5 rounded-md border transition-all duration-200 ${
+                                                        viewMode === 'schematic'
+                                                            ? 'border-white/30 bg-white/10 text-white shadow-sm'
+                                                            : 'border-white/10 bg-white/[0.03] text-white/60 hover:border-white/30 hover:bg-white/[0.06]'
+                                                    }`}
+                                                    onClick={() => setViewMode('schematic')}
+                                                    aria-pressed={viewMode === 'schematic'}
+                                                >
+                                                    Schematic
                                                 </button>
                                                 {mermaidTemplates?.architecture && (
                                                     <button
@@ -527,6 +614,11 @@ const ProjectDetail = ({ project }: Props) => {
                                                         <ReactMarkdown
                                                             remarkPlugins={[remarkGfm]}
                                                             components={{
+                                                                // `react-markdown` v10 ships broad prop types; the
+                                                                // narrow shape we need (`children` + spread) is
+                                                                // stable enough that the `any` here is safer than
+                                                                // maintaining hand-rolled sub-types upstream.
+                                                                /* eslint-disable @typescript-eslint/no-explicit-any */
                                                                 ul({ children, ...props }: any) {
                                                                     return (
                                                                         <ul className="custom-bullet-list space-y-2 mt-4" {...props}>
@@ -572,6 +664,7 @@ const ProjectDetail = ({ project }: Props) => {
                                                                         </code>
                                                                     );
                                                                 },
+                                                                /* eslint-enable @typescript-eslint/no-explicit-any */
                                                             }}
                                                         >
                                                             {explanation}
@@ -595,6 +688,20 @@ const ProjectDetail = ({ project }: Props) => {
                                                 Boxes represent system components or services; arrows represent data flow and execution order.
                                             </span>
                                             {viewMode === 'ascii' && <SystemArchitectureDiagrams projectId={project.id} />}
+                                            {viewMode === 'schematic' && (
+                                                <div className="w-full overflow-x-auto rounded-xl bg-zinc-950/50 border border-white/5">
+                                                    <Image
+                                                        src={`/projects/${project.slug}/architecture.svg`}
+                                                        alt={`${project.title} architecture schematic`}
+                                                        width={1200}
+                                                        height={900}
+                                                        sizes="(min-width: 1024px) 1024px, 100vw"
+                                                        loading="lazy"
+                                                        className="w-full h-auto"
+                                                        unoptimized
+                                                    />
+                                                </div>
+                                            )}
                                             {viewMode === 'architecture' && mermaidTemplates?.architecture && (
                                                 <MermaidDiagram chart={mermaidTemplates.architecture} />
                                             )}
