@@ -304,9 +304,6 @@ const Footer = () => {
                                         { href: '/', label: 'Home' },
                                         { href: '/#selected-projects', label: 'Projects' },
                                         { href: '/#open-source', label: 'Open Source' },
-                                        { href: '/architecture', label: 'Architecture' },
-                                        { href: '/blog', label: 'Blog' },
-                                        { href: '/uses', label: 'Uses' },
                                     ].map((link) => (
                                         <li key={link.href}>
                                             <a
@@ -342,9 +339,6 @@ const Footer = () => {
                                         </li>
                                     ))}
                                 </ul>
-                                <p className="text-xs text-white/50">
-                                    Resume + 30-min call CTAs are just above this footer.
-                                </p>
                             </div>
 
                             <div className="space-y-2 text-xs text-white/50 md:text-right">

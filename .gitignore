@@ -39,3 +39,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local build / lint / type-check logs (developer-only, never committed)
+*.log
+build*.txt
+ts-out*.txt
+eslint*.txt
+next-build*.txt
+next-stdout.log
+next-stderr.log
+
+# leftover brand-asset scratch files
+nvidia-source.svg

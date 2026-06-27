@@ -4,7 +4,6 @@ import { Suspense } from 'react';
 import Banner from './_components/Banner';
 import AboutMe from './_components/AboutMe';
 import { SectionFallback } from './_components/SectionFallback';
-import SectionDivider from '@/components/SectionDivider';
 import { buildPersonJsonLd } from '@/lib/jsonld';
 
 // Dynamic imports for below-the-fold content to improve initial load performance.
@@ -12,7 +11,6 @@ import { buildPersonJsonLd } from '@/lib/jsonld';
 // still get chunk-splitting and lazy hydration for these heavier components.
 const Education = dynamic(() => import('./_components/Education'));
 const Experiences = dynamic(() => import('./_components/Experiences'));
-const CareerTimeline = dynamic(() => import('./_components/CareerTimeline'));
 const Skills = dynamic(() => import('./_components/Skills'));
 const ProjectList = dynamic(() => import('./_components/ProjectList'));
 const Publications = dynamic(() => import('./_components/Publications'));
@@ -22,16 +20,12 @@ const Talks = dynamic(() => import('./_components/Talks'));
 const Awards = dynamic(() => import('./_components/Awards'));
 const Footer = dynamic(() => import('@/components/Footer'));
 
-// Pick a divider variant per gap so each transition feels unique.
-const DIVIDER_VARIANTS = ['wave', 'tilt', 'chunks'] as const;
-
 export default function Home() {
     const sections = [
         { key: 'banner', node: <Banner />, priority: true },
         { key: 'about', node: <AboutMe />, priority: true },
         { key: 'education', node: <Education /> },
         { key: 'experience', node: <Experiences /> },
-        { key: 'timeline', node: <CareerTimeline /> },
         { key: 'projects', node: <ProjectList /> },
         { key: 'skills', node: <Skills /> },
         { key: 'oss', node: <OpenSource /> },
@@ -67,14 +61,8 @@ export default function Home() {
                             </Suspense>
                         )}
                     </div>
-                    {/* Divider sits BETWEEN sections, never before the first
-                        (the banner is the LCP; nothing should precede it). */}
-                    {index < sections.length - 1 && (
-                        <SectionDivider
-                            variant={DIVIDER_VARIANTS[index % DIVIDER_VARIANTS.length]}
-                            heightClass="h-12 md:h-20"
-                        />
-                    )}
+                    {/* Divider removed per user feedback — sections now flow
+                        directly into one another with no decorative border. */}
                 </div>
             ))}
         </div>

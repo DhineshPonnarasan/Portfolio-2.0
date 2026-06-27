@@ -64,7 +64,7 @@ const AboutMe = () => {
                 </h2>
 
                 <div className="grid lg:grid-cols-12 gap-10">
-                    <div className="lg:col-span-5 slide-up-and-fade">
+                    <div className="lg:col-span-5 slide-up-and-fade flex flex-col gap-6">
                         <div className="relative aspect-square w-full max-w-[400px] overflow-hidden rounded-2xl bg-zinc-900 flex items-center justify-center border border-white/10 group mx-auto lg:mx-0">
                             <div className={`relative w-full h-full transition-opacity duration-300 ${imgError ? 'opacity-0 hidden' : 'opacity-100'}`}>
                                 <Image
@@ -89,6 +89,30 @@ const AboutMe = () => {
                                 </div>
                             )}
                         </div>
+
+                        {/* Fills the empty space below the portrait with a
+                            concrete "currently working on" panel. Pure CSS,
+                            no extra dependencies, honours reduced motion via
+                            the same GSAP `.slide-up-and-fade` class. */}
+                        <div className="w-full max-w-[400px] mx-auto lg:mx-0 rounded-2xl border border-white/10 bg-white/[0.02] p-5 slide-up-and-fade">
+                            <p className="text-[11px] font-mono uppercase tracking-[0.3em] text-primary/80 mb-3">
+                                Currently shipping
+                            </p>
+                            <ul className="space-y-2 text-sm text-white/80">
+                                <li className="flex items-start gap-2">
+                                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
+                                    <span>End-to-end ML pipelines with Airflow + MLflow at Uplifty AI</span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
+                                    <span>Streaming CDC ingestion → Iceberg tables for distributed systems work</span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
+                                    <span>Shipping inference-correctness fixes upstream across OSS projects I contribute to</span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
 
                     <div className="lg:col-span-7 flex flex-col justify-between gap-10">
@@ -104,16 +128,19 @@ const AboutMe = () => {
                                 put them in front of users.
                             </p>
                             <p className="text-muted-foreground text-lg leading-relaxed">
-                                Outside of work I contribute upstream to
-                                <span className="text-primary"> Microsoft</span>,
-                                <span className="text-primary"> NVIDIA Megatron-LM</span>,
-                                <span className="text-primary"> NVIDIA TensorRT-LLM</span>,
-                                <span className="text-primary"> CodeGraphContext</span>,
-                                <span className="text-primary"> Scanapi</span>, and
-                                <span className="text-primary"> OLake</span> — adding regression
-                                tests, hardening protocol validation, pinning supply chains
-                                to immutable SHAs, and shipping the kind of fixes that compound
-                                across releases.
+                                Outside of work I contribute upstream to a handful of
+                                open-source projects spanning AI tooling, distributed inference,
+                                and data infrastructure — adding regression tests, hardening
+                                protocol validation, pinning supply chains to immutable SHAs,
+                                and shipping the kind of fixes that compound across releases.
+                                The full list lives in the{' '}
+                                <a
+                                    href="#open-source"
+                                    className="text-primary underline-offset-4 hover:underline"
+                                >
+                                    Open Source
+                                </a>{' '}
+                                section below.
                             </p>
                             <p className="text-muted-foreground text-lg leading-relaxed">
                                 What I care about most: clean abstractions, observable systems,

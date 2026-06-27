@@ -69,14 +69,6 @@ const Skills = () => {
             <div className="container">
                 <SectionTitle title="My Stack" />
 
-                <p className="slide-up max-w-3xl mb-10 text-base md:text-lg text-muted-foreground leading-relaxed">
-                    I&apos;m at my best turning ambiguous ML problems into production
-                    systems — feature engineering and gradient-boosted ensembles for tabular
-                    data, transformer fine-tuning for NLP, and the streaming + serving
-                    plumbing that ships them. The list below is grouped by what I&apos;ve
-                    used in anger, not by what looks good on a CV.
-                </p>
-
                 <div className="space-y-20">
                     {Object.entries(MY_STACK).map(([key, value]) => (
                         <div className="grid sm:grid-cols-12 gap-8 sm:gap-4" key={key}>

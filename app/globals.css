@@ -1247,16 +1247,10 @@
         .noise-overlay { opacity: 0.04; }
     }
 
-    /* Animated gradient hero background — driven by background-position
-       scrubbed by GSAP. The animation lives in JS so reduced motion
-       never animates it. */
+    /* Animated gradient hero background — removed (was a teal/cyan/purple/pink mesh
+       that the user no longer wants). Re-enable here if you want it back. */
     .hero-gradient-mesh {
-        background:
-            radial-gradient(at 20% 20%, rgba(34, 211, 238, 0.30), transparent 55%),
-            radial-gradient(at 80% 30%, rgba(16, 185, 129, 0.30), transparent 60%),
-            radial-gradient(at 50% 80%, rgba(124, 58, 237, 0.25), transparent 55%),
-            radial-gradient(at 10% 90%, rgba(244, 114, 182, 0.18), transparent 60%);
-        background-size: 220% 220%;
+        /* intentionally empty */
     }
 
     /* Skip-links — visible on focus only. */
